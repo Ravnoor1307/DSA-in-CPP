@@ -1,0 +1,16 @@
+# Executables
+*.exe
+*.out
+*.o
+*.obj
+
+# VS Code
+.vscode/
+
+# CMake
+build/
+CMakeFiles/
+CMakeCache.txt
+
+# Logs
+*.log
