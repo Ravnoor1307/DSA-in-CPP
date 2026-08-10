@@ -3,10 +3,10 @@ using namespace std;
 int main()
 {
 
-    int n = 5;
-    for (int i = 1; i <= n; i++)
+    char n = 'Z';
+    for (char i = 'A'; i <= n; i++)
     {
-        for (int j = 1; j <= n; j++)
+        for (char j = 'A'; j <= n; j++)
         {
             cout << j << " ";
         }
