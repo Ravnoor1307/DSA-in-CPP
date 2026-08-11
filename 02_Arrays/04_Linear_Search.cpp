@@ -20,7 +20,7 @@ int main()
     int size = sizeof(arr) / sizeof(arr[0]);
     int target = 30;
     int index = linear_search(size, target, arr);
-    if ((index >= 0))
+    if ((index >= 0) && (index < size))
     {
         cout << "Target Found at Index : " << index << endl;
     }
