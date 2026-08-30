@@ -1,3 +1,38 @@
+/*
+=======================================================================
+ THEORY : Conditional Statements (Decision Making)
+=======================================================================
+ Conditional statements execute a block of code only when a certain
+ condition is true. They control the flow of a program.
+
+ 1. if statement
+        if (condition) {  // body executed only if condition is true }
+    - For a single-line body braces can be omitted.
+
+ 2. if-else
+        if (condition) { ... } else { ... }
+    - else block runs when the condition is false.
+
+ 3. if-else if-else  (ladder)
+        if (c1) { ... }
+        else if (c2) { ... }
+        else { ... }
+    - Checks conditions from top to bottom; the FIRST true block runs
+      and the remaining conditions are skipped.
+
+ 4. switch statement
+        switch(expr){ case val: ... break; default: ... }
+    - More readable replacement for many if-else-if when testing one
+      variable against fixed values.
+    - `break` stops fall-through to the next case.
+    - `default` executes when no case matches (optional).
+
+ 5. TERNARY (conditional) OPERATOR
+        variable = (condition) ? value_if_true : value_if_false;
+    - A shorthand for the if-else that returns a value.
+        max = (num1 > num2) ? num1 : num2;
+=======================================================================
+*/
 #include <iostream>
 using namespace std;
 int main()

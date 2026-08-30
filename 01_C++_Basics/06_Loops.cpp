@@ -1,3 +1,43 @@
+/*
+=======================================================================
+ THEORY : Loops (Iteration) & Jump Statements
+=======================================================================
+ Loops repeat a block of code while (or for a fixed number of times)
+ a condition is satisfied. Iteration is the core of DSA because it
+ lets us process large data very quickly.
+
+ 1. for loop        - used when the number of iterations is known.
+        for (initialisation; condition; updation) { body }
+         Eg: for (int i = 0; i < 5; i++)
+
+ 2. while loop      - used when iterations depend on a condition.
+        initialisation;
+        while (condition) { body; updation; }
+
+ 3. do-while loop   - body runs AT LEAST ONCE, then condition checked.
+        do { body; } while (condition);
+
+ 4. Range-based for (for-each) loop - iterates over every element.
+        for (auto it : arr)             // by-value (copy)
+        for (auto &it : arr)            // by-reference (no copy)
+    - `auto` lets the compiler deduce the element type.
+
+ 5. Nested loops    - a loop inside another loop.
+        Outer runs N times; for each outer iteration the INNER loop
+        runs fully, giving N*M total inner executions.
+
+ 6. Jump statements
+        continue : skips the CURRENT iteration, goes to next.
+        break    : terminates the whole loop immediately.
+        goto label : jumps to a labelled line in the function
+                     (use sparingly - makes code hard to read).
+
+ EXAMPLE - nested loop on i=0..2 and j=0..1 prints:
+        i = 0, j = 0
+        i = 0, j = 1
+        i = 1, j = 0  ... and so on (6 lines total)
+=======================================================================
+*/
 #include <iostream>
 using namespace std;
 int main()

@@ -1,3 +1,25 @@
+/*
+=======================================================================
+ THEORY : Pattern Printing - Characters as Loop Variables
+=======================================================================
+ In C++, a char is a small integer. So we can use characters inside
+ loops just like numbers, and ++ moves to the next alphabet letter.
+
+ PATTERN 03 (Alphabet square):
+    n = 'Z';  i from 'A' to 'Z'   (26 rows)
+        j from 'A' to 'Z'        : print j  (same columns each row)
+
+ What it prints with n='F' (for a small example):
+    A B C D E F
+    A B C D E F
+    A B C D E F
+    A B C D E F
+    A B C D E F
+    A B C D E F
+
+ The file uses n = 'Z', so it prints 26 such rows (A..Z each row).
+=======================================================================
+*/
 #include <iostream>
 using namespace std;
 int main()

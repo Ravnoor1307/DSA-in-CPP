@@ -1,3 +1,48 @@
+/*
+=======================================================================
+ THEORY : Functions in C++
+=======================================================================
+ A function is a reusable block of code that performs a specific task.
+ It avoids code duplication and makes programs modular & testable.
+
+ 1. Function DEFINITION
+        return_type functionName(parameters) { body; return value; }
+        - return_type: what the function gives back (int, double,
+          bool, void...). `void` means it returns nothing.
+        - parameters : inputs received when the function is called.
+
+ 2. Function CALL
+        value = functionName(arguments);
+    - The call hands over the arguments; function executes and its
+      return value can be used/printed.
+
+ 3. USE CASES shown in this file:
+        printHello()   -> prints text, returns 3
+        sum(a, b)      -> returns a + b
+        min(a, b)      -> returns smaller of two numbers
+        sum_1_to_n(n)  -> sum 1+2+...+n        (loop)
+        fact(n)        -> n! = 1*2*...*n        (loop)
+        sum_of_digit_of_numbers(num) -> sum of digits by %10 & /10
+        nCr(n, r)      -> nCr = n! / (r! * (n-r)!)   [Binomial coeff]
+        isPrime(n)     -> true/false using sqrt() optimisation
+        allPrimeNumbers(n) -> prints all primes from 2..n
+
+ 4. PASS BY VALUE (default)
+    - A COPY of the argument is passed into the function.
+    - Changes made inside do NOT affect the original variable.
+        void changeX(int x) { x = x*2; }   // original x unchanged
+
+ 5. PRIME CHECK optimisation
+    - Only test odd divisors from 3 to sqrt(n).
+    - If n has a divisor <= sqrt(n), it cannot be prime.
+    - Edge cases handled: n<=1 -> false; n==2 -> true; even -> false.
+
+ 6. NOTE: nCr() computes the result but forgets to `return result`;
+    add `return result;` before running to avoid undefined behaviour.
+
+ 7. #include <cmath>  provides sqrt(), pow(), etc.
+=======================================================================
+*/
 #include <iostream>
 #include <cmath>
 using namespace std;

@@ -1,3 +1,27 @@
+/*
+=======================================================================
+ THEORY : Pattern Printing - Hollow Diamond
+=======================================================================
+ To print a HOLLOW shape, print a star only at the first and the last
+ column of every row; use spaces in between (the "hole").
+    - if (i == 0) there is only ONE star (top tip)
+    - inner loop prints (2*i - 1) spaces between the two stars
+
+ PATTERN 15 (Hollow diamond):
+    TOP HALF  : i = 0..n-1
+        print (n-i-1) spaces, '*', middle (2i-1) spaces, '*'
+    BOTTOM HALF: i = 0..n-2  (mirror of the top half)
+
+ EXPECTED OUTPUT (n = 4):
+       *
+      * *
+     *   *
+    *     *
+     *   *
+      * *
+       *
+=======================================================================
+*/
 #include<iostream>
 using namespace std;
 int main(){

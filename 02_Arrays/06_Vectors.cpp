@@ -1,3 +1,51 @@
+/*
+=======================================================================
+ THEORY : Vectors (Dynamic Arrays) from the STL
+=======================================================================
+ 1. WHAT IS A VECTOR?
+    - vector is a DYNAMIC array from the C++ Standard Template
+      Library (STL): it can GROW or SHRINK automatically.
+    - Unlike plain arrays, you do NOT need to know the size in
+      advance. Include <vector> and <algorithm>.
+
+ 2. CREATING VECTORS
+        vector<int> v1;          // empty vector
+        vector<int> v2(3, 5);    // 3 elements, each = 5
+        vector<int> v3 = {1,2,3};// initialiser list
+
+ 3. ADDING ELEMENTS
+        vec.push_back('z');      // add at the BACK  (O(1) amortized)
+        vec.insert(vec.begin()+1, 'c');  // insert at any position
+                                        // (O(n) - shifts elements)
+
+ 4. ACCESSING ELEMENTS
+        vec[1]      -> fast, NO bounds check
+        vec.at(1)   -> SAFE: throws out_of_range exception if invalid
+                     (that is why v.at(10) on a 5-sized vector throws)
+    - UPDATING:   v4[1] = 50;
+
+ 5. SIZE / TRAVERSAL / DELETION
+        v5.size()                      -> number of elements
+        for (char i : v6) ...          -> range-based loop
+        v6.pop_back()                  -> remove last element  O(1)
+        v6.erase(find(v6.begin(), v6.end(), 'f'));
+            find() returns an iterator to 'f'; erase removes it.
+            Include <algorithm> for find().
+
+ 6. EMPTY CHECK
+        v7.empty()                     -> true if size == 0
+
+ 7. WHY VECTORS FOR DSA
+    - They replace most manual arrays, give automatic resizing and
+      huge standard-library support.
+
+ COMPLEXITY:
+    push_back/pop_back : O(1) amortized
+    insert/erase       : O(n)   (elements shift)
+    access via [] / at : O(1)
+    space              : O(n)
+=======================================================================
+*/
 #include <iostream>
 #include <vector>
 #include <algorithm>
