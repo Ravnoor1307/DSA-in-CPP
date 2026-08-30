@@ -16,3 +16,5 @@ CMakeCache.txt
 *.log
 
 questions.txt
+
+*.ipynb
