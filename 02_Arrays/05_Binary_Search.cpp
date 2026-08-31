@@ -48,10 +48,72 @@
  COMPLEXITY:
     Time  : O(log n) worst and average, O(1) best (mid hit at once)
     Space : O(1) (iterative version; recursive uses O(log n) stack)
-
- NOTE: This file currently contains NO runnable code.
-       A complete working implementation lives inside the notes file
-       (DSA_Complete_Notes.ipynb) as well as the topic file
-       01_C++_Basics/00_Complexity_Analysis.cpp.
 =======================================================================
 */
+
+#include <iostream>
+using namespace std;
+
+int binarySearch(int arr[], int n, int target)
+{
+    int low = 0, high = n - 1;
+    while (low <= high)
+    {
+        int mid = low + (high - low) / 2;
+        if (arr[mid] == target)
+            return mid;
+        else if (arr[mid] < target)
+            low = mid + 1;
+        else
+            high = mid - 1;
+    }
+    return -1;
+}
+
+int main()
+{
+    int arr[] = {10, 20, 30, 40, 50, 60, 70, 80, 90, 100};
+    int n = sizeof(arr) / sizeof(arr[0]);
+
+    cout << "Sorted array: ";
+    for (int i = 0; i < n; i++)
+        cout << arr[i] << " ";
+    cout << endl;
+
+    int targets[] = {70, 10, 100, 55};
+    for (int t = 0; t < 4; t++)
+    {
+        int target = targets[t];
+        int result = binarySearch(arr, n, target);
+        if (result != -1)
+            cout << "Binary search for " << target << " -> found at index " << result << endl;
+        else
+            cout << "Binary search for " << target << " -> not found" << endl;
+    }
+
+    cout << "\nStep-by-step trace for target = 70:" << endl;
+    int low = 0, high = n - 1;
+    while (low <= high)
+    {
+        int mid = low + (high - low) / 2;
+        cout << "  low=" << low << " high=" << high << " mid=" << mid
+             << " arr[mid]=" << arr[mid];
+        if (arr[mid] == 70)
+        {
+            cout << " -> FOUND!" << endl;
+            break;
+        }
+        else if (arr[mid] < 70)
+        {
+            cout << " -> low = mid+1" << endl;
+            low = mid + 1;
+        }
+        else
+        {
+            cout << " -> high = mid-1" << endl;
+            high = mid - 1;
+        }
+    }
+
+    return 0;
+}
