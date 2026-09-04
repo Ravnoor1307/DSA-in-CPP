@@ -189,8 +189,93 @@
        Step 3 : Reduce to a Big-O expression
                 (drop constants + lower terms, keep the largest).
 
-     PRO TIP for interviews: always STATE the complexity of your
-     solution before/after coding - interviewers love it.
+      PRO TIP for interviews: always STATE the complexity of your
+      solution before/after coding - interviewers love it.
+
+  ---------------------------------------------------------------------
+  14. HOW TO CALCULATE THE COMPLEXITY OF ANY ALGORITHM
+      AND DECIDE WHICH APPROACH IS BEST  (THE MOST IMPORTANT SKILL)
+
+      This is the systematic 5-step method used to compare candidate
+      approaches and pick the best one for a given problem.
+
+      STEP A - Find the INPUT SIZE VARIABLE(s).
+        Identify what n is. Usually the array/vector length, the
+        number of rows, or the size of the dataset. If there are two
+        independent sizes (e.g. m rows, n cols) you must keep BOTH:
+        O(m * n) or O(m + n), etc.
+
+      STEP B - Find the DOMINANT OPERATION.
+        The loop (or recursion / function call) that runs the most.
+        For each loop, count how many times its body executes in
+        terms of n.
+
+      STEP C - Account for NESTING and SEQUENCING.
+        - Nested loops MULTIPLY their counts.
+        - Sequential (separate) loops ADD, and you keep the largest.
+        - Conditionals: analyse the worst branch.
+        - Function calls: add their cost multiplied by how many times
+          they are called.
+
+      STEP D - REDUCE to Big-O.
+        Drop constants, drop lower-order terms, keep the largest
+        term. This is the final complexity of that approach.
+
+      STEP E - DECIDE THE BEST APPROACH using the CONSTRAINT.
+        Once you have the Big-O of each candidate, compare against
+        the input size given by the problem:
+            n <= 1000    -> O(n^2) is fine  (~10^6 ops)
+            n <= 10^5    -> need O(n) or O(n log n)
+            n <= 10^7    -> need O(n) or O(n log n) with small constants
+            n <= 10^8    -> need O(n) or O(log n)
+            n huge (10^9+)-> need O(log n) or O(1) per query
+        Rule of thumb: 10^8 simple ops ~ 1 second.
+
+      EXAMPLE - Applying the method to "Pair Sum".
+        n = array length.
+        Approach 1 (brute force): 2 nested loops -> n*n = O(n^2).
+        Approach 2 (sort + two pointers): sort O(n log n) + O(n) scan,
+          keep largest -> O(n log n).
+        Approach 3 (hash set): 1 loop, each op O(1) -> O(n) average.
+        DECISION: 
+          - If n <= 1000, all three pass; brute force is simplest.
+          - If n = 10^5, O(n^2) = 10^10 ops = ~100 sec (TLE); must use
+            O(n log n) sort+two-pointers or O(n) hash set.
+          - If also memory is limited (space O(1) required), choose
+            sort + two pointers over hash set (which needs O(n) space).
+        The "best" approach is the SIMPLEST one that FITS the limit.
+
+      EXAMPLE - Applying the method to "Majority Element".
+        n = array length.
+        Approach 1 (brute force): O(n^2).
+        Approach 2 (hash map): O(n) time, O(n) space.
+        Approach 3 (sort): O(n log n), O(1) space.
+        Approach 4 (Moore's voting): O(n) time, O(1) space.
+        DECISION: Moore's is optimal on BOTH time and space, so it is
+        clearly the best approach for large n.
+
+      EXAMPLE - Applying the method to "Maximum Subarray (Kadane)".
+        n = array length.
+        Approach 1 (print all subarrays): O(n^3).
+        Approach 2 (brute force max sum): O(n^2).
+        Approach 3 (Kadane): single pass O(n), O(1) space.
+        DECISION: for n = 100000, O(n^2) = 10^10 (TLE); Kadane's O(n)
+        is the only fast one -> clearly the best.
+
+      WHY THE 10^8 RULE DECIDES EVERYTHING:
+        The whole point of complexity analysis is to answer "will my
+        program finish in time?" A laptop does ~10^8 simple ops/sec.
+        If your complexity, inserted n, exceeds ~10^8, your solution
+        will likely TLE on that platform. So you pick the approach
+        whose Big-O keeps total ops under ~10^7 to 10^8.
+
+      SUMMARY - THE DECISION FRAMEWORK:
+        1. Write the Big-O (time and space) of EVERY approach.
+        2. Find the input size n from the problem constraints.
+        3. Estimate total ops = Big-O value at that n.
+        4. Reject any approach whose ops clearly exceed 10^8.
+        5. Among those that fit, pick the one with the best space OR
+           the simplest code (least bug-prone), whichever matters more.
 =======================================================================
 */
 
@@ -289,6 +374,101 @@ int binarySearch(int arr[], int size, int target)
     return -1;
 }
 
+// ----------------------------------------------------------------
+// DEMO : Choosing the BEST approach by complexity
+// Three solutions to "find a target" in a sorted array.
+// Count the operations to PROVE which approach is best.
+// ----------------------------------------------------------------
+
+// Approach 1 : O(n) linear scan -- 1 nested level, n iterations
+long long approach1_ops(int arr[], int n, int target)
+{
+    long long ops = 0;
+    for (int i = 0; i < n; i++)
+    {
+        ops++;
+        if (arr[i] == target)
+            break;
+    }
+    return ops; // up to n comparisons
+}
+
+// Approach 2 : O(log n) binary search -- halves each step
+long long approach2_ops(int arr[], int n, int target)
+{
+    long long ops = 0;
+    int low = 0, high = n - 1;
+    while (low <= high)
+    {
+        ops++;
+        int mid = low + (high - low) / 2;
+        if (arr[mid] == target)
+            return ops;
+        else if (arr[mid] < target)
+            low = mid + 1;
+        else
+            high = mid - 1;
+    }
+    return ops; // ~log2(n) comparisons
+}
+
+// Approach 3 : O(n^2) "check every pair" - imitate inefficient search
+long long approach3_ops(int arr[], int n, int target)
+{
+    long long ops = 0;
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < n; j++)
+        {
+            ops++;
+            if (arr[i] + arr[j] == target) // artificial, just to count
+                return ops;
+        }
+    return ops;
+}
+
+// Helper to fill a sorted array of size n
+void fillSorted(int arr[], int n)
+{
+    for (int i = 0; i < n; i++)
+        arr[i] = i * 2; // 0,2,4,6,...
+}
+
+void compareApproaches()
+{
+    cout << "\n===== DECIDING THE BEST APPROACH BY COMPLEXITY =====" << endl;
+    cout << "Finding a target in a SORTED array of size n." << endl;
+    cout << "We count actual operations to confirm the Big-O." << endl;
+
+    int sizes[] = {100, 10000, 1000000}; // increasing input sizes
+    const char *names[] = {"n=100    ", "n=10000  ", "n=1000000"};
+
+    for (int s = 0; s < 3; s++)
+    {
+        int n = sizes[s];
+        int *arr = new int[n];
+        fillSorted(arr, n);
+        int target = arr[n - 1]; // worst-ish: target near the end
+
+        long long ops1 = approach1_ops(arr, n, target); // O(n)
+        long long ops2 = approach2_ops(arr, n, target); // O(log n)
+        long long ops3 = approach3_ops(arr, n, target); // O(n^2)
+
+        cout << names[s]
+             << "  Linear O(n)=" << ops1
+             << "  Binary O(logn)=" << ops2
+             << "  Pairwise O(n^2)=" << ops3
+             << "   BEST: " << (ops2 < ops1 ? "Binary search (O(log n))" : "compare")
+             << endl;
+        delete[] arr;
+    }
+
+    cout << "\nConclusion: For large n, O(log n) binary search does"
+         << "\nlog2(n) ops while O(n) linear does n and O(n^2) does n^2."
+         << "\nAt n=1,000,000: log2 ~ 20, linear = 1,000,000,"
+         << "\npairwise = ~10^12 (impossible). So the best approach"
+         << "\nis the one with the smallest growth rate that fits." << endl;
+}
+
 int main()
 {
     // Quick complexity demonstrations (operation counts are printed)
@@ -307,6 +487,9 @@ int main()
     int sorted[8] = {1, 3, 5, 7, 9, 11, 13, 15};
     cout << "O(log n)   binary search 7     -> index "
          << binarySearch(sorted, 8, 7) << endl;
+
+    // Compare approaches to pick the best one
+    compareApproaches();
 
     return 0;
 }

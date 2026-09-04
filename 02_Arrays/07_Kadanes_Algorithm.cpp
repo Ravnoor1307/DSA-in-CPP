@@ -59,6 +59,20 @@
                  (we must at least look at every element).
         Space : O(1)   — only two integer variables, no extra array.
 
+ 6b. HOW TO CALCULATE THE COMPLEXITY (step by step)
+    Step A - Input size n = array length.
+    Step B - Dominant operation = one pass, visiting each element once.
+    Step C - Print-all-subarrays uses 3 nested loops -> n(n+1)/2 subarrays
+             each printed in O(n) -> O(n^3).
+             Brute-force max sum uses 2 nested loops -> n(n+1)/2 starts
+             without printing -> O(n^2). Kadane uses a SINGLE loop.
+    Step D - Kadane: exactly n iterations, O(1) work each -> O(n); two
+             integer variables -> O(1) space.
+    Step E - Decision: at n = 100,000, O(n^2) = 10^10 ops (TLE vs the
+             ~10^8 budget) while Kadane = 10^5 ops (instant) ->
+             Kadane is the best approach, and O(n) is optimal (we must
+             look at every element).
+
  7. COMPARISON WITH OTHER APPROACHES (shown in this file)
         Brute force (3 nested loops)  : O(n^3)
         Brute force (2 nested loops)   : O(n^2)   -- used below

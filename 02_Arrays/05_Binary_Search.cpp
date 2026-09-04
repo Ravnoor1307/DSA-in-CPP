@@ -29,6 +29,17 @@
     - The boundary updates (low = mid+1 / high = mid-1) guarantee the
       loop terminates and mid is never checked twice.
 
+ 5. HOW TO CALCULATE THE COMPLEXITY (step by step)
+    Step A - Input size n = array length (must be sorted).
+    Step B - Dominant operation = comparing arr[mid] to target.
+    Step C - Each comparison HALVES the search window:
+             n -> n/2 -> n/4 -> ... -> 1. Number of halvings = log2(n).
+    Step D - T(n) = T(n/2) + O(1)  solves to  O(log n).
+    Step E - Decision: at n = 1e9, binary needs ~30 comparisons while
+             linear would need a billion -> binary is mandatory at scale.
+    Space : O(1) iterative. Recursive version uses O(log n) stack depth
+            (one stack frame per halving).
+
  5. WHEN TO USE
     - Search in sorted data, lower/upper bound queries, "answer
       binary search" used widely in competitive programming.

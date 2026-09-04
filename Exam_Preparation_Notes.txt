@@ -1,0 +1,1765 @@
+================================================================================
+    DATA STRUCTURES AND ALGORITHMS - EXAM PREPARATION NOTES
+    (Detailed Topic-wise Explanation from an Examination Point of View)
+================================================================================
+
+    How to use this file:
+    Every topic below follows the same exam-friendly structure:
+        1. IMPORTANT (what is usually asked)
+        2. Theory in points (definitions, key facts)
+        3. Formulas / Stay through
+        4. Common exam questions (often asked in viva / written / interviews)
+        5. Code-snippet memory hooks
+        6. Common mistakes / pointers-for-answers
+
+    Topics covered:
+        0.  Time & Space Complexity Analysis
+        1.  Introduction to C++
+        2.  Variables & Data Types
+        3.  Type Casting & User Input
+        4.  Operators
+        5.  Conditional Statements
+        6.  Loops & Jump Statements
+        7.  Functions
+        8.  Binary Number System
+        9.  Miscellaneous (Bitwise & Modifiers)
+        10. Pattern Printing
+        11. Digital Lock Problem (Q-1)
+        12. Arrays - Basics
+        13. Arrays - Traversal
+        14. Applications of Traversal
+        15. Linear Search
+        16. Binary Search
+        17. STL - Vectors
+        18. Kadane's Algorithm
+        19. Pair Sum (Brute Force + Two Pointers)
+
+--------------------------------------------------------------------------------
+
+================================================================================
+TOPIC 0 - TIME & SPACE COMPLEXITY ANALYSIS
+================================================================================
+
+IMPORTANT:
+    This is the SINGLE most important topic in DSA. Almost every written
+    question and interview round asks: "What is the time and space complexity
+    of this code?" or "Which is better, O(n) or O(n^2)?" Prepare it fully.
+
+WHAT IT MEANS:
+    Complexity analysis measures HOW the time/memory of a program grows as the
+    INPUT SIZE (n) grows. It is expressed using Big-O notation.
+
+EXAM DEFINITIONS (memorise these exactly):
+    - Time Complexity : The amount of time taken by an algorithm as a function
+        of input size n. Written as Big-O, e.g. O(n), O(n^2).
+    - Space Complexity : The amount of EXTRA (auxiliary) memory an algorithm
+        needs beyond the input, again as Big-O.
+
+ASYMPTOTIC NOTATIONS (very frequently asked):
+    - Big-O  (O)  : UPPER bound. Worst case growth. f(n) <= c*g(n) for n >= n0.
+        This is what we normally report.
+    - Big-Omega (Ω): LOWER bound. Best case growth. f(n) >= c*g(n).
+    - Big-Theta (Θ): TIGHT bound. Both upper and lower bounds hold.
+        f(n) = Θ(g(n)) means O(g(n)) and Ω(g(n)) both hold.
+
+    Exam tip: "Which notation tells the worst case?" -> Big-O.
+              "Which is a tight/exact bound?"           -> Big-Theta.
+
+GROWTH RATES (must memorise ranking, slowest to fastest):
+    O(1) < O(log n) < O(sqrt(n)) < O(n) < O(n log n) < O(n^2) < O(n^3)
+           < O(2^n) < O(n!)
+
+    Meaning with n = 1000:
+        O(1)      : 1 operation
+        O(log n)  : ~10 operations
+        O(n)      : 1000 operations
+        O(n^2)    : 1,000,000 operations
+        O(n^3)    : 1,000,000,000 operations
+        O(2^n)    : astronomically large (impossible)
+
+RULE OF THUMB FOR EXAMS:
+    A modern computer does roughly 10^8 simple operations per second.
+    - If n = 10^5, an O(n^2) algorithm does 10^10 ops = ~100 seconds (too slow).
+    - Keep total operations under ~10^7 to 10^8 for a solution to pass.
+
+GOLDEN RULES TO READ/WRITE BIG-O (classic exam short-answer):
+    Rule 1: Drop constants.      3n, 100n  ->  O(n)
+    Rule 2: Drop lower terms.    n^2 + n   ->  O(n^2)
+    Rule 3: Sequential blocks ADD (keep the largest).
+                                  O(n) then O(n^2) -> O(n^2)
+    Rule 4: Nested loops MULTIPLY.
+                                  outer n * inner n -> O(n^2)
+    Rule 5: Halving loop is logarithmic.
+                                  for(i=n; i>0; i/=2) -> O(log n)
+
+LOOP ANALYSIS (frequent written question - predict iterations):
+    Loop shape                       Iterations        Big-O
+    for(i=0;i<n;i++)                 n                 O(n)
+    for(i=0;i<n;i+=2)                n/2               O(n)   (constant dropped)
+    for(i=n;i>0;i/=2)                log2(n)           O(log n)
+    for(i=1;i*i<=n;i++)              sqrt(n)           O(sqrt(n))
+    outer n + inner n                n*n               O(n^2)
+    outer n + inner (j=i..n)         n(n+1)/2          O(n^2)  (triangular)
+
+RECURRENCE RELATIONS (asked in advance exams):
+    Recurrence                     Algorithm        Result
+    T(n)=T(n/2)+O(1)               binary search    O(log n)
+    T(n)=T(n-1)+O(1)               linear recursion O(n)
+    T(n)=2T(n/2)+O(n)              merge sort       O(n log n)
+    T(n)=T(n-1)+T(n-2)+O(1)        naive fib        O(2^n)
+
+    MASTER THEOREM (statement-level question):
+        For T(n) = a*T(n/b) + f(n), compare f(n) with n^(log_b a):
+            - f(n) smaller   -> dominated by leaves -> T(n)=Theta(n^(log_b a))
+            - f(n) equal     -> T(n)=Theta(n^(log_b a) * log n)
+            - f(n) larger    -> dominated by f(n)   -> T(n)=Theta(f(n))
+
+SPACE COMPLEXITY EXAM POINTS:
+    - Count only EXTRA memory (auxiliary arrays + recursion stack), not input.
+    - O(1): swapping variables. O(n): hash map, array copy.
+    - Recursion adds stack space: binary search recursion = O(log n) stack.
+    - Trade-off fact: hashing gives O(1) average lookup but costs O(n) space.
+
+COMMON EXAM QUESTIONS:
+    Q: Why don't we count the input array in space complexity?
+       A: Space complexity measures EXTRA/auxiliary space the algorithm itself
+          needs. The input is "given", not produced by the algorithm.
+    Q: Is O(2n) same as O(n)?  A: Yes, constants are dropped -> O(n).
+    Q: Which is faster, O(log n) or O(n)?  A: O(log n).
+
+HOW TO CALCULATE THE COMPLEXITY OF ANY ALGORITHM
+AND DECIDE WHICH APPROACH IS BEST (must-know for exams):
+    This is the #1 asked skill: "Given 2-3 solutions, which is best?"
+
+    5-STEP METHOD (memorize this exact sequence):
+    STEP A - Find the INPUT SIZE variable(s).
+        n is the array length / rows / dataset size. If there are two
+        independent sizes (m, n) keep BOTH: O(m*n), O(m+n), etc.
+    STEP B - Find the DOMINANT operation.
+        The loop / recursion / function call that runs the most.
+        For each loop, count how many times the body executes in terms of n.
+    STEP C - Account for NESTING and SEQUENCING.
+        Nested loops MULTIPLY. Sequential loops ADD (keep largest).
+        Conditionals: analyse the WORST branch. Calls: cost x count.
+    STEP D - REDUCE to Big-O.
+        Drop constants, drop lower terms, keep the largest term.
+    STEP E - DECIDE THE BEST using the CONSTRAINT.
+        Compare each candidate's Big-O to the input size n:
+
+        n <= 1000       -> O(n^2) fine (~10^6 ops)
+        n <= 10^5       -> O(n) or O(n log n)
+        n <= 10^8       -> O(n) or O(log n)
+        n 10^9+         -> O(log n) or O(1) per query
+
+    RULE OF THUMB: 10^8 simple ops ~ 1 second.
+    Estimate total ops = Big-O value at that n.
+    Reject any approach whose ops clearly exceed ~10^8.
+
+    WORKED EXAMPLE - 'Find target in sorted array':
+        Approach  Linear O(n)   Binary O(log n)   Nested-pair O(n^2)
+        n=100     100           7                 (up to 10,000)
+        n=10^4    10^4          14                10^8 (borderline)
+        n=10^6    10^6          20                10^12 (impossible)
+        DECISION: Binary search is clearly best at scale (O(log n) vs O(n)).
+
+    WORKED EXAMPLE - 'Majority element':
+        Brute O(n^2) -> n=10^6 gives 10^12 ops (TLE).
+        Hash O(n) time / O(n) space -> fits but uses memory.
+        Moore's O(n) time / O(1) space -> BEST (fits time AND space).
+
+    WORKED EXAMPLE - 'Pair sum':
+        Brute O(n^2) TLEs at n=10^5.
+        Sort+two-pointers O(n log n) O(1) space -> good when memory limited.
+        Hash set O(n) avg -> fastest but O(n) space.
+
+    THE DECISION FRAMEWORK (final answer style):
+        1. Write Big-O (time AND space) of every approach.
+        2. Find n from constraints.
+        3. Estimate total ops = Big-O at that n.
+        4. Reject approaches whose ops exceed ~10^8.
+        5. Among those that fit, pick the best space OR simplest code.
+    EXAM ANSWER SENTENCE:
+        "The best approach is the simplest that fits within the time and
+         memory limits. At n = X, approach Y does Z ops (under/over 10^8),
+         so it passes/TLEs; hence we choose W."
+
+MISTAKES TO AVOID:
+    - Saying O(n^2) for a triangular loop (it IS O(n^2), justify with n(n+1)/2).
+    - Forgetting recursion stack space.
+    - Confusing Big-O (upper) with Big-Theta (tight).
+    - Comparing approaches WITHOUT plugging in n (complexity alone only ranks
+      growth; the limit decides which one actually passes).
+    - Forgetting to account BOTH time and space in the final verdict.
+
+--------------------------------------------------------------------------------
+
+================================================================================
+TOPIC 1 - INTRODUCTION TO C++
+================================================================================
+
+IMPORTANT:
+    Exam/viva questions here are mostly about the PROGRAM STRUCTURE, the role
+    of main(), the meaning of #include, and why we write return 0.
+
+PROGRAM STRUCTURE (know in order):
+    1. Preprocessor directives  : #include <iostream>
+    2. using namespace std;     : lets us skip the std:: prefix
+    3. int main()               : program entry point
+    4. statements               : the actual logic
+    5. return 0;                : signals success to OS
+
+KEY EXAM FACTS:
+    - #include <iostream> pulls in the Input/Output stream library.
+    - cout  : standard output stream (console output).
+    - cin   : standard input stream (console input).
+    - <<    : insertion operator (writes INTO cout).
+    - >>    : extraction operator (reads FROM cin).
+    - endl  : newline + flush buffer. "\n" is faster (does not flush).
+    - return 0; : 0 means success to the OS. Non-zero means error.
+    - main() MUST return int (some compilers allow void but int is correct).
+
+COMPILATION PIPELINE (asked in some viva/labs):
+    1. Preprocessor -> 2. Compiler -> 3. Linker -> 4. Loader.
+    - Preprocessor: expands #include, #define, #ifdef.
+    - Compiler: converts source to object code (.o / .obj).
+    - Linker: merges object files + libraries into the executable (.exe).
+    - Loader: loads into memory and runs.
+
+COMMON EXAM QUESTIONS:
+    Q: What is the use of 'return 0'?
+       A: It tells the OS the program completed successfully. Non-zero means error.
+    Q: Why use "\n" instead of endl in loops?
+       A: endl flushes the buffer every time, slowing output in large loops.
+    Q: What is the entry point of a C++ program?  A: main() function.
+
+MISTAKES TO AVOID:
+    - Writing void main() (old style, not standard C++).
+    - Forgetting semicolons.
+    - Using endl in tight loops (performance penalty).
+
+--------------------------------------------------------------------------------
+
+================================================================================
+TOPIC 2 - VARIABLES & DATA TYPES
+================================================================================
+
+IMPORTANT:
+    Viva/exam focus: data types and their SIZE and RANGE, pointers vs
+    references, global vs local scope, and the sizeof operator.
+
+KEY EXAM FACTS:
+    A variable is a NAMED MEMORY LOCATION whose value can change.
+
+DATA TYPES (memorise sizes AND ranges):
+    Type      Size       Range
+    int       4 bytes    ~ -2*10^9  to  2*10^9
+    char      1 byte     -128 to 127  (or 0-255 unsigned)
+    bool      1 byte     0 or 1
+    float     4 bytes    ~7 decimal digit precision
+    double    8 bytes    ~15 decimal digit precision
+    long long 8 bytes    ~ -9*10^18 to 9*10^18
+
+POINTERS (very common viva):
+    - int *ptr = &x;  stores the ADDRESS of x.
+    - *ptr dereferences (gets the value at that address).
+    - Pointer arithmetic: ptr + 1 moves by sizeof(type) bytes, not 1 byte.
+
+REFERENCES (very common viva - understand difference):
+    - int &ref = x;  is an ALIAS. ref and x are the SAME variable.
+    - References cannot be re-bound; pointers can.
+    - References cannot be NULL; pointers can.
+    - Use & : for modifying the caller's variable / avoiding copies.
+
+SCOPE & LIFETIME (asked often):
+    - Local variable : inside a block, created on entry, destroyed on exit.
+    - Global variable: outside functions, visible everywhere, ZERO-initialized.
+    - Static local   : initialized once, persists across function calls.
+    - A local shadows a global with the same name.
+
+OTHER EXAM FACTS:
+    - #define Side 5 : a macro, preprocessor replaces Side with 5 (no type safety).
+    - const int x=5; : cannot be modified after init (compile error if tried).
+    - struct (public by default) vs class (private by default) vs union (shared memory).
+    - sizeof(x) : compile-time operator giving size in bytes.
+
+COMMON EXAM QUESTIONS:
+    Q: Difference between pointer and reference?
+       A: Pointer stores address, can be NULL, can be re-assigned, uses * and ->.
+          Reference is an alias, can't be NULL, can't be re-bound, no new syntax.
+    Q: What is the range of an int in C++?  A: about -2^31 to 2^31 - 1 (4 bytes).
+    Q: Global vs local variable initialization?
+       A: Globals are zero-initialized; locals hold garbage until assigned.
+    Q: Why use long long?
+       A: When integer sums/products can exceed the int range (~2*10^9),
+          e.g. product of two 10^5 values = 10^10 which overflows int.
+
+MISTAKES TO AVOID:
+    - Relying on garbage value of uninitialized local (undefined behaviour).
+    - Using int when values can exceed 2*10^9 (use long long).
+
+MEMORY LAYOUT (bonus, good for interviews):
+    - Code : program instructions.
+    - Data : global/static variables.
+    - Heap : dynamic memory (new/malloc) - large, manual.
+    - Stack: local variables/function calls - fast but limited (~MBs).
+
+--------------------------------------------------------------------------------
+
+================================================================================
+TOPIC 3 - TYPE CASTING & USER INPUT
+================================================================================
+
+IMPORTANT:
+    Viva focus: implicit vs explicit conversion, the 4 C++ casts, and the
+    cin vs getline (buffer) problem.
+
+TYPE CONVERSION - two kinds:
+    1. IMPLICIT (automatic): compiler promotes smaller type to larger.
+       e.g. int sum = a + 45.457;  -- the double is used then truncated to int.
+    2. EXPLICIT (manual):    programmer forces conversion.
+       e.g. int prod = a * (int)b; -- truncates 45.25 to 45.
+
+THE 4 C++ CASTS (exam-important):
+    - static_cast<T>(x)      : compile-time checked numeric/type conversion (most common).
+    - dynamic_cast<T>(x)     : runtime checked, only for polymorphic (virtual) classes.
+    - const_cast<T>(x)       : remove/add const (dangerous).
+    - reinterpret_cast<T>(x) : bit-level reinterpretation (very unsafe).
+
+    Exam tip: ALWAYS prefer static_cast over C-style (int)x.
+              static_cast is checked at compile time and is explicit/searchable.
+
+TRUNCATION vs ROUNDING:
+    - (int)45.99 = 45  (truncates TOWARD ZERO, not to nearest).
+    - Use round() for nearest integer.
+
+cin vs getline (CLASSIC exam/viva problem):
+    - cin >> x : stops at WHITESPACE (space/tab/newline). For numbers/words.
+    - getline(cin, s) : reads a WHOLE LINE including spaces. For strings.
+    - BUG: mixing cin >> then getline -> getline reads the leftover newline
+            as an empty line.
+    - FIX: call cin.ignore(numeric_limits<int>::max(), '\n') after cin >> .
+           This discards the leftover newline from the buffer.
+
+FAST INPUT/OUTPUT (competitive programming exam tip):
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+    - Removes C++/C I/O synchronization, making cin/cout much faster.
+
+COMMON EXAM QUESTIONS:
+    Q: What is the value of (int)45.99?  A: 45 (truncation toward zero).
+    Q: Difference between implicit and explicit conversion?
+       A: Implicit is done by the compiler automatically (promotion);
+          explicit is done by the programmer using a cast.
+    Q: Why do we need cin.ignore() after cin >> before getline?
+       A: Because cin >> leaves the newline in the input buffer, and getline
+          would read that leftover newline as an empty line.
+
+MISTAKES TO AVOID:
+    - Assuming (int)45.99 rounds to 46 (it truncates to 45).
+    - Forgetting cin.ignore() between cin >> and getline.
+
+--------------------------------------------------------------------------------
+
+================================================================================
+TOPIC 4 - OPERATORS
+================================================================================
+
+IMPORTANT:
+    Viva/exam focus: operator categories, short-circuiting, bitwise operators
+    and their fast tricks, and operator precedence.
+
+CATEGORIES (classic "list all operators" question):
+    1. Arithmetic : + - * / % ++ --
+    2. Relational : == != > < >= <=
+    3. Logical    : && || !
+    4. Bitwise    : & | ^ << >> ~
+    5. Assignment : = += -= *= /= %=
+    6. Ternary    : ?:
+
+ARITHMETIC EXAM FACTS:
+    - Integer division drops fraction: 8/3 = 2.
+    - Modulo gives remainder: 8%3 = 2.
+    - Pre/post increment difference:
+        ++a : increment FIRST then use.
+        a++ : use FIRST then increment.
+    - Division by zero: undefined for int (crash), inf/nan for float.
+    - Sign of % : follows the dividend in C++ (e.g. -7%3 = -1).
+
+SHORT-CIRCUITING (very common exam question):
+    - In && and ||, evaluation STOPS once the result is known.
+    - if (p != nullptr && p->value > 5)  -> safe because second part only runs
+        if p is valid. This is used to guard against errors.
+    - if (a > 0 || b > 0) -> if a>0 true, we never evaluate b>0.
+
+BITWISE OPERATORS (know these results, often asked):
+    Let a = 8 (1000), b = 3 (0011):
+        a & b  = 0      (AND)
+        a | b  = 11     (OR)
+        a ^ b  = 11     (XOR)
+        a << 1 = 16     (left shift = multiply by 2)
+        a >> 1 = 4      (right shift = integer divide by 2)
+        ~5     = -6     (complement = -(x+1))
+
+FAST BITWISE TRICKS (gold for both exams and competitive coding):
+    - n << 1, n >> 1 : multiply / divide by 2 (fastest).
+    - n & 1          : parity check (1 = odd, 0 = even).
+    - a ^ a = 0, a ^ 0 = a  : basis of 'find the single non-repeating number'.
+    - n & (n-1)      : clears the lowest set bit (count set bits trick).
+
+OPERATOR PRECEDENCE (high to low - top memory hooks):
+    1. ()  2. unary (-, !, ~, ++, --)  3. * / %  4. + -
+    5. << >>  6. relational  7. == !=  8. & ^ |
+    9. &&  10. ||  11. ?:  12. = +=
+    Exam tip: When unsure, USE PARENTHESES.
+
+COMMON EXAM QUESTIONS:
+    Q: What is short-circuit evaluation?
+       A: In logical && and ||, once the result is known the remaining operands
+          are NOT evaluated.
+    Q: What is n&1 used for?  A: Checking if n is odd (1) or even (0).
+    Q: result of 8<<1 and 8>>1?  A: 16 and 4.
+    Q: Difference between ++a and a++?
+       A: ++a increments then uses the value; a++ uses then increments.
+
+MISTAKES TO AVOID:
+    - Thinking 8/3 = 2.66 (integer division truncates to 2).
+    - Comparing floats with == (use abs(a-b) < small).
+    - Forgetting short-circuiting stops evaluation (side effects).
+
+--------------------------------------------------------------------------------
+
+================================================================================
+TOPIC 5 - CONDITIONAL STATEMENTS
+================================================================================
+
+IMPORTANT:
+    Viva focus: if / if-else / ladder / switch / ternary, truthiness in C++,
+    and why switch can be faster (jump table).
+
+TYPES (list them):
+    1. if
+    2. if-else
+    3. if-else if-else ladder
+    4. switch-case
+    5. Ternary operator ?:
+
+KEY EXAM FACTS:
+    - if : runs block when the condition is true (only one line can skip braces,
+        but ALWAYS use braces for safety).
+    - if-else : exactly one of the two branches runs.
+    - if-else ladder : checks top-down, the FIRST TRUE branch runs, rest skipped.
+    - switch : selects among DISCRETE (integral) values.
+        * Works ONLY on int, char, enum -- NOT float or string.
+        * break stops fall-through. Default runs if NO case matches.
+        * Without break, execution falls through into the next case (common bug).
+        * Compiler may optimize switch into a JUMP TABLE -> O(1) dispatch.
+    - Ternary : max = (a > b) ? a : b;  returns a VALUE (it's an expression).
+
+TRUTHINESS IN C++ (frequently asked):
+    - 0 = false, ANY non-zero = true (including negative numbers).
+    - NULL/nullptr pointer = false; valid pointer = true.
+
+WHEN TO USE WHICH (exam reasoning):
+    - Use if-else ladder for RANGES (score >= 90, etc.).
+    - Use switch for many discrete single-value matches on one variable.
+    - Use ternary for a simple 2-way value select.
+
+COMMON EXAM QUESTIONS:
+    Q: When do we use switch instead of if-else? 
+       A: When testing ONE integral variable against many fixed discrete values;
+          it is often compiled to a fast O(1) jump table.
+    Q: What happens if you forget break in a switch?
+       A: Fall-through -- execution continues into the next case(s).
+    Q: In C++, which values are considered true?
+       A: Any non-zero value (and any non-null pointer).
+
+MISTAKES TO AVOID:
+    - Using switch on a float or string (compiler error).
+    - Forgetting break -> fall-through.
+    - Putting the general condition before the specific one in a ladder.
+
+--------------------------------------------------------------------------------
+
+================================================================================
+TOPIC 6 - LOOPS & JUMP STATEMENTS
+================================================================================
+
+IMPORTANT:
+    Viva/exam: types of loops, when to use each, the for-loop anatomy,
+    range-based for vs indexed for, and jump statements. Loop invariants.
+
+TYPES OF LOOPS (list them):
+    1. for
+    2. while
+    3. do-while
+    4. range-based for (C++11)
+
+WHEN TO USE (exam reasoning):
+    - for          : number of iterations is KNOWN.
+    - while        : depends on a condition (unknown iterations).
+    - do-while     : body must run AT LEAST ONCE.
+    - range-based  : iterate over a container cleanly.
+
+FOR-LOOP ANATOMY:
+    for (init; condition; update) { body }
+    - init runs once.
+    - condition is checked before each iteration.
+    - update runs at the end of each iteration.
+    - for(;;) is an infinite loop.
+
+WHILE vs DO-WHILE (CLASSIC exam question):
+    - while : checks condition FIRST; body may never run.
+    - do-while : runs body FIRST then checks; ALWAYS runs at least once.
+    - Example: while(i<0) never runs if i>=0; do-while runs once regardless.
+
+RANGE-BASED FOR (C++11):
+    for (auto it : arr)          // by value (COPY) - slow for large types
+    for (auto &it : arr)         // by reference - no copy, can modify
+    for (const auto &it : arr)   // const ref - no copy, read-only (best for large)
+
+JUMP STATEMENTS:
+    - continue : skip the CURRENT iteration, go to the next.
+    - break    : terminate the WHOLE loop immediately.
+    - goto     : jump to a labelled statement (avoid, destroys readability).
+    - return   : exit the whole function even from inside a loop.
+
+LOOP INVARIANTS (interview-important):
+    A condition that is true before, during and after every iteration,
+    used to PROVE the loop is correct and terminates.
+    - Binary search invariant: target always within [low, high].
+    - Two-pointer invariant:   left <= right.
+    - If you can state the invariant, you can argue correctness.
+
+COMMON EXAM QUESTIONS:
+    Q: Difference between while and do-while?
+       A: while checks before executing (may run 0 times); do-while executes
+          then checks (runs at least once).
+    Q: Difference between break and continue?
+       A: break exits the whole loop; continue skips only the current iteration.
+    Q: What is a loop invariant?
+       A: A condition true at the start of every iteration, used to prove
+          the loop's correctness and termination.
+
+MISTAKES TO AVOID:
+    - Unsigned underflow: for(int i=(int)v.size()-1; ...) -- you NEED the int cast
+        or i-- wraps to a huge number and loops forever.
+    - Choosing while when a for is cleaner (or vice versa).
+
+--------------------------------------------------------------------------------
+
+================================================================================
+TOPIC 7 - FUNCTIONS
+================================================================================
+
+IMPORTANT:
+    Viva/exam: function syntax, pass-by-value vs pass-by-reference, return
+    values, overloading, default arguments.
+
+SYNTAX:
+    return_type functionName(parameters) { body; return value; }
+
+WHY FUNCTIONS (exam reasoning):
+    - Modularity (break a big problem into pieces).
+    - Reusability (call the same logic many times).
+    - Readability (a named function documents itself).
+
+COMMON FUNCTIONS FROM THIS FILE (know what each does):
+    - sum(a,b)        : a + b  (double)
+    - min(a,b)        : smaller of two (int)
+    - sum_1_to_n(n)   : 1+2+...+n (O(n))
+    - fact(n)         : n! = 1*2*...*n (O(n))
+    - sum_of_digit... : adds digits using %10 and /10
+    - nCr(n,r)        : binomial coefficient
+    - isPrime(n)      : prime test using sqrt() -> O(sqrt(n))
+    - allPrimeNumbers(n): prints primes from 2 to n
+
+PASS BY VALUE (default) - CLASSIC EXAM:
+    - A COPY of the argument is passed.
+    - Changes INSIDE the function do NOT affect the caller's variable.
+        void changeX(int x){ x *= 2; }   // caller's x unchanged
+
+PASS BY REFERENCE:
+    - The function works on the ORIGINAL variable.
+        void modify(int &x){ x *= 2; }   // caller's x IS changed
+    - Use to modify the caller OR to avoid copying large containers
+      (pass large data by const &).
+
+RETURN VALUES:
+    - A non-void function MUST return a value, else undefined behaviour.
+    - Multiple return points are fine.
+
+OVERLOADING (exam concept):
+    - Same function NAME, different parameter LISTS (different types/counts).
+    - The compiler picks the best match.
+    - CANNOT overload based only on return type.
+
+DEFAULT ARGUMENTS:
+    - int sum3(int a, int b, int c=0); -> c is optional.
+    - Defaults MUST come LAST in the parameter list.
+
+COMMON EXAM QUESTIONS:
+    Q: What is pass by value vs pass by reference?
+       A: Value passes a copy (no change to original). Reference passes the
+          original (changes affect the caller, and avoids copying large data).
+    Q: Why is passing a vector by value slow?
+       A: It copies the whole container, costing O(n).
+    Q: What is function overloading?
+       A: Multiple functions with the same name but different parameter lists.
+
+MISTAKES TO AVOID:
+    - Forgetting to return from a non-void function (garbage value).
+    - Passing large containers by value (performance).
+    - Putting default arguments before required ones.
+
+--------------------------------------------------------------------------------
+
+================================================================================
+TOPIC 8 - BINARY NUMBER SYSTEM
+================================================================================
+
+IMPORTANT:
+    Viva/exam: decimal<->binary conversion, bit positions, two's complement,
+    and basic bit manipulation. This underpins all of bit-manipulation DSA.
+
+WHY BINARY (exam reasoning):
+    - Computers use switches (transistors) with 2 states -> base 2.
+    - Any decimal number = a sum of powers of 2.
+
+DECIMAL -> BINARY (divide by 2, collect remainders UPWARD):
+    10 / 2 = 5 rem 0
+     5 / 2 = 2 rem 1
+     2 / 2 = 1 rem 0
+     1 / 2 = 0 rem 1
+    Read remainders UPWARD: 10 (decimal) = 1010 (binary).
+
+    Memory hook code:
+        while(n!=0){ rem=n%2; n/=2; ans += rem*pow; pow*=10; }
+
+BINARY -> DECIMAL (multiply each digit by power of 2):
+    1010 = 1*2^3 + 0*2^2 + 1*2^1 + 0*2^0 = 8 + 0 + 2 + 0 = 10.
+
+BIT POSITIONS (memorise):
+    bit0=1, bit1=2, bit2=4, bit3=8, bit4=16, bit5=32 ... (2^k at bit k).
+
+BIT MANIPULATION (exam-important formulas):
+    - Check k-th bit  : n & (1 << k)   (non-zero means set).
+    - Set k-th bit    : n | (1 << k).
+    - Clear k-th bit  : n & ~(1 << k).
+    - Toggle k-th bit : n ^ (1 << k).
+    - Clear lowest set bit : n & (n-1)  (also counts set bits when looped).
+
+TWO'S COMPLEMENT (signed representation) - exam concept:
+    - Negative numbers stored as two's complement: -x = ~x + 1.
+    - Signed int range : -2^31 to 2^31 - 1.
+    - Unsigned int     : 0 to 2^32 - 1 (no negative, wraps around).
+    - INT_MAX + 1 = INT_MIN (signed overflow, undefined behaviour).
+
+DIGIT EXTRACTION PATTERN (generalizes to any base, very reusable):
+    while(n!=0){ digit = n % base; n /= base; }
+
+COMMON EXAM QUESTIONS:
+    Q: Convert 10 decimal to binary.  A: 1010.
+    Q: Convert 1010 binary to decimal. A: 10.
+    Q: What is n & (n-1) used for?
+       A: Clears the lowest set bit, used for counting set bits.
+    Q: How are negative numbers stored? A: Two's complement (-x = ~x + 1).
+
+MISTAKES TO AVOID:
+    - Reading the remainders in the WRONG direction (must read upward).
+    - Confusing signed overflow (undefined) with unsigned wrap (defined).
+
+--------------------------------------------------------------------------------
+
+================================================================================
+TOPIC 9 - MISCELLANEOUS (BITWISE & DATA MODIFIERS)
+================================================================================
+
+IMPORTANT:
+    Viva/exam: data type modifiers, signed vs unsigned, sizeof, const/constexpr.
+
+BITWISE REVIEW (with a=4 (0100), b=8 (1000)):
+    a & b = 0,  a | b = 12 (1100),  a ^ b = 12,
+    a << 1 = 8, a >> 1 = 2.
+
+DATA TYPE MODIFIERS (memorize sizes):
+    Type            sizeof
+    int             4 bytes
+    long int        4 or 8 bytes (platform dependent)
+    short int       2 bytes
+    long long int   8 bytes
+    unsigned int    4 bytes (range 0 to 2^32 - 1)
+
+SIGNED vs UNSIGNED (classic exam):
+    - signed   : negative + non-negative. Range -(2^31) to (2^31-1).
+    - unsigned : only 0 to 2^n - 1.
+    - MIXING signed & unsigned in a comparison is dangerous: the signed value
+      is converted to unsigned, so a negative number becomes a huge positive.
+    - Rule of thumb: use signed (int) for loop counters.
+
+UNSIGNED WRAP-AROUND (common viva code-trace):
+    unsigned int c = -10;   // 32-bit
+    c = 2^32 - 10 = 4294967286.
+    - Unsigned overflow WRAPS (defined by standard).
+    - Signed overflow is UNDEFINED behaviour.
+
+sizeof EXAM POINTS:
+    - sizeof(array) on a declared array = total bytes.
+    - Length = sizeof(arr) / sizeof(arr[0]).
+    - CRITICAL BUG: inside a function the array parameter DECAYS to a pointer,
+      so sizeof(arr) = pointer size (4 or 8), NOT the array length.
+      -> Always pass the size explicitly.
+
+const vs constexpr:
+    - const int x = 5;          : value fixed (compiler may or may not know at compile time).
+    - constexpr int x = 5;      : guaranteed compile-time constant, usable in array sizes.
+    - Prefer constexpr for true compile-time constants.
+
+using vs typedef (type aliases):
+    - typedef unsigned long ulong;
+    - using ll = long long;   // C++11, preferred, cleaner, supports templates.
+
+COMMON EXAM QUESTIONS:
+    Q: What is the range of an unsigned int?
+       A: 0 to 2^32 - 1 for a 32-bit unsigned int.
+    Q: What is the value of (unsigned int)-10?  A: 4294967286 (wraps).
+    Q: Why does sizeof(arr) give the wrong answer inside a function?
+       A: Because the array parameter decays to a pointer, so sizeof gives the
+          pointer size, not the array length.
+
+MISTAKES TO AVOID:
+    - Using unsigned for loop counters (underflow infinite-loop bug).
+    - Relying on sizeof inside functions for array length.
+
+--------------------------------------------------------------------------------
+
+================================================================================
+TOPIC 10 - PATTERN PRINTING
+================================================================================
+
+IMPORTANT:
+    Pattern printing is the #1 warm-up for NESTED LOOPS. Exams grade it for
+    correct loop boundaries and understanding of the "what to print" choice.
+
+UNIVERSAL RECIPE (every pattern = these 4 steps):
+    1. OUTER loop  = number of ROWS.
+    2. INNER loop  = number of COLUMNS in each row.
+    3. WHAT to print = decided by i, j, a counter, or a constant.
+    4. cout << endl after the inner loop = move to next row.
+
+THE 3-AXIS "WHAT TO PRINT" DECISION:
+    - i (row index) varies per ROW -> repeats same value in a row.
+    - j (column index) varies per COLUMN -> value advances inside a row.
+    - a counter (declared outside loops) advances per TILE (keeps counting).
+    - a constant prints the same symbol every tile.
+
+PATTERN CLASSIFICATION (helps you solve ANY pattern):
+    Category          Signature                       Examples
+    Rectangle/square  fixed inner bound, constant/j   P01-P04
+    Right triangles   inner bound depends on i        P05-P10
+    Mirrored/shifted  spaces + content                P12
+    Pyramids          spaces + increasing + decreasing P13-P14
+    Hollow shapes     print only at boundaries        P15
+    Combined/reflected two halves fused               P16
+
+KEY NUMERIC RESULTS (exam arithmetic):
+    - Triangle prints = 1+2+3+...+n = n(n+1)/2  -> O(n^2).
+    - Rectangle prints = rows*cols.
+    - Pyramid per row: (n-i-1) spaces + increasing half + decreasing half.
+
+MEMORY HOOKS:
+    - Triangle:      inner bound = i+1.
+    - Reverse:       inner loop runs DOWNWARD (j=i+1; j>0; j--).
+    - Pyramid:       THREE loops per row (spaces, inc half, dec half).
+    - Hollow:        print char only at FIRST and LAST column, spaces between.
+    - Butterfly:     top = i+1 stars + gap + i+1 stars; bottom = mirror.
+
+COMMON EXAM QUESTIONS:
+    Q: How many stars in an n-row triangle?  A: n(n+1)/2, which is O(n^2).
+    Q: Why 3 loops for a pyramid per row?
+       A: One for leading spaces, one for the increasing half, one for the
+          decreasing half (to make it symmetric).
+    Q: Difference between printing i and j in the inner loop?
+       A: i repeats the same value across a row; j advances within the row.
+
+MISTAKES TO AVOID:
+    - Off-by-one on the inner bound (need <= vs <, i+1 vs n-i).
+    - Forgetting the spaces loop before content in shifted/pyramid shapes.
+    - Using the wrong variable to print (confusing i with j).
+
+--------------------------------------------------------------------------------
+
+================================================================================
+TOPIC 11 - DIGITAL LOCK PROBLEM (Q-1)
+================================================================================
+
+IMPORTANT:
+    A hard integration problem. Exam/viva focus: digit extraction order,
+    and mapping each validation rule to a single pass. Good practice question.
+
+PROBLEM STATEMENT (memorize the rules):
+    A password is valid only if ALL:
+        1. Positive integer.
+        2. Exactly 8 digits.
+        3. Sum of digits divisible by 7.
+        4. Product of all NON-ZERO digits divisible by 9.
+        5. First digit > last digit.
+        6. No two consecutive digits are equal.
+
+CORE TECHNIQUE - DIGIT EXTRACTION (RIGHT to LEFT):
+    while(temp != 0){ digit = temp % 10; temp /= 10; }
+    CRITICAL KEY POINT:
+    - Digits come out in REVERSE order (rightmost first).
+    - The FIRST digit extracted = LAST (rightmost) digit of the number.
+    - The LAST digit extracted  = FIRST (leftmost) digit.
+    - To compare first vs last, save the FIRST extraction as lastDigit and the
+      LAST extraction (after the loop) as firstDigit.
+
+RULE -> IMPLEMENTATION MAPPING (exam reasoning):
+    Rule                Implementation
+    - digit count       loop iteration counter
+    - sum / 7           sumOfDigits % 7 == 0
+    - product / 9       multiply only non-zero digits, then % 9 == 0
+    - first > last      compare saved firstDigit with lastDigit after the loop
+    - no consecutive eq compare current digit to previous; break on mismatch
+
+CONSECUTIVE-EQUAL CHECK (subtle):
+    - Initialise prev = -1 before the loop (digit 0-9 never equals -1).
+    - On each extraction compare digit == prev; if equal, set flag and break.
+
+VALIDATION CONTROL FLOW (fall-through):
+    - Check rules one by one; on first failure print "Invalid" and RETURN.
+    - Only if all pass, print success. This short-circuits wasted work.
+
+COMPLEXITY:
+    - Time : O(d) = O(1) for fixed 8 digits.
+    - Space: O(1) -- only scalar variables, no arrays.
+
+COMMON EXAM QUESTIONS:
+    Q: Does digit extraction give digits in forward order?
+       A: No, it gives them RIGHT-to-LEFT (last digit first).
+    Q: How do you get the FIRST (leftmost) digit?
+       A: It is the LAST one extracted; save it after the loop ends.
+
+MISTAKES TO AVOID:
+    - Assuming digits come out in the original order.
+    - Not initializing prev (garbage comparison on the first digit).
+    - Multiplying by zero (must skip zero digits for the product rule).
+
+--------------------------------------------------------------------------------
+
+================================================================================
+TOPIC 12 - ARRAYS: BASICS
+================================================================================
+
+IMPORTANT:
+    Viva/exam: definition, indexing (0-based), contiguous memory, O(1) access,
+    declaration/initialization, sizeof trick, and the array-decay bug.
+
+DEFINITION:
+    An array is a collection of SAME-TYPE elements stored in CONTIGUOUS
+    (consecutive) memory. Any element is directly addressable -> O(1) access.
+
+DECLARATION / INITIALIZATION:
+    int marks[5];                        // declared, garbage values
+    int Marks[5] = {98,90,78,79,89};     // initialized
+    double price[] = {34,63,67,46};      // size auto = 4
+
+INDEXING (exam key fact):
+    - First element at index 0.
+    - Last element at index size-1.
+    - Out-of-range access = undefined behaviour.
+
+WHY O(1) ACCESS (memory hook / justification):
+    arr[i] is literally  *(base_address + i * sizeof(type))
+    The address is computed in O(1) -> constant-time random access.
+
+CONTIGUITY ADVANTAGE (interview point):
+    - Consecutive elements share cache lines -> fast iteration (cache locality).
+    - 2-D arrays stored ROW-MAJOR: a[i][j] at a[0][0] + (i*n + j).
+
+SIZE FROM sizeof (exam trick):
+    int length = sizeof(Marks) / sizeof(Marks[0]);
+    - Works ONLY on declared arrays in the same scope.
+    - NOT on function parameters (they decay to pointers -> wrong size).
+
+ARRAY OPERATIONS & COST (memorize):
+    Access arr[i]            O(1)
+    Search (unsorted)        O(n)
+    Search (sorted binary)   O(log n)
+    Insert at index (shift)  O(n)
+    Delete at index (shift)  O(n)
+    Append at end            O(1)
+
+ARRAY vs VECTOR (quick):
+    Array: fixed size, stack, same block -> variable-size arrays need vector.
+
+COMMON EXAM QUESTIONS:
+    Q: What is the time to access arr[i]?  A: O(1).
+    Q: Why is an array faster to iterate than a linked list?
+       A: Contiguous memory gives cache locality; random access is O(1).
+    Q: How to find array length?  A: sizeof(arr)/sizeof(arr[0]).
+    Q: What happens on out-of-bounds access?  A: Undefined behaviour.
+
+MISTAKES TO AVOID:
+    - Forgetting indexing starts at 0 (last index = size-1).
+    - Using sizeof inside a function (array decays to pointer).
+
+--------------------------------------------------------------------------------
+
+================================================================================
+TOPIC 13 - ARRAYS: TRAVERSAL
+================================================================================
+
+IMPORTANT:
+    Traversal = visiting every element. Exam focus: all the directions
+    (forward/reverse/range-based/iterator) and the unsigned underflow trap.
+
+DEFINITION:
+    Traversal is visiting (reading) every element of the array once.
+    Most array algorithms begin with a traversal. Cost per pass = O(n).
+
+TRAVERSAL FORMS (know all, be ready to write any):
+    Forward (index):      for(i=0; i<length; i++)
+    Forward (while):      while(i<length) { ...; i++; }
+    Reverse (index):      for(i=length-1; i>=0; i--)
+    Reverse (while):      while(j>=0) { ...; j--; }
+    Range-based:          for(int value : arr)
+    Reverse iterator:     for(auto it=rbegin(); it!=rend(); ++it)
+
+REVERSE TRAVERSAL GOTCHA (CLASSIC EXAM TRAP):
+    for(int i = n-1; i >= 0; i--)   is CORRECT (int).
+    BUT if i is unsigned (e.g. int vs size_t from v.size()):
+        when i becomes 0 and we do i--, it WRAPS to the huge max value
+        -> infinite loop.
+    FIX: cast to int:  for(int i = (int)v.size()-1; i>=0; i--)
+
+WHEN TO USE WHICH (exam reasoning):
+    - Forward with index: the workhorse; you need the index for in-place updates.
+    - Range-based: clean for read-only where you don't need the index.
+    - Reverse: reversing, or problems that say "from the end".
+
+COMMON EXAM QUESTIONS:
+    Q: What is the time complexity of traversing n elements?  A: O(n).
+    Q: Why does a reverse loop with an unsigned counter hang forever?
+       A: The counter underflows from 0 to a huge value instead of becoming -1.
+    Q: When should you use range-based for?
+       A: When iterating read-only and you don't need the index.
+
+MISTAKES TO AVOID:
+    - Unsigned reverse counters (infinite loop).
+    - Range-based for by value on large types (copy cost).
+
+--------------------------------------------------------------------------------
+
+================================================================================
+TOPIC 14 - APPLICATIONS OF TRAVERSAL
+================================================================================
+
+IMPORTANT:
+    Exam focus: two main applications - searching (linear) and in-place
+    modification, plus the idiomatic "bool found + break" pattern.
+
+APPLICATION 1 - SEARCHING (this IS linear search):
+    Walk the array, compare each element to the target, set a found flag
+    and break early when found.
+    - Early break saves work when the target is near the front.
+    - Worst case (target missing) scans all n -> O(n).
+
+APPLICATION 2 - MODIFYING IN PLACE:
+    Visit every element and assign a new value (e.g. price[i] += 15).
+    - Changes hit the ORIGINAL array.
+    - You NEED the index (a range-based for by value would NOT change the array).
+
+THE 'bool found + break' IDIOM (memorize this pattern):
+    bool found = false;
+    for(int i=0; i<n && !found; i++){
+        if(arr[i]==target){ found=true; index=i; }
+    }
+    The condition i<n && !found short-circuits: loop exits the moment found.
+    Central to search / validation / "does X exist" problems.
+
+COMPLEXITY:
+    - Search with early break: O(n) worst case (target missing).
+    - In-place modification: O(n) time, O(1) extra space.
+
+COMMON EXAM QUESTIONS:
+    Q: How does linear search terminate early?  A: It breaks the moment the
+       target is found; if never found it scans all n elements.
+    Q: Why can't a range-based for by value modify the array?
+       A: Because it iterates over COPIES, so changes don't affect the original.
+    Q: What is the worst-case time of a search with early break?  A: O(n).
+
+MISTAKES TO AVOID:
+    - Modifying with a by-value iterator (changes are lost).
+    - Forgetting to break -> continues scanning after found.
+
+--------------------------------------------------------------------------------
+
+================================================================================
+TOPIC 15 - LINEAR SEARCH
+================================================================================
+
+IMPORTANT:
+    Viva/exam: the algorithm, its complexity, when to use it (unsorted/small),
+    and the array-decay function gotcha. Compare with binary search.
+
+ALGORITHM (memorize the steps):
+    1. Start at index 0.
+    2. If arr[index] == target -> return index (found).
+    3. Else move to the next index.
+    4. If we reach the end without a match -> return -1.
+
+WALKTHROUGH (good to show an example):
+    Searching 70 in {10,20,40,70,90}:
+        index0:10!=70 -> next
+        index1:20!=70 -> next
+        index2:40!=70 -> next
+        index3:70==70 -> return 3
+
+WHEN TO USE (exam reasoning):
+    - Unsorted arrays (binary search needs sorted).
+    - Small arrays (few elements, overhead not worth it).
+    - One-time search.
+
+FUNCTION GOTCHA (CLASSIC EXAM):
+    int linear_search(int size, int target, int arr[])
+    - The array parameter DECAYS to a pointer (it's really int* arr).
+    - So size MUST be passed separately; sizeof(arr) inside won't give length.
+
+COMPLEXITY:
+    Best  : O(1)   (target at index 0)
+    Average: O(n/2) = O(n)
+    Worst : O(n)   (target missing or at the end)
+    Space : O(1)
+
+LINEAR vs BINARY (decision table - frequently asked):
+    Situation                          Best choice
+    Unsorted, single search            Linear O(n)
+    Sorted, single search              Binary O(log n)
+    Unsorted, many searches            Sort once + binary (or hash)
+    Tiny array (<10)                   Linear (no benefit from binary)
+
+EXAM EXAMPLES OF TIME:
+    For n=10^5 unsorted, linear search worst-case does 10^5 comparisons.
+    If you sort first (O(n log n)) then binary search (O(log n)) per query,
+    many queries win on the sorted + binary approach.
+
+COMMON EXAM QUESTIONS:
+    Q: What is the worst case of linear search?  A: O(n) (target missing).
+    Q: When is linear search better than binary search?
+       A: On unsorted data, or on very small arrays.
+    Q: Why must we pass the size to a search function?
+       A: The array parameter decays to a pointer, so the function can't
+          compute the length itself.
+
+MISTAKES TO AVOID:
+    - Using binary search on unsorted data (wrong answer).
+    - Forgetting to return -1 (found flag) when absent.
+    - Relying on sizeof for array length inside the function.
+
+--------------------------------------------------------------------------------
+
+================================================================================
+TOPIC 16 - BINARY SEARCH
+================================================================================
+
+IMPORTANT:
+    This is a HIGH-VALUE topic. Exam/viva: the algorithm, why O(log n),
+    the overflow-safe mid formula, loop invariant, and the variants.
+
+REQUIREMENT (first thing to state):
+    The array MUST be SORTED. On unsorted data the answer is meaningless.
+
+MAIN IDEA:
+    Compare the target with the MIDDLE element, then DISCARD the half that
+    cannot contain the target. Each step halves the search space.
+
+ALGORITHM (iterative - memorize exactly):
+    low=0, high=n-1
+    while(low<=high){
+        mid = low + (high-low)/2;    // overflow-safe
+        if(arr[mid]==target) return mid;
+        else if(arr[mid]<target) low=mid+1;
+        else high=mid-1;
+    }
+    return -1;
+
+WHY O(log n) (justify in exam):
+    n -> n/2 -> n/4 -> ... -> 1 takes log2(n) steps.
+    For n=10^9, only ~30 comparisons (vs up to a billion for linear).
+
+WHY OVERFLOW-SAFE MID (exam question):
+    (low+high)/2 can OVERFLOW if low+high exceeds INT_MAX (arrays with
+    millions of elements -> low+high could exceed 2 billion).
+    Use low + (high-low)/2 to avoid overflow.
+
+LOOP INVARIANT (state it):
+    Before every iteration, IF the target exists it lies in [low, high].
+    When low>high the interval is empty -> target absent -> return -1.
+    This proves termination and correctness.
+
+TERMINATION / CORRECTNESS POINTS:
+    - Using low=mid+1 and high=mid-1 guarantees progress (never infinite loop).
+    - Never use low=mid naively on a 2-element range -> infinite loop.
+
+COMPLEXITY:
+    Best  : O(1)   (mid hit immediately)
+    Worst/Average : O(log n)
+    Space : O(1) iterative; O(log n) for the recursive stack version.
+
+HOW TO CALCULATE binary search complexity (exam reasoning):
+    Apply the 5-step method:
+    1. Input size n = array length (sorted required).
+    2. Dominant operation = comparing the middle element to target.
+    3. Each comparison halves the search window: n -> n/2 -> n/4 -> ... -> 1.
+       Number of halvings until the window is size 1 = log2(n).
+       That is THE reason it is O(log n), not O(n).
+    4. Recurrence form: T(n) = T(n/2) + O(1) -> solves to O(log n).
+       Recursion depth = same log2(n) -> O(log n) stack space in the
+       recursive version; iterative uses O(1).
+    5. DECISION: at n=10^9, binary takes ~30 comparisons (far under 10^8),
+       linear would take 10^9 (exceeds) -> binary is mandatory at scale.
+    EXAM ANSWER: "Binary search halves the search space each step, taking
+       log2(n) comparisons. That is O(log n) time, O(1) iterative space."
+
+VARIANTS (interview-important):
+    1. Exact value   : what we implemented.
+    2. lower_bound   : first index with value >= target.
+    3. upper_bound   : first index with value > target.
+    4. Answer search : not on the array but on the "answer space"
+       (e.g. max x such that f(x) is feasible).
+
+COMMON EXAM QUESTIONS:
+    Q: Why is binary search O(log n)?
+       A: Each step halves the interval, so it takes log2(n) steps.
+    Q: Why use low+(high-low)/2 instead of (low+high)/2?
+       A: To avoid integer overflow when low+high exceeds INT_MAX.
+    Q: What is the loop invariant of binary search?
+       A: The target (if present) is always within [low, high].
+    Q: What is the requirement for binary search?  A: The array must be sorted.
+
+MISTAKES TO AVOID:
+    - Using it on unsorted data.
+    - Using (low+high)/2 (overflow risk).
+    - Forgetting to update to mid+1 / mid-1 (infinite loop).
+
+--------------------------------------------------------------------------------
+
+================================================================================
+TOPIC 17 - STL: VECTORS
+================================================================================
+
+IMPORTANT:
+    Viva/exam: what a vector is, how it grows (amortized O(1)), member
+    functions and their complexities, at() vs [](), and vector vs array.
+
+DEFINITION:
+    A vector is a DYNAMIC array from the STL that resizes automatically.
+    The default replacement for C arrays in modern C++/DSA.
+
+CREATION:
+    vector<int> v1;           // empty
+    vector<int> v2(3, 5);     // 3 elements, each 5
+    vector<int> v3 = {1,2,3}; // from initializer list
+
+HOW VECTOR GROWS (amortized O(1)) - exam concept:
+    - Keeps extra CAPACITY beyond size().
+    - When full, allocates a bigger buffer (typically 2x), copies elements,
+      frees the old one.
+    - Each reallocation costs O(n), but they are rare (log n total)
+        -> amortized O(1) per push_back.
+    - v.reserve(n) : pre-allocate to avoid repeated reallocations (if you
+        know the final size).
+    - v.shrink_to_fit() : release unused capacity.
+
+CORE MEMBER FUNCTIONS & COMPLEXITY (memorize):
+    push_back(x)  add at back          O(1) amortized
+    insert(pos,x) insert at position   O(n)
+    pop_back()    remove last          O(1)
+    erase(pos)    remove element       O(n)
+    size()        number of elements   O(1)
+    empty()       true if size 0       O(1)
+    v[i]          fast access, no bounds check  O(1)
+    v.at(i)       safe, throws out_of_range     O(1)
+    front()/back() first / last element         O(1)
+    capacity()    currently allocated size      O(1)
+
+at() vs [] (CLASSIC EXAM):
+    - v.at(10) on a 5-element vector THROWS an exception (safe).
+    - v[10] silently reads garbage memory (fast but unsafe).
+    - Use [] for speed in trusted hot loops; use at() for untrusted indices.
+
+ITERATORS & ALGORITHMS:
+    - begin(), end(), rbegin(), rend() give access points.
+    - sort(v.begin(), v.end()) : standard way to sort.
+    - reverse, find, count, accumulate all work on iterators.
+    - The SAME algorithms work on EVERY STL container (unified design).
+
+VECTOR vs C ARRAY (table):
+    Aspect          C array          vector
+    Size            fixed at compile dynamic
+    Memory          stack            heap
+    Pass to function decays to ptr     by const&, knows size
+    Insert/delete   manual shifting    methods handle it
+    Bounds check    none              optional via at()
+
+COMMON EXAM QUESTIONS:
+    Q: Why is push_back O(1)?
+       A: Amortized O(1) -- occasional O(n) reallocation, but rare overall.
+    Q: Difference between v[i] and v.at(i)?
+       A: at() throws an exception on out-of-range; [] doesn't check and
+          reads garbage.
+    Q: What does reserve() do?  A: Pre-allocates capacity to avoid repeated
+       reallocations when the final size is known.
+
+MISTAKES TO AVOID:
+    - Using [] with untrusted indices (no bounds check).
+    - Not reserving when size is known (repeated reallocations).
+    - Confusing size() with capacity().
+
+--------------------------------------------------------------------------------
+
+================================================================================
+TOPIC 18 - KADANE'S ALGORITHM
+================================================================================
+
+IMPORTANT:
+    HIGH-VALUE interview/algorithm topic. Must know: problem, the greedy
+    "reset on negative" idea, the code, the edge case (all negatives), 
+    and O(n) vs brute force.
+
+THE PROBLEM:
+    Given an array (may contain negatives), find the CONTIGUOUS SUBARRAY
+    with the largest sum, and return that maximum sum.
+
+    Example: {-2,1,-3,4,-1,2,1,-5,4}
+    Best subarray {4,-1,2,1} -> max sum = 6.
+
+THE CORE IDEA (single pass, memorize):
+    Keep a running sum. At each element decide:
+        current_sum = max(arr[i], current_sum + arr[i])
+    - current_sum + arr[i]  : EXTEND the current subarray.
+    - arr[i]                : START a new subarray at i.
+    If the running sum turns NEGATIVE, it's never worth keeping (a negative
+    prefix drags the answer down) -> reset by choosing arr[i] alone.
+
+THE ALGORITHM (memorize exactly):
+    current_sum = 0
+    best_sum    = arr[0]
+    for i in 0..n-1:
+        current_sum = max(arr[i], current_sum + arr[i])
+        best_sum    = max(best_sum, current_sum)
+    return best_sum
+
+CRITICAL EDGE CASE - ALL NEGATIVES (interview gold):
+    For {-3,-1,-2} the answer is -1 (the LEAST negative).
+    -> MUST initialize best_sum = arr[0], NOT 0.
+    If best_sum started at 0, the EMPTY subarray (sum 0) would wrongly win.
+
+WHY GREEDY+RESET IS CORRECT (informal proof, good to mention):
+    In the optimal subarray a[i..j], any prefix a[i..k] (k<j) must have a
+    POSITIVE sum -- if it were negative, removing it would leave a bigger
+    subarray, contradicting optimality. So Kadane's reset on negative never
+    discards part of the optimal subarray -> it always finds it.
+
+COMPLEXITY (memorize the comparison):
+    Approach                  Loops   Complexity
+    Print all subarrays       3        O(n^3)
+    Brute-force max sum       2        O(n^2)
+    Kadane                    1        O(n), space O(1)
+    For n=100000: O(n^2)=10^10 ops (too slow); Kadane=10^5 (instant).
+
+HOW TO CALCULATE these complexities (exam reasoning):
+    Apply the 5-step method:
+    1. Input size n = array length.
+    2. Print-all-subarrays: 3 nested loops (start, end, print). Number of
+       subarrays = n(n+1)/2, each print costs O(n) -> O(n^3).
+    3. Brute force max sum: 2 nested loops, inner accumulates one element
+       (no printing) -> n(n+1)/2 ~ O(n^2), O(1) space.
+    4. Kadane: a SINGLE loop, each element visited once with O(1) work ->
+       exactly n ops -> O(n), and only 2 variables -> O(1) space.
+    5. DECISION: at n=100000, O(n^2) = 10^10 > 10^8 limit (TLE);
+       O(n) = 10^5 (well under) -> Kadane is clearly the best approach.
+    EXAM ANSWER: "Kadane is best because it is the only approach whose
+       worst-case work (O(n) = 10^5 ops for n=10^5) stays under the ~10^8
+       one-second budget, while O(n^2) needs 10^10 ops."
+
+RECONSTRUCT THE SUBARRAY (bonus, good to know):
+    Track current window start; when best_sum updates, record bestStart/bestEnd.
+
+VARIANTS:
+    - 2-D max sum rectangle: compress rows, run Kadane per column band -> O(n^3).
+    - Circular array: two passes (max + min) or duplicate the array.
+
+COMMON EXAM QUESTIONS:
+    Q: Why can't a negative best prefix help?
+       A: A negative prefix only decreases any subarray sum, so resetting is
+          always better or equal.
+    Q: Why initialize best_sum to arr[0] and not 0?
+       A: To correctly handle all-negative arrays where the true answer is the
+          least negative, not the empty subarray (0).
+    Q: What is the time complexity of Kadane?  A: O(n) time, O(1) space.
+    Q: What is a contiguous subarray vs a subsequence?
+       A: Subarray = contiguous slice; subsequence can skip elements.
+
+MISTAKES TO AVOID:
+    - Initializing best_sum to 0 (breaks all-negative case).
+    - Confusing subarray (contiguous) with subsequence (can skip).
+    - Using O(n^2) brute force when O(n) Kadane is possible.
+
+--------------------------------------------------------------------------------
+
+================================================================================
+TOPIC 19 - PAIR SUM (Brute Force + Two Pointers)
+================================================================================
+
+IMPORTANT:
+    Viva/exam: the three approaches (brute force, two pointers on sorted,
+    hash set), their complexities, and WHY two pointers works. Foundation for
+    Three Sum.
+
+THE PROBLEM:
+    Given an array and a target sum, find all PAIRS of elements (i<j) whose
+    values add up to the target.
+    Example: {8,7,2,5,3,1}, target=10 -> pairs (8,2) and (7,3).
+    NOTE: unlike Kadane, the two elements can be ANYWHERE (not adjacent).
+
+APPROACH 1 - BRUTE FORCE (O(n^2)):
+    for i: for j=i+1..n-1: if arr[i]+arr[j]==target -> found.
+    - Time O(n^2) (n(n-1)/2 pairs), Space O(1).
+    - Works on UNSORTED arrays.
+
+APPROACH 2 - SORT + TWO POINTERS (optimal for sorted, O(n log n)):
+    Sort first if needed, then:
+        left=0, right=n-1
+        while(left<right):
+            sum = arr[left]+arr[right]
+            sum==target -> found, left++, right--
+            sum<target  -> left++   (need larger sum)
+            sum>target  -> right--  (need smaller sum)
+    - Moving left++ INCREASES sum; right-- DECREASES sum.
+    - Each element visited once -> O(n) scan after sort.
+    - Total O(n log n) sort + O(n) scan. Space O(1).
+
+WHY TWO POINTERS WORKS (Key Insight - explain):
+    On a sorted array, for fixed arr[left], the partner giving the target
+    is unique. If arr[left]+arr[right] < target, NO element at index <= right
+    can fix it (all too small), so we MUST increase left. Symmetric logic for
+    the other case. This eliminates all impossible pairs in one pass.
+
+APPROACH 3 - HASH SET (O(n) for unsorted):
+    seen={}
+    for x in arr:
+        if (target-x) in seen -> pair found
+        add x to seen
+    - Time O(n) average (hash ops O(1)), Space O(n).
+    - Best for LeetCode-style Two Sum on unsorted input.
+
+DECISION GUIDE (frequently asked):
+    Input                   Best choice
+    Already sorted          Two pointers (O(n), O(1) space)
+    Unsorted, small n       Brute force (simple)
+    Unsorted, large n       Hash set (O(n) time)
+    Unsorted, all pairs     Sort + two pointers (O(n log n), O(1) space)
+
+COMPLEXITY SUMMARY (memorize):
+    Approach               Time        Space   Sorted needed?
+    Brute force            O(n^2)      O(1)    No
+    Sort + two pointers    O(n log n)  O(1)    Yes (or sort first)
+    Hash set               O(n) avg    O(n)    No
+
+HOW TO CALCULATE these complexities (exam reasoning):
+    Apply the 5-step method:
+    1. Input size n = array length.
+    2. Brute force: outer n, inner j=i+1..n-1 -> n(n-1)/2 pairs ~ O(n^2),
+       O(1) space.
+    3. Sort + two pointers: two SEQUENTIAL parts. Sort = O(n log n). The
+       scan moves left/right each at most n times total -> O(n). Sequential
+       blocks ADD and we keep the largest -> O(n log n). O(1) space.
+    4. Hash set: one loop of n iterations, each an O(1) average hash op ->
+       O(n) time; the set holds up to n keys -> O(n) space.
+    5. DECISION: at n=10^5, brute force = ~10^10 (TLE). Both O(n log n) and
+       O(n) fit. If memory is limited, choose sort+two-pointers (O(1) space);
+       if time is the only concern, hash set is fastest. The 'best' = the
+       simplest that fits.
+
+COMMON EXAM QUESTIONS:
+    Q: Why does moving left increase the sum in two pointers?
+       A: In a sorted array, the element at left+1 is larger, so the sum grows.
+    Q: Why does the two-pointer approach work on sorted arrays?
+       A: Because for a fixed left, the partner is unique, and impossible
+          pairs can be discarded systematically instead of all being checked.
+    Q: Which approach is fastest on sorted input?  A: Two pointers, O(n).
+    Q: Which approach handles unsorted input with O(n) time?  A: Hash set.
+
+MISTAKES TO AVOID:
+    - Using two pointers on UNSORTED data (wrong).
+    - Forgetting to advance BOTH pointers after a match (would find same pair).
+    - Taking a subarray (Adjacent) view instead of any-two-elements.
+
+--------------------------------------------------------------------------------
+
+================================================================================
+TOPIC 20 - MAJORITY ELEMENT (MOORE'S VOTING ALGORITHM)
+================================================================================
+
+IMPORTANT:
+    HIGH-VALUE interview/algorithm topic. Must know: the problem, all 4
+    approaches and their complexities, the brute-force/hash/sort/Moore's
+    comparison, and especially WHY Moore's needs a verification pass.
+
+THE PROBLEM:
+    Given an array of size n, find the element that appears MORE THAN n/2
+    times (strictly greater than half).
+    Example: {2,2,1,1,1,2,2} (n=7), 2 appears 4 times (>3.5) -> majority = 2.
+
+KEY FACTS (memorize):
+    - A majority element, if it exists, is UNIQUE (two different elements
+      can't both appear more than n/2 times).
+    - "Strictly more than n/2": even n=8 needs >=5; odd n=7 needs >=4.
+
+THE 4 APPROACHES (exam comparison - very common question):
+
+| Approach          | Time       | Space | Idea                          |
+|-------------------|------------|-------|-------------------------------|
+| Brute force       | O(n^2)     | O(1)  | count each element with inner loop |
+| Hash map          | O(n) avg   | O(n)  | frequency map, find count>n/2 |
+| Sorting           | O(n log n) | O(1)  | sort, majority lands at middle n/2 |
+| Moore's voting    | O(n)       | O(1)  | candidate + verify (2 passes) |
+
+HOW TO CALCULATE these four complexities (exam reasoning):
+    Apply the 5-step method:
+    1. Input size n = array length.
+    2. Brute force: outer n, inner counts n -> n*n = O(n^2), O(1) space.
+    3. Hash map: one n-loop doing O(1) average inserts, then O(n) scan to
+       find the key with count>n/2. Nested? No -- sequential, ADD -> O(n)
+       total. Space = up to n distinct keys -> O(n).
+    4. Sorting: sort = O(n log n); position-n/2 check is a single O(n)
+       verification pass, sequential, keep largest -> O(n log n), O(1) space.
+    5. Moore's: TWO loops, each O(n), sequential (ADD, keep largest) -> O(n)
+       time. Only one candidate variable + count -> O(1) space.
+    6. DECISION: at n=10^6, brute = 10^12 ops (TLE); hash = 10^6 ops but
+       needs ~4MB-16MB extra ram; Moore's = 10^6 ops with ZERO extra memory
+       -> Moore's is BEST on both time AND space.
+
+APPROACH 1 - BRUTE FORCE (O(n^2)):
+    For each element, count occurrences in an inner loop; if any count > n/2
+    return it. Simple but O(n^2) -- TLE for large n.
+
+APPROACH 2 - HASH MAP (O(n) time, O(n) space):
+    for x: freq[x]++
+    for (key,count): if count > n/2 return key.
+    O(n) average time but uses O(n) extra memory.
+
+APPROACH 3 - SORTING (O(n log n)):
+    Sort, then if a majority exists it MUST occupy position n/2.
+    Return arr[n/2] and VERIFY it (count > n/2). O(n log n) time, O(1) space.
+
+APPROACH 4 - MOORE'S VOTING ALGORITHM (O(n) time, O(1) space) - BEST:
+    Works in TWO PASSES:
+
+    PASS 1 - Find candidate:
+        candidate = arr[0], count = 1
+        for i = 1..n-1:
+            if arr[i]==candidate: count++
+            else: count--
+            if count==0: candidate = arr[i], count = 1
+
+    PASS 2 - VERIFY (CRITICAL - never skip):
+        count how many times candidate appears
+        if count > n/2: candidate is majority
+        else: no majority exists
+
+WHY MOORE'S WORKS (must be able to explain):
+    The algorithm CANCELS equal pairs of different elements. If a majority M
+    exists, it appears > n/2 times, so even after cancelling every M with a
+    distinct element, at least one M survives. So the final candidate can be M.
+    IMPORTANT: Moore's finds a POSSIBLE majority, not a guaranteed one.
+
+WHY WE MUST VERIFY (very common interview point):
+    Moore's does NOT guarantee the candidate is majority -- it only guarantees
+    that IF a majority exists, it is this candidate. For an array with no
+    majority (e.g. {1,2,3,4,5}), the algorithm still returns some leftover
+    candidate. An O(n) verification pass (count it) is MANDATORY.
+
+EDGE CASES:
+    - No majority -> return -1.
+    - n=1 -> single element is trivially majority.
+    - All same -> appears n times (> n/2).
+    - n=2 different -> neither appears more than once -> no majority.
+
+EXTENSIONS (bonus for interviews):
+    - "> n/3 times" -> need TWO candidates.
+    - "> n/4 times" -> need THREE candidates.
+    - Generalizes to k-1 candidates for "> n/k".
+
+COMMON EXAM QUESTIONS:
+    Q: What is the optimal time complexity to find a majority element?
+       A: O(n) -- Moore's Voting Algorithm, with O(1) extra space.
+    Q: Why does Moore's algorithm need a verification pass?
+       A: It finds a CANDIDATE (a possible majority), not a guaranteed one.
+          If no majority exists, the candidate is just a leftover, so we
+          must count it to confirm count > n/2.
+    Q: Can there be two majority elements?  A: No -- only one element can
+       appear more than n/2 times.
+    Q: Which approach uses O(n) space?  A: Hash map.
+    Q: After sorting, where does the majority (if any) land?  A: At index n/2.
+
+MISTAKES TO AVOID:
+    - Skipping the verification pass (would give wrong answer on no-majority arrays).
+    - Using strict count > n/2 (not >=).
+    - Using O(n^2) brute force when O(n) Moore's is available.
+
+--------------------------------------------------------------------------------
+
+================================================================================
+TOPIC 21 - COMPUTE x^n (BINARY EXPONENTIATION)
+================================================================================
+
+IMPORTANT:
+    O(log n) exponentiation using repeated squaring. Must-know for
+    competitive programming (modular exponentiation). Frequently tested
+    in both theory and practical questions.
+
+THE PROBLEM:
+    Given integer x >= 0 and non-negative integer n, compute x^n.
+    Modular variant: compute x^n mod m (most common form).
+
+WHY NOT LINEAR EXPONENTIATION (must be able to explain):
+    Naive approach:
+        result = 1
+        for i = 1 to n: result *= x        // O(n) multiplications
+
+    THREE reasons it fails at scale:
+    1. SPEED: n can be up to 10^9 -> 10^9 multiplications exceeds the
+       ~10^8 ops/second budget -> TLE.
+    2. OVERFLOW: each multiplication makes the number grow. By the end
+       you are multiplying huge multi-precision integers, making each
+       step far slower than O(1).
+    3. MOD SAFETY: without reducing after every step, intermediate values
+       overflow even long long (e.g. 2^63 > LLONG_MAX).
+
+    The binary method fixes all three: fewer multiplications AND each
+    one stays bounded (with mod).
+
+THE KEY IDEA - BINARY DECOMPOSITION:
+    Write n in binary: n = b_k * 2^k + ... + b_1 * 2 + b_0
+    Then x^n = product of x^(2^i) for every bit b_i = 1.
+    Compute x^1, x^2, x^4, x^8, ... by repeated squaring.
+    Total: O(log n) multiplications.
+
+    Worked example: x=2, n=13 (binary 1101)
+        x^1  = 2         (bit 0 = 1 -> multiply result)
+        x^2  = 4         (bit 1 = 0 -> skip)
+        x^4  = 16        (bit 2 = 1 -> multiply result)
+        x^8  = 256       (bit 3 = 1 -> multiply result)
+        result = 2 * 16 * 256 = 8192 = 2^13
+
+THREE IMPLEMENTATIONS:
+
+    1. ITERATIVE (preferred, O(1) space):
+        long long power(long long x, long long n) {
+            long long result = 1;
+            while (n > 0) {
+                if (n & 1) result *= x;   // multiply when bit is 1
+                x *= x;                    // square the base
+                n >>= 1;                   // shift to next bit
+            }
+            return result;
+        }
+
+    2. MODULAR (most used in competitive programming):
+        const long long MOD = 1e9 + 7;
+        long long power_mod(long long x, long long n) {
+            long long result = 1;
+            x %= MOD;
+            while (n > 0) {
+                if (n & 1) result = result * x % MOD;
+                x = x * x % MOD;
+                n >>= 1;
+            }
+            return result;
+        }
+
+    3. RECURSIVE (easier to understand, O(log n) stack):
+        long long power(long long x, long long n) {
+            if (n == 0) return 1;
+            long long half = power(x, n / 2);
+            if (n % 2 == 0) return half * half;
+            return x * half * half;
+        }
+
+COMPLEXITY:
+    Multiplications : O(log n)  -- each bit examined once
+    Iterative space : O(1)
+    Recursive space: O(log n)  -- stack depth = log2(n)
+    This is BEST POSSIBLE -- must examine every bit of n.
+
+HOW TO CALCULATE binary exponentiation complexity (exam reasoning):
+    1. Input size parameter is n (the exponent), not x.
+    2. Each loop iteration examines one bit of n -> floor(log2(n)) + 1 iterations.
+    3. Each iteration does at most 2 multiplications (square + possible multiply).
+    4. Total multiplications <= 2 * log2(n) = O(log n).
+    5. DECISION: at n = 10^9, linear = 10^9 ops (TLE), binary = ~60 ops
+       (instant). Binary is strictly better whenever n > ~60.
+
+EDGE CASES:
+    - n = 0: x^0 = 1 (including 0^0 = 1 by convention).
+    - x = 0, n > 0: 0^n = 0.
+    - x = 1: 1^n = 1 always.
+    - n = 1: both linear and binary do 1 multiplication -> tie.
+    - Overflow without mod: x^n overflows long long for modest n.
+
+COMMON EXAM QUESTIONS:
+    Q: Why is binary exponentiation O(log n)?
+       A: Each step halves n (examines one bit). Number of bits = log2(n).
+    Q: What is modular exponentiation used for?
+       A: Computing x^n mod m without overflow; used in RSA, hashing, etc.
+    Q: What is the modular inverse, and how do you compute it?
+       A: The number y such that x*y = 1 mod m. Compute as x^(m-2) mod m
+          (by Fermat's little theorem, when m is prime).
+    Q: Can you use binary exponentiation on matrices?  A: Yes -- matrix
+       exponentiation computes A^n for Fibonacci in O(k^3 log n) where k
+       is the matrix size (k=2 for Fibonacci).
+    Q: When is linear exponentiation acceptable?
+       A: Only when n is very small (n < ~60) -- otherwise it is TLE.
+
+MISTAKES TO AVOID:
+    - Using linear exponentiation for large n (TLE).
+    - Forgetting x %= MOD in the modular version (overflow before the loop).
+    - Using (low+high)/2 in the recursive version (not relevant here, but
+      good to remember the pattern of safe midpoint calculation).
+    - Confusing n (exponent) with x (base) when discussing complexity.
+
+--------------------------------------------------------------------------------
+
+================================================================================
+TOPIC 22 - STOCK BUY AND SELL
+================================================================================
+
+IMPORTANT:
+    Two variants commonly tested: (a) one transaction, (b) multiple
+    transactions. The one-transaction optimal solution (track min_price)
+    is one of the most frequently asked interview questions.
+
+THE PROBLEM:
+    Given prices[i] = price on day i, find the maximum profit from
+    buying and selling.
+
+VARIANT 1: ONE TRANSACTION (buy once, sell once):
+
+    BRUTE FORCE: try every (buy, sell) pair where buy < sell.
+        for i = 0 to n-1:
+            for j = i+1 to n-1:
+                max_profit = max(max_profit, prices[j] - prices[i])
+        Time O(n^2), Space O(1). TLE for n > 10^4.
+
+    OPTIMAL: track minimum price seen so far.
+        min_price = prices[0], max_profit = 0
+        for i = 1 to n-1:
+            max_profit = max(max_profit, prices[i] - min_price)
+            min_price  = min(min_price, prices[i])
+
+        WHY IT WORKS: at each day, you ask two questions:
+          1. "Is today a better day to SELL than all previous best?" ->
+             compare prices[i] - min_price with max_profit.
+          2. "Is today a better day to BUY than all previous?" ->
+             update min_price.
+        The constraint i < j is automatically satisfied because min_price
+        is always from a PREVIOUS day.
+
+        Time O(n), Space O(1).
+
+    EXAMPLE: prices = {7, 1, 5, 3, 6, 4}
+        Day 0: price=7, min=7,  profit=0
+        Day 1: price=1, min=1,  profit=0  (price < min, update min)
+        Day 2: price=5, profit=5-1=4, max_profit=4
+        Day 3: price=3, profit=3-1=2, max_profit=4
+        Day 4: price=6, profit=6-1=5, max_profit=5  <- BEST
+        Day 5: price=4, profit=4-1=3, max_profit=5
+        Answer: 5 (buy at 1, sell at 6)
+
+VARIANT 2: MULTIPLE TRANSACTIONS (unlimited):
+
+    GREEDY: sum every consecutive upward step.
+        profit = 0
+        for i = 1 to n-1:
+            if prices[i] > prices[i-1]:
+                profit += prices[i] - prices[i-1]
+
+        WHY IT WORKS: any valley-to-peak gain can be decomposed into
+        day-to-day gains. Buying at every valley and selling at every
+        peak captures all upward moves.
+
+        Time O(n), Space O(1).
+
+HOW TO CALCULATE the complexity (exam reasoning):
+    1. Input size n = number of days.
+    2. Brute force: nested i,j -> n(n-1)/2 pairs -> O(n^2).
+    3. Optimal: single pass, O(1) work per day -> O(n).
+    4. DECISION: at n = 10^5, brute = 10^10 (TLE); optimal = 10^5.
+       Always use the single-pass approach.
+
+EDGE CASES:
+    - Prices decreasing -> no profit -> return 0.
+    - All same price -> no profit -> return 0.
+    - Only one day -> cannot buy AND sell -> return 0.
+    - Two days -> profit = max(0, prices[1] - prices[0]).
+    - Use long long for profit accumulator (overflow risk).
+
+COMMON EXAM QUESTIONS:
+    Q: Why do we track min_price instead of max_price?
+       A: Profit = sell_price - buy_price. To maximise, we want the
+          lowest buy_price (min_price) and highest sell_price after it.
+    Q: Can the answer be negative?
+       A: No -- if all trades lose money, best strategy is to not trade
+          at all (profit = 0).
+    Q: What if we can make at most 2 transactions?
+       A: DP: dp[k][i] = max profit with at most k transactions up to
+          day i. O(k*n) time.
+    Q: Does the greedy multiple-transaction approach work for the
+       one-transaction variant?
+       A: No -- greedy may give a higher total by splitting into
+          multiple trades, which is not allowed in variant 1.
+
+MISTAKES TO AVOID:
+    - Trying to use the greedy approach for the one-transaction variant
+      (it gives a different answer).
+    - Forgetting that the answer can be 0 (not negative).
+    - Using int instead of long long for large price sums.
+    - Not initialising min_price to prices[0] (using 0 is wrong when
+      all prices are negative or above 0).
+
+--------------------------------------------------------------------------------
+
+================================================================================
+FINAL QUICK-REVISION SUMMARY TABLE
+================================================================================
+    Topic              Key formula / fact                 Complexity hook
+    Complexity         drop constants/terms, nest=multiply 10^8 ops = 1 sec
+    C++ intro          main() entry, return 0             --
+    Variables          int 4B, long long 8B               overflow care
+    Casting            static_cast preferred, truncation   --
+    Operators          short-circuit, n&1 parity, << >>   fast *2 /2
+    Conditional        switch=jump table, non-zero=true    --
+    Loops              do-while runs once                 invariant proof
+    Functions          pass by value copies                --
+    Binary system      10d=1010b, two's complement         --
+    Misc               unsigned wraps, sizeof decay bug    --
+    Patterns           n(n+1)/2 triangle                  O(n^2)
+    Digital lock       digit extraction right-to-left      O(1)
+    Arrays             arr[i]=*(base+i*size), 0-based      O(1) access
+    Traversal          reverse needs int not size_t        O(n)
+    Traversal apps     bool found + break                  O(n)
+    Linear search      indexed scan, return -1             O(n)
+    Binary search      low+(high-low)/2, sorted req        O(log n)
+    Vectors            amortized push_back, at() throws    O(1)/O(n)
+    Kadane             best=arr[0], reset on negative      O(n)
+    Pair sum           two pointers after sort / hash      O(n log n)/O(n)
+    Majority element   Moore's candidate + verify (2 passes) O(n), O(1)
+    Binary exponent     repeated squaring (each bit once)   O(log n), O(1)
+    Stock buy/sell      track min_price, update profit      O(n), O(1)
+
+================================================================================
+                      END OF EXAM PREPARATION NOTES
+================================================================================

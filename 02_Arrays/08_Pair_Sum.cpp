@@ -88,6 +88,22 @@
     If the array is ALREADY SORTED, two pointers is the best
     choice: O(n) scan, O(1) space. If unsorted, decide between
     sorting first (O(n log n)) or hashing (O(n) but O(n) space).
+
+ 11. HOW TO CALCULATE THESE COMPLEXITIES (step by step)
+    Step A - Input size n = array length.
+    Step B - Brute force: outer i (n times), inner j (i+1..n-1).
+             Count = n(n-1)/2 (triangular) -> O(n^2), O(1) space.
+    Step C - Sort + two pointers: two SEQUENTIAL parts.
+             Sort = O(n log n). The scan moves left/right each at most
+             n times total -> O(n). Sequential blocks ADD, so we keep
+             the larger -> O(n log n). O(1) space.
+    Step D - Hash set: one n-loop doing O(1) average hashing -> O(n)
+             time; the set can hold up to n keys -> O(n) space.
+    Step E - Decision: at n = 100,000, brute force = ~10^10 ops (TLE).
+             Both O(n log n) and O(n) fit the ~10^8 budget. If memory
+             is limited choose sort+two-pointers (O(1) space); if time
+             is the only concern hash set is fastest. The "best" = the
+             simplest approach that FITS the constraints.
 =======================================================================
 */
 
