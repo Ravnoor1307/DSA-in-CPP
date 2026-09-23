@@ -1,55 +1,62 @@
 /*
-┌────────────────────────────────────────────────────────────┐
-│ FILE: 05_Frequency_Counting task.cpp
-│
-│ REAL-WORLD SCENARIO:
-│ Voting counter practice me tumhe letters count, max letter, first unique, and anagram checks solve karne hain.
-│
-│ LOGIC (step-by-step, Hinglish):
-│ TASKS (easy -> hard):
-│ 1. Nested loop se char frequency print karo.
-│ 2. freq[26] using `s[i]-'a'` se char frequency print karo.
-│ 3. Max occurring character find karo.
-│ 4. First non-repeating char O(n²) se find karo.
-│ 5. First non-repeating char two-pass freq se find karo.
-│ 6. Anagram check sorting se implement karo.
-│ 7. Anagram check frequency array se implement karo.
-│ 8. LISTEN vs SILENT ka frequency visual comments me draw karo.
-│
-│ HINTS:
-│ - lowercase normalize karo.
-│ - strcmp nahi; string comparison or freq arrays use karo.
-│ - all zero array means anagram.
-│
-│ STARTER CODE:
-│ vector<int> freq(26,0); freq[ch-'a']++;
-│
-│ SOLUTION: Neeche compact demo hai.
-│
-│ ASCII VISUAL / COUNT STATE:
-│ banana frequency:
-│ a:3 b:1 n:2
-│
-│ LISTEN/SILENT:
-│ add listen, subtract silent -> all zeros
-│
-│ DRY RUN:
-│ swiss:
-│ pass1 s:3,w:1,i:1
-│ pass2 first freq==1 is w
-│
-│ FLOW OF EXECUTION:
-│ input string -> scan/build frequency/transform -> produce output
-│
-│ COMPLEXITY CALCULATION:
-│ - Frequency array scans n chars = O(n).
-│ - Nested approach scans n for each n = O(n²).
-│ - Sort approach O(n log n), n/2^k=1 -> k=log₂n.
-│
-│ SPACE COMPLEXITY CALCULATION:
-│ - array26/ASCII freq fixed size -> O(1).
-│ - Sorting copied strings -> O(n).
-└────────────────────────────────────────────────────────────┘
+═══════════════════════════════════════════════
+ TASK SET — FREQUENCY COUNTING
+═══════════════════════════════════════════════
+ 🌍 REAL-WORLD SCENARIO: A voting-counter practice session needs character counts,
+    the most frequent letter, the first unique character, and anagram checks. These
+    tasks cover the counting patterns used in validators, word games, and data
+    cleaning.
+
+ 🧠 HOW TO SOLVE: For each character map it to an index with `ch - 'a'` and bump a
+    fixed 26-cell (or 256-cell) frequency array. Nested loops give O(n²) but need no
+    extra space; the frequency array gives O(n). For anagrams, sort both strings or
+    add one string's letters and subtract the other's, then confirm all boxes are
+    zero. Normalize to lowercase before counting.
+
+ MODES/TOPICS COVERED:
+  1. Print character frequency with nested loops
+  2. Print character frequency with freq[26] using `s[i]-'a'`
+  3. Find the maximum occurring character
+  4. Find the first non-repeating char in O(n²)
+  5. Find the first non-repeating char with the two-pass freq method
+  6. Implement anagram check with sorting
+  7. Implement anagram check with a frequency array
+  8. Draw the LISTEN vs SILENT frequency visual in comments
+
+ HINTS:
+ - Normalize to lowercase.
+ - Do not use strcmp; use string comparison or frequency arrays.
+ - An all-zero array means anagram.
+
+ STARTER CODE:
+ vector<int> freq(26,0); freq[ch-'a']++;
+
+ SOLUTION: A compact demo is below.
+
+ ASCII VISUAL / COUNT STATE:
+ banana frequency:
+ a:3 b:1 n:2
+
+ LISTEN/SILENT:
+ add listen, subtract silent -> all zeros
+
+ DRY RUN:
+ swiss:
+ pass1 s:3,w:1,i:1
+ pass2 first freq==1 is w
+
+ FLOW OF EXECUTION:
+ input string -> scan/build frequency/transform -> produce output
+
+ TIME COMPLEXITY CALCULATION:
+ - Frequency array scans n chars = O(n).
+ - Nested approach scans n for each n = O(n²).
+ - Sort approach O(n log n), n/2^k=1 -> k=log₂n.
+
+ SPACE COMPLEXITY CALCULATION:
+ - array26/ASCII freq fixed size -> O(1).
+ - Sorting copied strings -> O(n).
+═══════════════════════════════════════════════
 */
 
 #include <iostream>

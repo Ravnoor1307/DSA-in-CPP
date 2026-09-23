@@ -2,92 +2,26 @@
 ═══════════════════════════════════════════════
  TASK SET — DESTRUCTORS
 ═══════════════════════════════════════════════
+ 🌍 REAL-WORLD SCENARIO: After a fest, halls close in the REVERSE order
+    they opened — the stage that opened first is cleaned last. Similarly a
+    destructor is the automatic "cleaning staff" of an object: it runs at
+    scope-end, at delete, and at program-end, and it always runs for stack
+    objects in LIFO order.
 
- 🌍 REAL-WORLD SCENARIO:
- After a fest, halls close in the REVERSE order they opened — the stage
- that opened first is cleaned last. Similarly a destructor is the automatic
- "cleaning staff" of an object: it runs at scope-end, at delete, and at
- program-end, and it always runs for stack objects in LIFO order.
+ 🧠 HOW TO SOLVE: 1) Close in the destructor any resource the constructor
+    opened (file, heap, timer) — this is called RAII. 2) When a scope
+    ends, stack objects are destroyed in reverse order. 3) Always answer
+    new with delete; if you forget delete, the destructor will NOT run.
+    4) If you delete a derived object through a base pointer, make the
+    base destructor virtual.
 
- 🧠 HOW TO SOLVE:
- 1) Jo resource ctor me khola (file, heap, timer) use dtor me band karo —
-    isi ko RAII kehte hain.
- 2) Scope khatam → stack objects reverse order me destroy hote hain.
- 3) new ka jawab humesha delete se do; delete bhool gaye to dtor NAHI chalega.
- 4) Base pointer se derived delete karna ho to base ka dtor virtual rakho.
-
- TASKS (EASY → HARD):
-
- TASK 1 — Timer: RAII (EASY)
- class Timer: label + start time. Ctor prints "Timer started", dtor prints
- "Timer destroyed". In main() make a Timer inside a block and watch it die
- at the block's closing brace.
- 💡 HINT: dtor ka syntax ~Timer() { ... } — block } par khud chal jata hai.
- ✏️ STARTER CODE:
- // class Timer {
- //   private: string label;
- //   public:
- //     Timer(string l);   // print started
- //     ~Timer();          // print destroyed
- // };
- // main: { Timer t("A"); ... }   ← } par dtor chala
-
- TASK 2 — Destruction order: nested blocks (EASY)
- Make 3 Timers: A at main scope, B inside one inner block, C inside an even
- deeper block. Print as each scope opens/closes. Observe that C dies first
- and A dies last — REVERSE of construction.
- 💡 HINT: scope jitna under, dtor utna pehle.
- ✏️ STARTER CODE:
- // void demo() {
- //   Timer A("A");
- //   { Timer B("B");
- //     { Timer C("C"); }
- //     cout << "inner block over, B alive\n";
- //   }
- // }   // order: C → B → A
-
- TASK 3 — Array of objects (MEDIUM)
- Make an ARRAY of 3 Timers {"P","Q","R"} inside a block. Print construction
- and destruction — the array is destroyed PICHHE se (R → Q → P).
- 💡 HINT: array destruction = last element se first tak, LIFO.
- ✏️ STARTER CODE:
- // Timer arr[3] = { Timer("P"), Timer("Q"), Timer("R") };
- // // destruction: R, Q, P
-
- TASK 4 — new/delete: manual destruction (MEDIUM)
- Create two heap Timers with new. delete only the FIRST one with delete —
- print when its destructor runs. Leave the second undeleted and comment on
- why its destructor never runs (memory/resource LEAK).
- 💡 HINT: heap objects scope par destroy NAHI hote — sirf delete par.
- ✏️ STARTER CODE:
- // Timer* p = new Timer("heap-1");
- // delete p;              // ← dtor yahan chala
- // Timer* q = new Timer("leak");  // delete bhool gaye → LEAK
-
- TASK 5 — Virtual destructor (HARD)
- class Base { public: virtual ~Base(); };
- class Derived : public Base { public: ~Derived(); };
- In main(): Base* obj = new Derived(); delete obj; observe which destructor
- runs. Comment: WITHOUT virtual, sirf ~Base chalta → Derived part leak.
- 💡 HINT: base pointer se delete karte waqt virtual dtor derived ka bhi dtor
-    chain se chalata hai.
- ✏️ STARTER CODE:
- // Base* obj = new Derived();
- // delete obj;   // virtual → Derived dtor, phir Base dtor
-
- TASK 6 — Session early-return cleanup (HARD)
- class Session: ctor prints "acquired", dtor prints "released". Write
- doWork(bool fail) that creates a Session, then RETURNS EARLY on failure.
- Show that even on early return the destructor runs automatically (RAII).
- Then call doWork(true) and doWork(false).
- 💡 HINT: stack objects ko early return bhi nahi bachata — scope exit par
-    dtor pakka chalta hai.
- ✏️ STARTER CODE:
- // bool doWork(bool fail) {
- //   Session s("db-conn");
- //   if (fail) return false;   // yahan bhi ~Session() chala
- //   return true;
- // }
+ MODES/TOPICS COVERED:
+  1. Timer: the RAII pattern
+  2. Destruction order across nested blocks
+  3. Array of objects destroyed in reverse (LIFO)
+  4. new/delete: manual destruction and leaks
+  5. Virtual destructor for polymorphic delete
+  6. Early-return cleanup guaranteed by RAII
 ═══════════════════════════════════════════════
 */
 

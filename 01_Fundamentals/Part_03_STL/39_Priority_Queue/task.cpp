@@ -2,91 +2,26 @@
 ═══════════════════════════════════════════════
  TASK SET — STD::PRIORITY_QUEUE
 ═══════════════════════════════════════════════
-🌍 REAL-WORLD SCENARIO:
-A hospital ER serves the most critical patient first, not the first
-arrival. A KPI dashboard wants the top 3 selling products in a day.
-An electrician wants to join cables of minimum length so total
-joins cost the least. All of these reduce to "always grab the
-biggest (or smallest) thing next" — exactly what std::priority_queue
-(a heap) does in O(log n) per push/pop.
+ 🌍 REAL-WORLD SCENARIO: A hospital ER serves the most critical patient
+    first, not the first arrival. A KPI dashboard wants the top 3 selling
+    products in a day. An electrician wants to join cables of minimum
+    length so total joins cost the least. All of these reduce to "always
+    grab the biggest (or smallest) thing next" — exactly what
+    std::priority_queue (a heap) does in O(log n) per push/pop.
 
-🧠 HOW TO SOLVE:
-Default priority_queue is a MAX-heap (top = largest). Use
-`greater<int>` to flip it to a MIN-heap. For "k largest", keep a
-MIN-heap of size k: push bigger elements, evict the smallest. For
-"kth smallest", keep a MAX-heap of size k instead. For cost
-problems, keep popping the two tops and push back their sum.
+ 🧠 HOW TO SOLVE: Default priority_queue is a MAX-heap (top = largest).
+    Use `greater<int>` to flip it to a MIN-heap. For "k largest", keep a
+    MIN-heap of size k: push bigger elements, evict the smallest. For
+    "kth smallest", keep a MAX-heap of size k instead. For cost problems,
+    keep popping the two tops and push back their sum.
 
- 6-6 tasks EASY → HARD:
-──────────────────────────────────────────────
- TASK 1 — k largest elements
- Statement: nums = {5, 10, 3, 7, 1, 9}, k = 3 → top 3 largest
-            = {10, 9, 7} (order not important).
- 💡 HINT: Min-heap of size k: if heap has k+1 elements, pop the
-          smallest. Heap left with k largest.
- ✏️ STARTER CODE:
- // priority_queue<int, vector<int>, greater<int>> minH;
- // for (int x : nums) { minH.push(x);
- //   if (minH.size() > k) minH.pop(); }
- // // ab minH me k largest hain
-──────────────────────────────────────────────
- TASK 2 — kth smallest element
- Statement: nums = {7, 10, 4, 3, 20, 15}, k = 3 → 3rd smallest = 7.
- 💡 HINT: MAX-heap of size k. Top of heap = kth smallest.
- ✏️ STARTER CODE:
- // priority_queue<int> maxH;   // default max-heap
- // for (int x : nums) { maxH.push(x);
- //   if (maxH.size() > k) maxH.pop(); }
- // // answer = maxH.top()
-──────────────────────────────────────────────
- TASK 3 — Connect ropes with minimum cost
- Statement: ropes {4, 3, 2, 6}. Joining two ropes costs their sum
-            (that sum becomes a new rope). Minimum total cost = 29.
- 💡 HINT: Always join the two SMALLEST ropes (greedy). Sum them,
-          push the sum back, repeadd until one rope left.
- ✏️ STARTER CODE:
- // priority_queue<int, vector<int>, greater<int>> minH(ropes.begin(), ropes.end());
- // int cost = 0;
- // while (minH.size() > 1) {
- //   int a = minH.top(); minH.pop();
- //   int b = minH.top(); minH.pop();
- //   cost += a + b; minH.push(a + b);
- // }
-──────────────────────────────────────────────
- TASK 4 — Sort by frequency using heap
- Statement: nums = {4, 1, 1, 1, 2, 2, 3} → output values sorted by
-            decreasing frequency: 1 1 1 2 2 4 3.
- 💡 HINT: Count in a map. Push (freq, value) into a max-heap
-          (custom comparator), then pop and print value freq times.
- ✏️ STARTER CODE:
- // // map<int,int> freq; for (int x:nums) freq[x]++;
- // // pair (freq, value) ke liye max-heap — frequency zyada pehle
- // priority_queue<pair<int,int>> h; // default sorts by first (freq)
- // for (auto& p : freq) h.push(make_pair(p.second, p.first));
- // while (!h.empty()) { print h.top().second, h.top().first times; h.pop(); }
-──────────────────────────────────────────────
- TASK 5 — Merge k sorted arrays (intro)
- Statement: Merge {1,4,7}, {2,5}, {3,6,8} → {1,2,3,4,5,6,7,8}.
- 💡 HINT: Min-heap stores (value, whichArray, indexInArray). Pop
-          smallest, push the NEXT element from the same array.
- ✏️ STARTER CODE:
- // // tuple(value, arrIdx, idx)
- // priority_queue<tuple<int,int,int>, vector<...>, greater<...>> minH;
- // for (i in 0..k) minH.push({a[i][0], i, 0});
- // while (!minH.empty()) { pop (v, r, c); ans.push_back(v);
- //   if (c+1 < a[r].size()) minH.push({a[r][c+1], r, c+1}); }
-──────────────────────────────────────────────
- TASK 6 — Median of a stream (intro to two-heaps pattern)
- Statement: Insert 5, 15, 1, 3 → medians after each insert:
-            5, 10, 5, 4.
- 💡 HINT: TWO heaps — max-heap for smaller half, min-heap for
-          larger half. Balance sizes so maxH is never more than
-          minH by 2. Median = top of the bigger heap (or avg).
- ✏️ STARTER CODE:
- // priority_queue<int> lo;                       // smaller half (max-heap)
- // priority_queue<int, vector<int>, greater<int>> hi; // larger half (min-heap)
- // add(x): if lo empty or x <= lo.top() → lo else hi; then balance sizes.
- // median = lo.size() > hi.size() ? lo.top() : avg(lo.top(), hi.top());
+ MODES/TOPICS COVERED:
+  1. k largest elements
+  2. kth smallest element
+  3. Connect ropes with minimum cost
+  4. Sort by frequency using a heap
+  5. Merge k sorted arrays
+  6. Median of a stream (two-heaps pattern)
 ═══════════════════════════════════════════════
 */
 // ---------------- SOLUTIONS ----------------

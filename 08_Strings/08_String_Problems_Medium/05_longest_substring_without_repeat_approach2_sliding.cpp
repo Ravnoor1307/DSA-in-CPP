@@ -1,56 +1,70 @@
 /*
-┌────────────────────────────────────────────────────────────┐
-│ FILE: 05_longest_substring_without_repeat_approach2_sliding.cpp
-│
-│ REAL-WORLD SCENARIO:
-│ Playlist window ko right se expand karo; repeat song aate hi left pointer move karke duplicate remove karo. Ye sliding window + freq array hai.
-│
-│ LOGIC (step-by-step, Hinglish):
-│ 1. left=0, freq[256]=0.
-│ 2. right pointer har char include karta hai.
-│ 3. freq[s[right]]++.
-│ 4. Jab freq current char > 1, left se chars remove karo until duplicate gone.
-│ 5. Window [left..right] always no-repeat maintain karo.
-│ 6. best=max(best,right-left+1).
-│
-│ ASCII VISUAL / WINDOW STATE:
-│ s="abcabcbb"
-│
-│ window expands:
-│ [a] best1
-│ [ab] best2
-│ [abc] best3
-│ add a -> [abca] duplicate a
-│ move left remove a -> [bca]
-│ continue...
-│ best=3
-│
-│ Arrays pattern reuse: freq[ch] works like count window.
-│
-│ DRY RUN:
-│ right0 a window a best1
-│ right1 b window ab best2
-│ right2 c window abc best3
-│ right3 a duplicate -> remove left a -> window bca best3
-│ right4 b duplicate -> remove b -> cab best3
-│
-│ FLOW OF EXECUTION:
-│ input string(s) -> choose pattern/window/map -> update state -> return answer
-│
-│ COMPLEXITY CALCULATION:
-│ - right pointer moves n times.
-│ - left pointer also moves at most n times total.
-│ - Each char added once and removed at most once.
-│ - Total operations <= 2n plus constant checks.
-│ -> Time Complexity = O(n).
-│
-│ SPACE COMPLEXITY CALCULATION:
-│ - freq array fixed 256.
-│ -> Extra Space Complexity = O(1).
-│ APPROACH COMPARISON TABLE:
-│ Brute = try every playlist segment and inspect duplicates, O(n³) time/O(1) space.
-│ Sliding window = adjustable live playlist window, O(n) time/O(1) space.
-└────────────────────────────────────────────────────────────┘
+═══════════════════════════════════════════════
+ LONGEST SUBSTRING WITHOUT REPEATING CHARACTERS — APPROACH 2 (SLIDING WINDOW)
+ ⏱️ TIME COMPLEXITY: O(n) — right moves n times and left moves at most n times, each char added once and removed once, extra space O(1)
+═══════════════════════════════════════════════
+
+ 🌍 REAL-WORLD SCENARIO:
+ Expand a playlist window to the right; as soon as a song repeats, move the left
+ pointer to drop the duplicate. This is the sliding window plus frequency array.
+
+ 📖 THEORY:
+ - Start left=0 with freq[256]=0.
+ - The right pointer includes each character.
+ - Increment freq[s[right]].
+ - While freq of the current char is > 1, remove chars from the left until the
+   duplicate is gone.
+ - The window [left..right] always has no repeats.
+ - Update best = max(best, right-left+1).
+
+ ASCII VISUAL / WINDOW STATE:
+ s="abcabcbb"
+
+ window expands:
+ [a] best1
+ [ab] best2
+ [abc] best3
+ add a -> [abca] duplicate a
+ move left remove a -> [bca]
+ continue...
+ best=3
+
+ Arrays pattern reuse: freq[ch] works like a count window.
+
+ 🧠 LOGIC — STEP BY STEP:
+ Step 1: Initialize left=0 and freq[256]=0.
+    WHY: the window starts empty at the left edge.
+ Step 2: For each right, include s[right] and increment its freq.
+    WHY: the window grows by one character.
+ Step 3: While freq[s[right]] > 1, remove s[left] and left++.
+    WHY: shrinking from the left restores uniqueness.
+ Step 4: Update best with the current window length.
+    WHY: the window is always a valid no-repeat segment.
+
+ DRY RUN:
+ right0 a window a best1
+ right1 b window ab best2
+ right2 c window abc best3
+ right3 a duplicate -> remove left a -> window bca best3
+ right4 b duplicate -> remove b -> cab best3
+
+ FLOW OF EXECUTION:
+ input string -> expand right into window -> shrink left on duplicate -> track max length -> print result
+
+ TIME COMPLEXITY CALCULATION:
+ - right pointer moves n times.
+ - left pointer also moves at most n times total.
+ - Each char added once and removed at most once.
+ - Total operations <= 2n plus constant checks.
+ -> Time Complexity = O(n).
+
+ SPACE COMPLEXITY CALCULATION:
+ - freq array fixed 256.
+ -> Extra Space Complexity = O(1).
+ APPROACH COMPARISON TABLE:
+ Brute = try every playlist segment and inspect duplicates, O(n³) time/O(1) space.
+ Sliding window = adjustable live playlist window, O(n) time/O(1) space.
+═══════════════════════════════════════════════
 */
 
 #include <iostream>

@@ -2,17 +2,25 @@
 ═══════════════════════════════════════════════
  TASK SET — std::set
 ═══════════════════════════════════════════════
-🌍 REAL-WORLD SCENARIO: A school wants a single sorted list of all
-student IDs without duplicates, and it must also answer "which two
-roll numbers sum to the target?" and "how many unique names were
-entered?" — std::set makes unique + sorted + membership checks
-natural. Tasks below go from warm-up to interview-style.
+ 🌍 REAL-WORLD SCENARIO: A school wants a single sorted list of all
+    student IDs without duplicates, and it must also answer "which two
+    roll numbers sum to the target?" and "how many unique names were
+    entered?" — std::set makes unique + sorted + membership checks
+    natural. Tasks below go from warm-up to interview-style.
 
-🧠 HOW TO SOLVE: Insert everything into the set — duplicates vanish.
-For union/intersection problems, insert both arrays. For sum problems,
-use find()/count() to check complement in O(log n) per element.
-Sorting by value needs a copy into a vector of pairs. Read every
-statement; HINT diya hai, pehle khud try karo.
+ 🧠 HOW TO SOLVE: Insert everything into the set — duplicates vanish.
+    For union/intersection problems, insert both arrays. For sum problems,
+    use find()/count() to check the complement in O(log n) per element.
+    Sorting by value needs a copy into a vector of pairs. Read every
+    statement carefully; a HINT is given, but try it yourself first.
+
+ MODES/TOPICS COVERED:
+  1. Print unique values in sorted order
+  2. Union of two arrays
+  3. Count distinct elements
+  4. Pair with a given sum (two-sum)
+  5. kth smallest element
+  6. Merge overlapping intervals
 ═══════════════════════════════════════════════
 */
 // ---------------- SOLUTIONS ----------------

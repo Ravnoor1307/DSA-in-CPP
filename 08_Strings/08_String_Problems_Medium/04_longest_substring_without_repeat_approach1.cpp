@@ -1,45 +1,58 @@
 /*
-┌────────────────────────────────────────────────────────────┐
-│ FILE: 04_longest_substring_without_repeat_approach1.cpp
-│
-│ REAL-WORLD SCENARIO:
-│ Music playlist me continuous segment chahiye jisme koi song repeat na ho. Brute force har substring check karta hai.
-│
-│ LOGIC (step-by-step, Hinglish):
-│ 1. Har start i choose karo.
-│ 2. Har end j choose karo.
-│ 3. s[i..j] unique hai ya nahi check karo.
-│ 4. Unique substring length best se badi ho to update.
-│ 5. Three-level work: start, end, uniqueness scan -> O(n³).
-│
-│ ASCII VISUAL / WINDOW STATE:
-│ s="abcabcbb"
-│ substrings:
-│ a, ab, abc valid length3
-│ abca invalid repeat a
-│ start1 bca valid length3
-│ longer unique not found
-│ answer=3
-│
-│ DRY RUN:
-│ i=0:
-│ j=0 a valid len1
-│ j=1 ab valid len2
-│ j=2 abc valid len3
-│ j=3 abca has repeated a invalid
-│
-│ FLOW OF EXECUTION:
-│ input string(s) -> choose pattern/window/map -> update state -> return answer
-│
-│ COMPLEXITY CALCULATION:
-│ - Number of substrings = n(n+1)/2 = O(n²).
-│ - Checking uniqueness can scan substring up to n chars.
-│ - Total = O(n²*n) = O(n³).
-│
-│ SPACE COMPLEXITY CALCULATION:
-│ - seen array 256 inside check fixed size.
-│ -> Extra Space Complexity = O(1).
-└────────────────────────────────────────────────────────────┘
+═══════════════════════════════════════════════
+ LONGEST SUBSTRING WITHOUT REPEATING CHARACTERS — APPROACH 1 (BRUTE FORCE)
+ ⏱️ TIME COMPLEXITY: O(n³) — O(n²) substrings each checked with an up-to-O(n) uniqueness scan, extra space O(1)
+═══════════════════════════════════════════════
+
+ 🌍 REAL-WORLD SCENARIO:
+ A music playlist needs a continuous segment in which no song repeats. The brute
+ force checks every substring for uniqueness.
+
+ 📖 THEORY:
+ - Choose every start i.
+ - Choose every end j.
+ - Check whether s[i..j] has all unique characters.
+ - If the unique substring is longer than the best, update the answer.
+ - Three levels of work: start, end, uniqueness scan -> O(n³).
+
+ ASCII VISUAL / WINDOW STATE:
+ s="abcabcbb"
+ substrings:
+ a, ab, abc valid length3
+ abca invalid repeat a
+ start1 bca valid length3
+ longer unique not found
+ answer=3
+
+ 🧠 LOGIC — STEP BY STEP:
+ Step 1: Loop i over every start index.
+    WHY: every candidate substring starts somewhere.
+ Step 2: Loop j over every end index from i.
+    WHY: together i,j enumerate all substrings.
+ Step 3: Check uniqueness of s[i..j] with a seen array.
+    WHY: only all-unique ranges are valid.
+ Step 4: If valid, update best = max(best, j-i+1).
+    WHY: the answer is the longest such range.
+
+ DRY RUN:
+ i=0:
+ j=0 a valid len1
+ j=1 ab valid len2
+ j=2 abc valid len3
+ j=3 abca has repeated a invalid
+
+ FLOW OF EXECUTION:
+ input string -> enumerate substrings -> check uniqueness -> keep longest -> print result
+
+ TIME COMPLEXITY CALCULATION:
+ - Number of substrings = n(n+1)/2 = O(n²).
+ - Checking uniqueness can scan substring up to n chars.
+ - Total = O(n²*n) = O(n³).
+
+ SPACE COMPLEXITY CALCULATION:
+ - seen array 256 inside check fixed size.
+ -> Extra Space Complexity = O(1).
+═══════════════════════════════════════════════
 */
 
 #include <iostream>

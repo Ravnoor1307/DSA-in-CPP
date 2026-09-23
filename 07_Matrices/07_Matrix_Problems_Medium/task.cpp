@@ -1,61 +1,29 @@
 /*
-┌────────────────────────────────────────────────────────────┐
-│ FILE: task.cpp
-│
-│ REAL-WORLD SCENARIO:
-│ Photo editor, spreadsheet cleaner, and factory optimizer practice ke liye medium matrix tasks solve karne hain.
-│
-│ LOGIC (step-by-step, Hinglish):
-│ TASKS (easy -> hard):
-│ 1. Rotate 3x3 matrix 90 clockwise using extra matrix.
-│ 2. Rotate 3x3 matrix 90 clockwise using transpose + reverse.
-│ 3. Set Matrix Zeroes brute force approach likho.
-│ 4. Set Matrix Zeroes O(1) space approach likho.
-│ 5. Matrix chain multiplication cost for dims array solve karo.
-│ 6. Boolean matrix row/column set implement karo.
-│ 7. Har problem ka before->after ASCII state draw karo.
-│ 8. Approach comparison table comments me likho.
-│
-│ HINTS:
-│ - Rotate extra: new[j][n-1-i]=old[i][j].
-│ - Rotate in-place: transpose then reverse rows.
-│ - Set zeroes: first row/col markers carefully handle karo.
-│ - Boolean matrix: marker arrays use karo to avoid cascading.
-│
-│ STARTER CODE IDEA:
-│ vector<vector<int>> A = {{1,2,3},{4,5,6},{7,8,9}};
-│
-│ SOLUTION: Neeche compiled starter solution hai.
-│
-│ ASCII VISUAL / STATE DIAGRAM:
-│ Rotate before:
-│ 1 2 3
-│ 4 5 6
-│ 7 8 9
-│ After clockwise:
-│ 7 4 1
-│ 8 5 2
-│ 9 6 3
-│
-│ DRY RUN:
-│ Set zeroes:
-│ 1 1 1      1 0 1
-│ 1 0 1  ->  0 0 0
-│ 1 1 1      1 0 1
-│
-│ FLOW OF EXECUTION:
-│ input matrix -> choose approach -> transform/mark/DP -> print final answer
-│
-│ COMPLEXITY CALCULATION:
-│ - Rotate approaches visit n² cells/swaps -> O(n²).
-│ - Brute zeroes worst n² zeros * 2n clearing = O(n³).
-│ - In-place zeroes scans RC cells constant times = O(R*C).
-│ - DP chain has n choices for length, i, split = O(n³).
-│
-│ SPACE COMPLEXITY CALCULATION:
-│ - Extra rotate uses O(n²), in-place rotate uses O(1).
-│ - In-place zeroes uses O(1), boolean matrix markers use O(R+C).
-└────────────────────────────────────────────────────────────┘
+═══════════════════════════════════════════════
+ TASK SET — MEDIUM MATRIX PROBLEMS
+═══════════════════════════════════════════════
+ 🌍 REAL-WORLD SCENARIO: A photo editor must rotate images, a
+    spreadsheet cleaner must blank defective rows and columns, and
+    a factory optimizer must pick the cheapest multiplication order.
+    These tasks build exactly those medium-difficulty skills.
+
+ 🧠 HOW TO SOLVE: Rotate 90° via the mapping
+    rotated[j][n-1-i] = A[i][j] (extra matrix) or transpose +
+    row-reverse (in-place). Set Matrix Zeroes uses marker arrays —
+    a result copy for the brute approach, first-row/column markers
+    for O(1) space. Matrix Chain Multiplication uses DP trying every
+    split k; boolean matrix uses marker arrays to avoid cascading.
+
+ MODES/TOPICS COVERED:
+  1. Rotate a 3x3 matrix 90° clockwise using an extra matrix
+  2. Rotate a 3x3 matrix 90° clockwise using transpose + reverse
+  3. Write the Set Matrix Zeroes brute-force approach
+  4. Write the Set Matrix Zeroes O(1) space approach
+  5. Solve the matrix chain multiplication cost for a dims array
+  6. Implement boolean matrix row/column set
+  7. Draw the before -> after ASCII state of each problem
+  8. Write an approach comparison table in comments
+═══════════════════════════════════════════════
 */
 
 #include <iostream>

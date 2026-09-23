@@ -1,44 +1,61 @@
 /*
-┌────────────────────────────────────────────────────────────┐
-│ FILE: 01_identity_matrix.cpp
-│
-│ REAL-WORLD SCENARIO:
-│ Multiplication identity 1 number ko change nahi karta. Matrix world me identity matrix I bhi A ko change nahi karta: I×A = A.
-│
-│ LOGIC (step-by-step, Hinglish):
-│ 1. Identity matrix square hoti hai.
-│ 2. Primary diagonal elements 1 hote hain.
-│ 3. Baaki all elements 0 hote hain.
-│ 4. Condition: if i==j then 1 else 0.
-│ 5. Property: I × A = A and A × I = A.
-│
-│ ASCII VISUAL / MEMORY DIAGRAM:
-│ I3:
-│ 1 0 0
-│ 0 1 0
-│ 0 0 1
-│
-│ Diagonal: i==j positions are 1.
-│ Off-diagonal: i!=j positions are 0.
-│
-│ DRY RUN:
-│ n=3
-│ i0 j0 -> 1, j1/j2 -> 0
-│ i1 j1 -> 1
-│ i2 j2 -> 1
-│
-│ FLOW OF EXECUTION:
-│ setup matrices -> validate condition -> nested loops/formula -> output matrix
-│
-│ COMPLEXITY CALCULATION:
-│ - Two nested loops n*n cells fill karte hain.
-│ - Each cell one if check.
-│ -> Time Complexity = O(n²).
-│
-│ SPACE COMPLEXITY CALCULATION:
-│ - Matrix stores n*n elements.
-│ -> Space Complexity = O(n²).
-└────────────────────────────────────────────────────────────┘
+═══════════════════════════════════════════════
+ IDENTITY MATRIX
+ ⏱️ TIME COMPLEXITY: O(n²) to build all n² cells
+═══════════════════════════════════════════════
+
+ 🌍 REAL-WORLD SCENARIO:
+ The multiplicative identity 1 does not change a number. In the
+ matrix world the identity matrix I also does not change a matrix:
+ I × A = A. It plays the role of the number 1 for matrices — used
+ in solving systems, inverses, and computer graphics.
+
+ 📖 THEORY:
+ - An identity matrix I is square: every primary diagonal element
+   (i == j) is 1 and every off-diagonal element (i != j) is 0.
+ - It is the multiplicative identity of matrices: I × A = A and
+   A × I = A for any compatible matrix A.
+ - Building it is a pure fill task: nested loops write 1 on the
+   diagonal and leave 0 everywhere else.
+
+ ASCII DIAGRAM:
+ I3:
+ 1 0 0
+ 0 1 0
+ 0 0 1
+
+ Diagonal: i==j positions are 1.
+ Off-diagonal: i!=j positions are 0.
+
+ 🧠 LOGIC — STEP BY STEP:
+ Step 1: Create an n×n matrix initialized to 0.
+    WHY: We need storage for all n² cells; starting from 0 means
+    every off-diagonal cell is already correct.
+ Step 2: Set I[i][i] = 1 for every row i.
+    WHY: This writes 1 onto the primary diagonal in a single pass;
+    index equality i==j is exactly the diagonal condition.
+ Step 3: Print the matrix.
+    WHY: Off-diagonal cells still hold their initial 0, matching the
+    identity definition.
+
+ DRY RUN:
+ n=3
+ i=0: I[0][0]=1, columns 1 and 2 stay 0   -> 1 0 0
+ i=1: I[1][1]=1                           -> 0 1 0
+ i=2: I[2][2]=1                           -> 0 0 1
+
+ FLOW OF EXECUTION:
+ create n×n matrix (all 0) -> write I[i][i]=1 on the diagonal -> print matrix -> output
+
+ TIME COMPLEXITY CALCULATION:
+ - Two nested loops visit all n*n cells.
+ - Each cell is written/checked once.
+ -> Time Complexity = O(n²)
+
+ SPACE COMPLEXITY CALCULATION:
+ - The matrix stores n*n elements.
+ -> Space Complexity = O(n²)
+═══════════════════════════════════════════════
 */
 
 #include <iostream>

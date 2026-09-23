@@ -2,19 +2,28 @@
 ═══════════════════════════════════════════════
  TASK SET — std::unordered_set
 ═══════════════════════════════════════════════
-🌍 REAL-WORLD SCENARIO: A gaming leaderboard must instantly say
-"has this user submitted a score today?" and a chat app must strip
-duplicate messages in milliseconds. Both only need FAST membership
-checks — order never matters — which is exactly what unordered_set's
-O(1) average hashing gives. Tasks below go from warm-up to
-interview-style.
+ 🌍 REAL-WORLD SCENARIO: A gaming leaderboard must instantly say "has
+    this user submitted a score today?" and a chat app must strip
+    duplicate messages in milliseconds. Both only need FAST membership
+    checks — order never matters — which is exactly what unordered_set's
+    O(1) average hashing gives. Tasks below go from warm-up to
+    interview-style.
 
-🧠 HOW TO SOLVE: Throw every element into the unordered_set —
-duplicates vanish in O(1) each. For two-sum style problems, check the
-complement with count() per element (O(1) each). For "first repeating",
-put only elements you have SEEN already in the set. Longest consecutive
-sequence: count(x+1)/count(x-1) checks only make sense after clearing
-duplicates. Read every statement; HINT diya hai, pehle khud try karo.
+ 🧠 HOW TO SOLVE: Throw every element into the unordered_set —
+    duplicates vanish in O(1) each. For two-sum style problems, check the
+    complement with count() per element (O(1) each). For "first repeating",
+    put only elements you have SEEN already in the set. Longest consecutive
+    sequence: count(x+1)/count(x-1) checks only make sense after clearing
+    duplicates. Read every statement carefully; a HINT is given, but try it
+    yourself first.
+
+ MODES/TOPICS COVERED:
+  1. Print distinct values (order arbitrary)
+  2. Pair with a given sum (two-sum)
+  3. First repeating element
+  4. Union of two arrays
+  5. Longest consecutive sequence
+  6. Intersection size of two arrays
 ═══════════════════════════════════════════════
 */
 // ---------------- SOLUTIONS ----------------

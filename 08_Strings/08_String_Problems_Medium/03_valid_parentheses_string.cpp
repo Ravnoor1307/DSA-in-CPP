@@ -1,47 +1,62 @@
 /*
-┌────────────────────────────────────────────────────────────┐
-│ FILE: 03_valid_parentheses_string.cpp
-│
-│ REAL-WORLD SCENARIO:
-│ Factory me har opening gate ka matching closing gate hona chahiye. Parentheses validation stack se hota hai: latest opened bracket pehle close hoga.
-│
-│ LOGIC (step-by-step, Hinglish):
-│ 1. Opening brackets `(`, `{`, `[` stack me push karo.
-│ 2. Closing bracket aaye to stack top matching opening hona chahiye.
-│ 3. Mismatch or empty stack -> invalid.
-│ 4. End me stack empty ho to valid.
-│ 5. Ye stack preview/application hai strings me.
-│
-│ ASCII VISUAL / WINDOW STATE:
-│ s="({[]})"
-│ read ( push: [(]
-│ read { push: [(,{]
-│ read [ push: [(,{,[]
-│ read ] matches [ pop
-│ read } matches { pop
-│ read ) matches ( pop
-│ stack empty -> valid
-│
-│ DRY RUN:
-│ ({[]}):
-│ push (, push {, push [
-│ ] matches [, pop
-│ } matches {, pop
-│ ) matches (, pop
-│ valid
-│
-│ FLOW OF EXECUTION:
-│ input string(s) -> choose pattern/window/map -> update state -> return answer
-│
-│ COMPLEXITY CALCULATION:
-│ - Loop scans n characters once.
-│ - Each char push/pop/top constant time.
-│ -> Time Complexity = O(n).
-│
-│ SPACE COMPLEXITY CALCULATION:
-│ - Worst case all opening brackets stored in stack.
-│ -> Extra Space Complexity = O(n).
-└────────────────────────────────────────────────────────────┘
+═══════════════════════════════════════════════
+ VALID PARENTHESES STRING
+ ⏱️ TIME COMPLEXITY: O(n) — one loop over n chars with constant push/pop/top, extra space O(n)
+═══════════════════════════════════════════════
+
+ 🌍 REAL-WORLD SCENARIO:
+ In a factory, every opening gate must have a matching closing gate. Parentheses
+ validation uses a stack: the most recently opened bracket must close first.
+
+ 📖 THEORY:
+ - Push opening brackets `(`, `{`, `[` onto the stack.
+ - On a closing bracket, the stack top must be the matching opening.
+ - A mismatch or an empty stack means invalid.
+ - If the stack is empty at the end, the string is valid.
+ - This is a stack application in strings.
+
+ ASCII VISUAL / WINDOW STATE:
+ s="({[]})"
+ read ( push: [(]
+ read { push: [(,{]
+ read [ push: [(,{,[]
+ read ] matches [ pop
+ read } matches { pop
+ read ) matches ( pop
+ stack empty -> valid
+
+ 🧠 LOGIC — STEP BY STEP:
+ Step 1: Loop over each character.
+    WHY: each bracket must be processed in order.
+ Step 2: If it is an opening bracket, push it.
+    WHY: it must be closed later.
+ Step 3: Else check the stack top matches this closing bracket.
+    WHY: LIFO means the latest opening is closed first.
+ Step 4: If the stack is empty or mismatched, return false.
+    WHY: an unmatched close is invalid.
+ Step 5: Otherwise pop and continue; at the end return stack.empty().
+    WHY: all openings must be closed for validity.
+
+ DRY RUN:
+ ({[]}):
+ push (, push {, push [
+ ] matches [, pop
+ } matches {, pop
+ ) matches (, pop
+ valid
+
+ FLOW OF EXECUTION:
+ input string -> push openings / match closings via stack -> check empty at end -> print result
+
+ TIME COMPLEXITY CALCULATION:
+ - Loop scans n characters once.
+ - Each char push/pop/top constant time.
+ -> Time Complexity = O(n).
+
+ SPACE COMPLEXITY CALCULATION:
+ - Worst case all opening brackets stored in stack.
+ -> Extra Space Complexity = O(n).
+═══════════════════════════════════════════════
 */
 
 #include <iostream>

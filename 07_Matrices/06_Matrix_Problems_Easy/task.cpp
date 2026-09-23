@@ -1,55 +1,27 @@
 /*
-┌────────────────────────────────────────────────────────────┐
-│ FILE: task.cpp
-│
-│ REAL-WORLD SCENARIO:
-│ Interview easy round me sorted library table search, diagonal road sum, and attendance max-ones row poochha ja sakta hai.
-│
-│ LOGIC (step-by-step, Hinglish):
-│ TASKS (easy -> hard):
-│ 1. Brute-force search implement karo.
-│ 2. Row-wise binary search implement karo.
-│ 3. Staircase search implement karo.
-│ 4. Primary + secondary diagonal sum calculate karo.
-│ 5. Row with maximum ones find karo.
-│ 6. Har problem ke required sorted condition comments me likho.
-│ 7. Complexity calculation with loop count likho.
-│
-│ HINTS:
-│ - Brute force: nested loops.
-│ - Row-wise BS: each row sorted.
-│ - Staircase: top-right pointer.
-│ - Diagonal center skip: if i != n-1-i.
-│
-│ STARTER CODE IDEA:
-│ pair<int,int> search(vector<vector<int>>& A, int target)
-│
-│ SOLUTION: Neeche compact combined demo hai.
-│
-│ ASCII VISUAL / PATH DIAGRAM:
-│ Search path target=9:
-│ 11 -> left to 7 -> down to 8 -> down to 9 found.
-│ Diagonal sum 3x3 = 25.
-│ Row max ones answer row1.
-│
-│ DRY RUN:
-│ Brute force compares cells one by one.
-│ Binary search halves row each time.
-│ Staircase removes one row/column per move.
-│
-│ FLOW OF EXECUTION:
-│ matrix setup -> choose traversal/search pattern -> update pointers/bounds -> output
-│
-│ COMPLEXITY CALCULATION:
-│ - Brute force: R*C comparisons.
-│ - Row-wise BS: R*log C, because C/2^k=1 => k=log₂C.
-│ - Staircase: <=R+C moves.
-│ - Diagonal sum: n iterations.
-│
-│ SPACE COMPLEXITY CALCULATION:
-│ - All listed easy solutions use O(1) extra space.
-│ -> Extra Space Complexity = O(1).
-└────────────────────────────────────────────────────────────┘
+═══════════════════════════════════════════════
+ TASK SET — EASY MATRIX PROBLEMS
+═══════════════════════════════════════════════
+ 🌍 REAL-WORLD SCENARIO: The easy interview round often asks you to
+    search a target in a sorted spreadsheet table, sum the diagonal
+    roads of a city grid, and find the lecture hall row with the
+    most present students.
+
+ 🧠 HOW TO SOLVE: Choose the fastest search the ordering allows:
+    brute force needs no ordering; row-wise binary search needs each
+    row sorted; the staircase method needs both rows and columns
+    sorted. Diagonal sums use one loop with a centre double-count
+    guard; max-ones uses the sorted-row pointer trick.
+
+ MODES/TOPICS COVERED:
+  1. Implement brute-force search
+  2. Implement row-wise binary search
+  3. Implement staircase search
+  4. Calculate primary + secondary diagonal sum
+  5. Find the row with the maximum number of ones
+  6. Write the sorted condition required by each problem
+  7. Write complexity calculations with loop counts
+═══════════════════════════════════════════════
 */
 
 #include <iostream>

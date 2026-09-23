@@ -1,55 +1,62 @@
 /*
-┌────────────────────────────────────────────────────────────┐
-│ FILE: 04_Palindrome_Problems task.cpp
-│
-│ REAL-WORLD SCENARIO:
-│ Mirror-word practice me words, phrases, and numbers ke palindromes check karne hain.
-│
-│ LOGIC (step-by-step, Hinglish):
-│ TASKS (easy -> hard):
-│ 1. Reverse + compare palindrome check likho.
-│ 2. Manual reverse string build karke check karo.
-│ 3. Two-pointer O(1) space palindrome check karo.
-│ 4. MADAM and RACECAR ka pointer dry run comments me banao.
-│ 5. Ignore case and spaces: "Nitin" check karo.
-│ 6. Ignore punctuation phrase: "A man, a plan, a canal: Panama".
-│ 7. Number 121 ko string method se check karo.
-│ 8. Complexity comparison table likho.
-│
-│ HINTS:
-│ - tolower and isalnum use karo.
-│ - Two pointers floor(n/2) pairs compare karte hain.
-│ - Negative number palindrome nahi.
-│
-│ STARTER CODE:
-│ bool isPal(string s){ int l=0,r=s.size()-1; }
-│
-│ SOLUTION: Neeche compiled demo hai.
-│
-│ ASCII VISUAL / POINTER STATE:
-│ MADAM:
-│ [M][A][D][A][M]
-│  L           R -> match
-│     L     R    -> match
-│ center -> true
-│
-│ DRY RUN:
-│ Nitin ignore case:
-│ n vs n, i vs i, center t -> true
-│ 121 -> "121" -> true
-│
-│ FLOW OF EXECUTION:
-│ input string -> scan/split/pointer movement -> build/modify answer -> print result
-│
-│ COMPLEXITY CALCULATION:
-│ - Reverse approaches O(n) time because reverse/compare scan n chars.
-│ - Two-pointer checks floor(n/2) pairs -> O(n).
-│ - Ignore spaces pointer moves <= n -> O(n).
-│
-│ SPACE COMPLEXITY CALCULATION:
-│ - Two-pointer approaches O(1) extra.
-│ - Reverse and number-to-string use O(n)/O(d) extra.
-└────────────────────────────────────────────────────────────┘
+═══════════════════════════════════════════════
+ TASK SET — PALINDROME PROBLEMS
+═══════════════════════════════════════════════
+ 🌍 REAL-WORLD SCENARIO: A mirror-word practice session needs plots to check words,
+    phrases, and numbers for palindromes. From a simple reverse-compare word check
+    up to ignoring case, spaces, and punctuation, these tasks build the logic behind
+    text validators and phrase checkers.
+
+ 🧠 HOW TO SOLVE: For words, reverse+compare or build the reverse manually; for
+    the O(1) version use two pointers left/right that shrink toward the center.
+    Use tolower and isalnum to ignore case, spaces, and punctuation. Convert a
+    number with to_string and check the string (negatives are never palindromes —
+    the '-' sign breaks the symmetry). Two pointers compare floor(n/2) pairs.
+
+ MODES/TOPICS COVERED:
+  1. Write a reverse + compare palindrome check
+  2. Check by building the reversed string manually
+  3. Two-pointer O(1) space palindrome check
+  4. Draw the pointer dry run for MADAM and RACECAR in comments
+  5. Ignore case and spaces: check "Nitin"
+  6. Ignore punctuation phrase: "A man, a plan, a canal: Panama"
+  7. Check number 121 using the string method
+  8. Write the complexity comparison table
+
+ HINTS:
+ - Use tolower and isalnum.
+ - Two pointers compare floor(n/2) pairs.
+ - Negative numbers are not palindromes.
+
+ STARTER CODE:
+ bool isPal(string s){ int l=0,r=s.size()-1; }
+
+ SOLUTION: A compiled demo is below.
+
+ ASCII VISUAL / POINTER STATE:
+ MADAM:
+ [M][A][D][A][M]
+  L           R -> match
+     L     R    -> match
+ center -> true
+
+ DRY RUN:
+ Nitin ignore case:
+ n vs n, i vs i, center t -> true
+ 121 -> "121" -> true
+
+ FLOW OF EXECUTION:
+ input string -> scan/split/pointer movement -> build/modify answer -> print result
+
+ TIME COMPLEXITY CALCULATION:
+ - Reverse approaches O(n) time because reverse/compare scan n chars.
+ - Two-pointer checks floor(n/2) pairs -> O(n).
+ - Ignore spaces pointer moves <= n -> O(n).
+
+ SPACE COMPLEXITY CALCULATION:
+ - Two-pointer approaches O(1) extra.
+ - Reverse and number-to-string use O(n)/O(d) extra.
+═══════════════════════════════════════════════
 */
 
 #include <iostream>

@@ -2,112 +2,26 @@
 ═══════════════════════════════════════════════
  TASK SET — CONSTRUCTORS
 ═══════════════════════════════════════════════
+ 🌍 REAL-WORLD SCENARIO: Every product in a factory starts its life
+    through a standard "birth process": a blank order makes a default
+    item, a detailed order makes a custom item, and duplicating an item
+    must copy the DATA without sharing the raw material. In C++ that birth
+    process is the constructor — default, parameterized, and copy.
 
- 🌍 REAL-WORLD SCENARIO:
- Every product in a factory starts its life through a standard "birth
- process": a blank order makes a default item, a detailed order makes a
- custom item, and duplicating an item must copy the DATA without sharing
- the raw material. In C++ that birth process is the constructor — default,
- parameterized, and copy.
+ 🧠 HOW TO SOLVE: 1) Choose the constructor's parameter list based on the
+    kind of object you need (0 args = default, k args = parameterized,
+    reference = copy). 2) Prepare members first in the initializer list,
+    then validate in the body. 3) With a pointer member, allocate a NEW
+    heap in the copy constructor (DEEP copy); otherwise both objects share
+    the same heap → double-delete crash.
 
- 🧠 HOW TO SOLVE:
- 1) Jis tarah ka object chahiye, us hisaab se constructor ka parameter list
-    choose karo (0 args = default, k args = parameterized, reference = copy).
- 2) Initializer list me members ko pehle ready karo, body me validate karo.
- 3) Pointer member ho to COPY CTOR me naya heap allocate karo (DEEP copy),
-    warna dono objects ek hi heap share karenge → double-delete crash.
-
- TASKS (EASY → HARD):
-
- TASK 1 — Point: default + parameterized (EASY)
- class Point with int x, y. Write a default ctor (0,0) and a parameterized
- ctor (a,b). Each ctor prints what it created. In main() make P1 (default)
- and P2(3,4), print both.
- 💡 HINT: ctor name = class name, no return type; initializer list : x(a), y(b).
- ✏️ STARTER CODE:
- // class Point {
- //   private: int x, y;
- //   public:
- //     Point();            // default → (0,0)
- //     Point(int a, int b);
- //     void show() const;
- // };
-
- TASK 2 — Employee: overloaded ctors printing (EASY)
- class Employee with name + id. Write THREE ctors: default (name "unknown",
- id 0), name-only, and name+id. Every ctor prints "Employee created: ...".
- In main() make all three kinds.
- 💡 HINT: overload = same name, alag parameter lists — compiler call ke
-    hisaab se chunega.
- ✏️ STARTER CODE:
- // class Employee {
- //   private: string name; int id;
- //   public:
- //     Employee();
- //     Employee(string n);
- //     Employee(string n, int i);
- // };
-
- TASK 3 — Rectangle: initializer list (MEDIUM)
- class Rectangle: private int len, wid, area. Parameterized ctor sirf
- initializer list se len/wid set kare aur body me area = len * wid kare
- (default args l=0, w=0). Methods: areaValue(), setDim(), show().
- 💡 HINT: default args ek hi ctor ko default + param dono bana dete hain.
- ✏️ STARTER CODE:
- // class Rectangle {
- //   private: int len; int wid; int area;
- //   public:
- //     Rectangle(int l = 0, int w = 0);   // initializer list use karo
- //     void show() const;
- // };
-
- TASK 4 — Circle: overloaded birth styles (MEDIUM)
- class Circle with double r. Ctors: default r=0, ctor(radius), and
- ctor(double val, bool isDiameter). isDiameter true ho to r = val/2.
- Print "Circle created" with radius in each.
- 💡 HINT: (double, bool) signature overload ko disambiguate karta hai.
- ✏️ STARTER CODE:
- // class Circle {
- //   private: double r;
- //   public:
- //     Circle();
- //     Circle(double radius);
- //     Circle(double val, bool isDiameter);
- //     void show() const;
- // };
-
- TASK 5 — DynamicArray: DEEP copy (HARD)
- class DynamicArray with int* arr + int n. Parameterized ctor (size, seed)
- fills arr[i] = i*seed. Copy ctor = DEEP copy (naya heap, values copy).
- Destructor delete[] kare. Methods: set(), show(). Prove independence:
- copy A2 = A1, change A2[0], show A1 unchanged.
- 💡 HINT: custom copy ctor ke bina default SHALLOW copy hoti — second delete[]
-    pe crash. Alag heap = alag zindagi.
- ✏️ STARTER CODE:
- // class DynamicArray {
- //   private: int* arr; int n;
- //   public:
- //     DynamicArray(int size, int seed);
- //     DynamicArray(const DynamicArray& src);   // deep copy
- //     ~DynamicArray();
- //     void set(int i, int v);
- //     void show() const;
- // };
-
- TASK 6 — Gadget: static alive counter (HARD)
- class Gadget: private string serial; static int alive. Ctor alive++ and
- print build message with alive count; dtor alive-- with destroy message.
- Make 3 gadgets in a block, jo block khatam hote hi sab destroy hon.
- 💡 HINT: static int Gadget::alive = 0; class ke BAHAR define karna mat bhoolo.
- ✏️ STARTER CODE:
- // class Gadget {
- //   private: string serial; static int alive;
- //   public:
- //     Gadget(string s);
- //     ~Gadget();
- //     static int count() { return alive; }
- // };
- // int Gadget::alive = 0;
+ MODES/TOPICS COVERED:
+  1. Point: default + parameterized constructors
+  2. Employee: overloaded constructors that print
+  3. Rectangle: initializer list with default arguments
+  4. Circle: overloaded "birth styles" (radius vs diameter)
+  5. DynamicArray: deep copy constructor
+  6. Gadget: static alive counter
 ═══════════════════════════════════════════════
 */
 

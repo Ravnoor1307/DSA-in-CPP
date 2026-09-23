@@ -1,57 +1,64 @@
 /*
-┌────────────────────────────────────────────────────────────┐
-│ FILE: 08_String_Problems_Medium task.cpp
-│
-│ REAL-WORLD SCENARIO:
-│ Interview medium practice me cipher mapping, anagram grouping, bracket validation, sliding window, and prefix sum queries solve karne hain.
-│
-│ LOGIC (step-by-step, Hinglish):
-│ TASKS (easy -> hard):
-│ 1. Isomorphic strings check karo.
-│ 2. Group anagrams using frequency key.
-│ 3. Valid parentheses using stack.
-│ 4. Longest substring without repeat brute force.
-│ 5. Longest substring without repeat sliding window.
-│ 6. Vowel prefix sum banao and range query answer karo.
-│ 7. Sliding window states ASCII comments me print karo.
-│ 8. Approach comparison table likho.
-│
-│ HINTS:
-│ - Isomorphic needs two maps.
-│ - Parentheses stack top matching hona chahiye.
-│ - Sliding window: right add, while duplicate left remove.
-│ - Prefix query: prefix[r+1]-prefix[l].
-│
-│ STARTER CODE:
-│ vector<int> freq(256,0); int left=0;
-│
-│ SOLUTION: Neeche compact demo hai.
-│
-│ ASCII VISUAL / WINDOW STATE:
-│ Sliding window abcabcbb:
-│ a -> ab -> abc -> duplicate a, left moves -> bca
-│ best=3
-│
-│ Prefix leetcode:
-│ query [1,3] eet has 2 vowels.
-│
-│ DRY RUN:
-│ Parentheses ({[]}) push push push, then pop matching closers.
-│ Isomorphic egg/add: e->a, g->d consistent.
-│
-│ FLOW OF EXECUTION:
-│ input string(s) -> choose pattern/window/map -> update state -> return answer
-│
-│ COMPLEXITY CALCULATION:
-│ - Isomorphic/parentheses/sliding scan n chars = O(n).
-│ - Brute longest unique O(n³).
-│ - Prefix build O(n), each query O(1).
-│
-│ SPACE COMPLEXITY CALCULATION:
-│ - Stack can store O(n) brackets.
-│ - Sliding freq fixed 256 -> O(1).
-│ - Prefix array O(n).
-└────────────────────────────────────────────────────────────┘
+═══════════════════════════════════════════════
+ TASK SET — STRING PROBLEMS (MEDIUM)
+═══════════════════════════════════════════════
+ 🌍 REAL-WORLD SCENARIO: An interview medium-level practice session needs work on
+    cipher mapping, anagram grouping, bracket validation, sliding windows, and
+    prefix-sum queries. These are the patterns that appear again and again in
+    medium string interviews.
+
+ 🧠 HOW TO SOLVE: Isomorphic strings need two maps (forward and reverse) to enforce a
+    bijection. Group anagrams by a frequency key. Validate parentheses with a stack
+    whose top must match each closer. For longest unique substring, expand the right
+    edge and shrink the left while a duplicate exists. Answer repeated vowel range
+    queries with prefix[r+1]-prefix[l].
+
+ MODES/TOPICS COVERED:
+  1. Check isomorphic strings
+  2. Group anagrams using a frequency key
+  3. Valid parentheses using a stack
+  4. Longest substring without repeat with brute force
+  5. Longest substring without repeat with a sliding window
+  6. Build a vowel prefix sum and answer range queries
+  7. Print the sliding window states as ASCII comments
+  8. Write the approach comparison table
+
+ HINTS:
+ - Isomorphic needs two maps.
+ - Parentheses stack top must match.
+ - Sliding window: right adds, while duplicate left removes.
+ - Prefix query: prefix[r+1]-prefix[l].
+
+ STARTER CODE:
+ vector<int> freq(256,0); int left=0;
+
+ SOLUTION: A compact demo is below.
+
+ ASCII VISUAL / WINDOW STATE:
+ Sliding window abcabcbb:
+ a -> ab -> abc -> duplicate a, left moves -> bca
+ best=3
+
+ Prefix leetcode:
+ query [1,3] eet has 2 vowels.
+
+ DRY RUN:
+ Parentheses ({[]}) push push push, then pop matching closers.
+ Isomorphic egg/add: e->a, g->d consistent.
+
+ FLOW OF EXECUTION:
+ input string(s) -> choose pattern/window/map -> update state -> return answer
+
+ TIME COMPLEXITY CALCULATION:
+ - Isomorphic/parentheses/sliding scan n chars = O(n).
+ - Brute longest unique O(n³).
+ - Prefix build O(n), each query O(1).
+
+ SPACE COMPLEXITY CALCULATION:
+ - Stack can store O(n) brackets.
+ - Sliding freq fixed 256 -> O(1).
+ - Prefix array O(n).
+═══════════════════════════════════════════════
 */
 
 #include <iostream>

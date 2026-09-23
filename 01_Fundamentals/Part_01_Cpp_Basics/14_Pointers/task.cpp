@@ -1,51 +1,22 @@
 /*
 ═══════════════════════════════════════════════
- TASK SET — Pointers
+ TASK SET — POINTERS
 ═══════════════════════════════════════════════
-🌍 REAL-WORLD SCENARIO: A bank updates two account balances in one call;
-   a data analyzer finds the max reading across thousands of sensors.
-   Both need functions that modify caller data or avoid copying —
-   pointers make them fast and direct.
-🧠 HOW TO SOLVE: Capture addresses with &, read/write with *. For arrays,
-   pointer arithmetic arr+i == &arr[i]. Always null-check before deref.
-═══════════════════════════════════════════════
+ 🌍 REAL-WORLD SCENARIO: A bank updates two account balances in one call;
+    a data analyzer finds the max reading across thousands of sensors.
+    Both need functions that modify caller data or avoid copying —
+    pointers make them fast and direct.
 
-TASK 1 (EASY): Swap Two Values via Pointers
-   Write swap(int* a, int* b) that swaps the values at both addresses.
-   Hint: temp = *a; *a = *b; *b = temp; — dereference karke swap.
-   // STARTER CODE:
-   // void swapPtr(int* a, int* b) { ... }
+ 🧠 HOW TO SOLVE: Capture addresses with &, read/write with *. For arrays,
+    pointer arithmetic arr+i == &arr[i]. Always null-check before deref.
 
-TASK 2 (EASY): Find Max Element
-   Return the maximum element of an array using a pointer to walk it.
-   Hint: *p se value lo, max update karo, p++ karke aage badho.
-   // STARTER CODE:
-   // int findMax(int* start, int size) { ... }
-
-TASK 3 (MEDIUM): Value vs Pointer — Square by Pointer
-   Write square(int* n) which modifies the value at n to its square.
-   Hint: *n = (*n) * (*n); — caller ka data badal jata hai.
-   // STARTER CODE:
-   // void squarePtr(int* n) { ... }
-
-TASK 4 (MEDIUM): Count Even Numbers
-   Count how many even numbers exist in an array — walk with a pointer.
-   Hint: *p % 2 == 0 check karo har iteration mein.
-   // STARTER CODE:
-   // int countEvens(int* start, int size) { ... }
-
-TASK 5 (HARD): Pointer-to-Pointer — Update a String Hello
-   Given a char** that points to a char*, change the pointed string.
-   Hint: **pp = 'X'; modifies pehla char of the actual string.
-   // STARTER CODE:
-   // void changeFirst(char** pp, char newCh) { ... }
-
-TASK 6 (HARD): Sum via Pointer Arithmetic
-   Compute sum of an array using ONLY pointer arithmetic (arr[i] nahi).
-   Hint: while loop end = start+size tak, sum += *start; start++;
-   // STARTER CODE:
-   // int ptrSum(int* start, int size) { ... }
-
+ MODES/TOPICS COVERED:
+  1. Swap two values via pointers
+  2. Find the maximum element by walking an array with a pointer
+  3. Square a value by modifying it through a pointer (value vs pointer)
+  4. Count even numbers using a pointer
+  5. Pointer-to-pointer to update the first character of a string
+  6. Sum an array using only pointer arithmetic
 ═══════════════════════════════════════════════
 */
 // ---------------- SOLUTIONS ----------------

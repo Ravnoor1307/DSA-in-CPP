@@ -1,49 +1,69 @@
 /*
-┌────────────────────────────────────────────────────────────┐
-│ FILE: 02_diagonal_matrix.cpp
-│
-│ REAL-WORLD SCENARIO:
-│ Lockers ki ek diagonal line active hai, baaki lockers empty hain. Diagonal matrix me sirf diagonal values meaningful hote hain, baaki zero.
-│
-│ LOGIC (step-by-step, Hinglish):
-│ 1. Diagonal matrix square hoti hai.
-│ 2. Non-diagonal elements zero hote hain.
-│ 3. Sirf A[i][i] values store karne se kaam chal sakta hai.
-│ 4. Full matrix storage n² hota hai.
-│ 5. Optimized diagonal storage n hota hai.
-│
-│ ASCII VISUAL / MEMORY DIAGRAM:
-│ Full diagonal matrix:
-│ 5 0 0
-│ 0 7 0
-│ 0 0 9
-│
-│ Compact storage:
-│ diag = [5,7,9]
-│
-│ Get A[i][j]:
-│ if i==j -> diag[i]
-│ else -> 0
-│
-│ DRY RUN:
-│ diag[0]=5 -> A[0][0]
-│ diag[1]=7 -> A[1][1]
-│ diag[2]=9 -> A[2][2]
-│ A[0][2] is off-diagonal -> 0
-│
-│ FLOW OF EXECUTION:
-│ setup matrices -> validate condition -> nested loops/formula -> output matrix
-│
-│ COMPLEXITY CALCULATION:
-│ - Printing full view visits n*n cells -> O(n²).
-│ - Access using compact diag checks i==j -> O(1).
-│ - Building diag array n assignments -> O(n).
-│
-│ SPACE COMPLEXITY CALCULATION:
-│ - Full matrix would need n² storage.
-│ - Compact diagonal stores only n values.
-│ -> Optimized Space Complexity = O(n).
-└────────────────────────────────────────────────────────────┘
+═══════════════════════════════════════════════
+ DIAGONAL MATRIX
+ ⏱️ TIME COMPLEXITY: O(n) to build compact storage, O(1) per
+ lookup, O(n²) to print the full view
+═══════════════════════════════════════════════
+
+ 🌍 REAL-WORLD SCENARIO:
+ In a row of lockers only one diagonal line of lockers is active;
+ all the other lockers are empty. A diagonal matrix is the same:
+ only the diagonal values are meaningful, everything else is zero.
+
+ 📖 THEORY:
+ - A diagonal matrix is square: all non-diagonal entries are zero,
+   so only A[i][i] holds meaningful values.
+ - Full matrix storage costs n² cells, but a diagonal matrix has
+   only n useful numbers — most of the storage is wasted zeros.
+ - Compact optimization: store just the diagonal in a 1D array
+   diag of size n; read A[i][j] = diag[i] if i==j, else 0.
+
+ ASCII DIAGRAM:
+ Full diagonal matrix:
+ 5 0 0
+ 0 7 0
+ 0 0 9
+
+ Compact storage:
+ diag = [5, 7, 9]
+
+ Get A[i][j]:
+ if i==j -> diag[i]
+ else    -> 0
+
+ 🧠 LOGIC — STEP BY STEP:
+ Step 1: Store only the diagonal values in a 1D array diag of size n.
+    WHY: Every off-diagonal value is guaranteed 0, so storing them
+    would waste n²-n cells.
+ Step 2: Reconstruct A[i][j] with the rule: if i==j return diag[i],
+    else return 0.
+    WHY: This rule exactly reproduces the definition of a diagonal
+    matrix.
+ Step 3: Print the full matrix by calling the rule for every (i,j).
+    WHY: This is for visual verification only; real use reads single
+    cells in O(1).
+
+ DRY RUN:
+ diag = [5, 7, 9], n=3
+ diag[0]=5 -> A[0][0]=5
+ diag[1]=7 -> A[1][1]=7
+ diag[2]=9 -> A[2][2]=9
+ A[0][2]: i!=j -> 0
+ A[1][0]: i!=j -> 0
+
+ FLOW OF EXECUTION:
+ compact diag array -> for each (i,j): i==j ? diag[i] : 0 -> print full matrix
+
+ TIME COMPLEXITY CALCULATION:
+ - Building the diag array takes n assignments -> O(n).
+ - A single lookup takes one i==j check -> O(1).
+ - Printing the full view visits all n*n cells -> O(n²).
+
+ SPACE COMPLEXITY CALCULATION:
+ - Full matrix would need n² storage.
+ - Compact diagonal stores only n values.
+ -> Space Complexity = O(n) (optimized)
+═══════════════════════════════════════════════
 */
 
 #include <iostream>

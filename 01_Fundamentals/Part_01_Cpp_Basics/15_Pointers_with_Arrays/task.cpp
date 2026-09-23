@@ -1,50 +1,23 @@
 /*
 ═══════════════════════════════════════════════
- TASK SET — Pointers with Arrays
+ TASK SET — POINTERS WITH ARRAYS
 ═══════════════════════════════════════════════
-🌍 REAL-WORLD SCENARIO: A delivery fleet tracks parcel weights (an array).
-   The operations — total weight, heaviest parcel, sorting routes — are all
-   done by passing a POINTER to the first parcel, never copying the list.
-🧠 HOW TO SOLVE: Arrays decay to pointers in functions. Use arr[i] or *(arr+i)
-   interchangeably. Two-pointer tricks for reversing / sorting in place.
-═══════════════════════════════════════════════
+ 🌍 REAL-WORLD SCENARIO: A delivery fleet tracks parcel weights (an array).
+    The operations — total weight, heaviest parcel, sorting routes — are
+    all done by passing a POINTER to the first parcel, never copying
+    the list.
 
-TASK 1 (EASY): Array Sum via Function
-   Write sumArr(int* arr, int n) that returns the total.
-   Hint: arr[i] literally means *(arr+i) — dono likh sakte hain.
-   // STARTER CODE:
-   // int sumArr(int* arr, int n) { ... }
+ 🧠 HOW TO SOLVE: Arrays decay to pointers in functions. Use arr[i] or
+    *(arr+i) interchangeably. Two-pointer tricks for reversing / sorting
+    in place.
 
-TASK 2 (EASY): Find Largest Element
-   Return the largest element. Pass array as pointer, walk it.
-   Hint: max variable initialize arr[0] se, phir compare.
-   // STARTER CODE:
-   // int largest(int* first, int n) { ... }
-
-TASK 3 (MEDIUM): Reverse Array In-Place
-   Reverse the array without a second array (two pointers).
-   Hint: left=0, right=n-1, swap karte jao dono ko beech mein milake.
-   // STARTER CODE:
-   // void reverseInPlace(int* a, int n) { ... }
-
-TASK 4 (MEDIUM): Count Occurrences
-   Count how many times a given value appears.
-   Hint: har index pe *p == target check karo.
-   // STARTER CODE:
-   // int countOcc(int* a, int n, int target) { ... }
-
-TASK 5 (HARD): Selection Sort via Pointers
-   Sort ascending with selection sort, looping with pointers.
-   Hint: Har position ke liye minimum index dhundho, swap karo.
-   // STARTER CODE:
-   // void selectionSort(int* a, int n) { ... }
-
-TASK 6 (HARD): Two Sum — Indices via Pointers
-   Given sorted array, find two numbers that add to target; print their values.
-   Hint: left + right pointers; sum > target → right--, sum < target → left++.
-   // STARTER CODE:
-   // void twoSum(int* a, int n, int target) { ... }
-
+ MODES/TOPICS COVERED:
+  1. Array sum via a function
+  2. Find the largest element
+  3. Reverse the array in place (two pointers)
+  4. Count occurrences of a value
+  5. Selection sort using pointers
+  6. Two Sum on a sorted array using pointers
 ═══════════════════════════════════════════════
 */
 // ---------------- SOLUTIONS ----------------

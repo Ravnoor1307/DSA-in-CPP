@@ -2,84 +2,26 @@
 ═══════════════════════════════════════════════
  TASK SET — DYNAMIC MEMORY ALLOCATION
 ═══════════════════════════════════════════════
-🌍 REAL-WORLD SCENARIO: A conference room has 30 fixed chairs. When 80
-   people register, the manager brings extra chairs at RUNTIME (heap),
-   seats everyone, and then the chairs are removed after the event
-   (delete). Resizing = bring MORE chairs, ask everyone to shift to the
-   new rows, and throw the old chairs away. Forgetting to remove chairs =
-   memory leak that slowly eats the hall.
+ 🌍 REAL-WORLD SCENARIO: A conference room has 30 fixed chairs. When 80
+    people register, the manager brings extra chairs at RUNTIME (heap),
+    seats everyone, and then the chairs are removed after the event
+    (delete). Resizing = bring MORE chairs, ask everyone to shift to the
+    new rows, and throw the old chairs away. Forgetting to remove chairs =
+    memory leak that slowly eats the hall.
 
-🧠 HOW TO SOLVE: Every dynamic array lives on the heap and must be freed
-   with delete[]. To RESIZE: allocate a NEW bigger buffer, copy elements
-   from the old buffer, then delete[] the old one and point to the new.
-   Always check new (nothrow) for nullptr, and set pointer to nullptr
-   after delete[] to avoid dangling pointers.
-═══════════════════════════════════════════════
+ 🧠 HOW TO SOLVE: Every dynamic array lives on the heap and must be freed
+    with delete[]. To RESIZE: allocate a NEW bigger buffer, copy elements
+    from the old buffer, then delete[] the old one and point to the new.
+    Always check new (nothrow) for nullptr, and set pointer to nullptr
+    after delete[] to avoid dangling pointers.
 
-TASK 1 (EASY): Allocate, Fill, Print, Free
-   Read n from user, allocate new (nothrow) int[n], fill with i*i,
-   print them, then delete[] correctly.
-   // STARTER CODE:
-   // int n; cin >> n;
-   // int* a = new (nothrow) int[n];
-   // if (a == nullptr) { cout << "fail"; return 1; }
-   // for (int i = 0; i < n; i++) a[i] = i * i;
-   // for (int i = 0; i < n; i++) cout << a[i] << " ";
-   // delete[] a; a = nullptr;
-
-TASK 2 (MEDIUM): Resize Array to a Larger Buffer
-   Start with an array of 5 elements {1,2,3,4,5}. Resize to size 8:
-   allocate new int[8], copy the 5 elements, fill 6,7,8 as 0, delete[]
-   the old buffer, and print the NEW larger array.
-   // STARTER CODE:
-   // int* old = new int[5] {1,2,3,4,5};
-   // int* bigger = new int[8] {};         // sab zero se shuru
-   // for (int i = 0; i < 5; i++) bigger[i] = old[i];   // copy
-   // delete[] old;   old = nullptr;      // purana buffer hatao
-   // // ab bigger[0..7] print karo
-
-TASK 3 (MEDIUM): Merge Two Dynamic Arrays
-   Given two sorted dynamic arrays A(size n) and B(size m), allocate
-   C of size n+m, merge them (copy A then B is fine), print, free all.
-   // STARTER CODE:
-   // int* C = new (nothrow) int[n + m];
-   // for (int i = 0; i < n; i++) C[i] = A[i];
-   // for (int i = 0; i < m; i++) C[n + i] = B[i];
-   // // sab print karo, phir teeno delete[] karo
-
-TASK 4 (MEDIUM): In-Place Reverse of Dynamic Array
-   Reverse a dynamic array in place (no extra array). Print before/after.
-   Hint: two-pointer — left from 0, right from n-1, swap, move inward.
-   // STARTER CODE:
-   // int left = 0, right = n - 1;
-   // while (left < right) {
-   //     int t = a[left]; a[left] = a[right]; a[right] = t;
-   //     left++; right--;
-   // }
-
-TASK 5 (HARD): Count Even/Odd in Dynamic Array
-   Read n, allocate new int[n], fill from user, then count how many are
-   even and how many are odd using pointers (traverse with a pointer).
-   Free everything at the end.
-   // STARTER CODE:
-   // int even = 0, odd = 0;
-   // for (int* it = a; it != a + n; it++) {
-   //     if (*it % 2 == 0) even++; else odd++;
-   // }
-   // // delete[] a; a = nullptr; LEAK mat karo!
-
-TASK 6 (HARD): Dynamic String Builder
-   Read a small word from the user, find its length, build a dynamic
-   char buffer of size length+1, copy letters + '\0', print it, delete[].
-   Hint: char* s = new char[len + 1]; then for loop copy with '\0' end.
-   // STARTER CODE:
-   // cout << "enter word: "; string w; cin >> w;
-   // char* s = new char[w.size() + 1];
-   // for (size_t i = 0; i < w.size(); i++) s[i] = w[i];
-   // s[w.size()] = '\0';
-   // cout << "built: " << s << endl;
-   // delete[] s; s = nullptr;
-
+ MODES/TOPICS COVERED:
+  1. Allocate, fill, print, free a dynamic array
+  2. Resize an array to a larger buffer
+  3. Merge two dynamic arrays
+  4. In-place reverse of a dynamic array
+  5. Count even/odd in a dynamic array
+  6. Build a dynamic string
 ═══════════════════════════════════════════════
 */
 // ---------------- SOLUTIONS ----------------

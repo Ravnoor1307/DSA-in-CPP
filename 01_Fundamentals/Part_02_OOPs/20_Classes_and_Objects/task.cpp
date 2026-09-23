@@ -2,109 +2,24 @@
 ═══════════════════════════════════════════════
  TASK SET — CLASSES AND OBJECTS
 ═══════════════════════════════════════════════
+ 🌍 REAL-WORLD SCENARIO: A school registry stores name, roll number and
+    marks for every student. One report-card formula works for the whole
+    school, but every student has different data. You need one reusable
+    TEMPLATE (the class) and many independent RECORDS (the objects).
 
- 🌍 REAL-WORLD SCENARIO:
- A school registry stores name, roll number and marks for every student.
- One report-card formula works for the whole school, but every student has
- different data. You need one reusable TEMPLATE (the class) and many
- independent RECORDS (the objects).
+ 🧠 HOW TO SOLVE: 1) First decide the DATA: which things each object
+    stores (members). 2) Then decide the BEHAVIOUR: which actions go into
+    methods (set/display). 3) In main(), create an object and call methods
+    with the dot (.) operator. 4) Remember: every object has its own copy
+    of the data — changing one object does NOT affect another.
 
- 🧠 HOW TO SOLVE:
- 1) Pehle decide DATA: kaunsi cheezein har object me store hongi (members).
- 2) Phir decide BEHAVIOUR: kaunse kaam methods me likhne hain (set/display).
- 3) main() me object banao aur dot (.) operator se methods call karo.
- 4) Yaad rakho: har object ki apni data copy hoti hai — ek object me change
-    karne se doosre object pe koi asar NAHI hota.
-
- TASKS (EASY → HARD):
-
- TASK 1 — CIRCLE ka area  (EASY)
- Make a class Circle with a private double radius. Provide setRadius() and
- a method area() that returns 3.14 * radius * radius. In main() set the
- radius to 7 and print the area.
- 💡 HINT: setter me assign karo, area() me compute karo — basic data hiding.
- ✏️ STARTER CODE:
- // class Circle {
- //   private:
- //     double radius;
- //   public:
- //     void setRadius(double r) { radius = r; }
- //     double area() { return 3.14 * radius * radius; }
- // };
- // main me: Circle c; c.setRadius(7); cout << c.area();
-
- TASK 2 — BANK ACCOUNT  (EASY)
- Make class BankAccount with holder name and balance (private). Methods:
- create(), deposit(), withdraw() (return false if amount > balance), show().
- Create one account, deposit 2000, withdraw 500, print final balance.
- 💡 HINT: withdraw me pehle check karo ki paisa kafi hai ya nahi.
- ✏️ STARTER CODE:
- // class BankAccount {
- //   private:
- //     string holder;
- //     double balance;
- //   public:
- //     void create(string h, double b);
- //     void deposit(double amt);
- //     bool withdraw(double amt);
- //     void show();
- // };
-
- TASK 3 — STUDENT ka AVERAGE  (EASY)
- class Student with name + marks of 2 subjects. setData() for input and
- average() returning (sub1 + sub2) / 2. In main() make 2 students and print
- each one's name + average.
- 💡 HINT: average = (marks1 + marks2) / 2.0 — /2.0 se double division hota hai.
- ✏️ STARTER CODE:
- // class Student {
- //   private: string name; double s1, s2;
- //   public:
- //     void setData(string n, double a, double b);
- //     double average();
- //     void report();
- // };
-
- TASK 4 — CAR PARK (MEDIUM)
- class Car with brand and speed. Methods: setCar(), accelerate() (speed
- +10) and show(). Make an ARRAY of 3 cars, accelerate each car twice, then
- print all speeds.
- 💡 HINT: Car fleet[3]; loop me fleet[i] ka method call karo.
- ✏️ STARTER CODE:
- // class Car {
- //   private: string brand; int speed;
- //   public:
- //     void setCar(string b, int s);
- //     void accelerate();     // speed += 10
- //     void show();
- // };
-
- TASK 5 — BOOK COUNTER via STATIC member (MEDIUM)
- class Book with title + a STATIC int count. The constructor increases
- count, the destructor decreases it. Create 3 books and print total() after
- each creation.
- 💡 HINT: static member sabhi objects SHARE karte hain; class ke bahar define
-    karna padta hai: int Book::count = 0;
- ✏️ STARTER CODE:
- // class Book {
- //   private: string title; static int count;
- //   public:
- //     Book(string t);
- //     static int total();
- // };
- // int Book::count = 0;
-
- TASK 6 — class vs struct + empty class size (HARD)
- Make struct Point { int x; }; and class Box { int x; };. Inside main() try
- p.x = 5 (OK) and b.x = 5 (compile error — private). Then print sizeof() of
- an empty class and explain why it is never 0.
- 💡 HINT: struct = public by default, class = private by default.
- ✏️ STARTER CODE:
- // struct Point { int x; };
- // class  Box   { int x; };
- // class Empty {};
- // Point p;   p.x = 5;        // ✅ public member
- // Box   b;   b.x = 5;        // ❌ COMPILE ERROR: x private hai
- // cout << sizeof(Empty);     // 1
+ MODES/TOPICS COVERED:
+  1. Circle area using a setter and a method
+  2. Bank account with create/deposit/withdraw/show
+  3. Student average across two subjects
+  4. Car park: an array of objects with accelerate()
+  5. Book counter via a static member
+  6. struct vs class and the size of an empty class
 ═══════════════════════════════════════════════
 */
 

@@ -2,105 +2,27 @@
 ═══════════════════════════════════════════════
  TASK SET — ACCESS MODIFIERS (public/private/protected)
 ═══════════════════════════════════════════════
+ 🌍 REAL-WORLD SCENARIO: A bank's cash vault is private (only the banker
+    touches it), the staff room is protected (only employees of the branch
+    and its child branches may enter), and the customer hall is public
+    (everyone walks in). You build the same three layers in every class:
+    private data, protected values for children, and a public safe
+    interface of getters/setters.
 
- 🌍 REAL-WORLD SCENARIO:
- A bank's cash vault is private (only the banker touches it), the staff
- room is protected (only employees of the branch and its child branches
- may enter), and the customer hall is public (everyone walks in). You build
- the same three layers in every class: private data, protected values for
- children, and a public safe interface of getters/setters.
+ 🧠 HOW TO SOLVE: 1) Keep sensitive data (salary, balance, pin) private.
+    2) For every write, create a public setter that validates first.
+    3) For read-only views, create public getters.
+    4) Keep values that only the family (derived classes) needs as
+    protected. 5) Never touch data held in main() directly — you will get
+    a compile error.
 
- 🧠 HOW TO SOLVE:
- 1) Sensitive data (salary, balance, pin) ko private rakho.
- 2) Har write-guard ke liye public setter banao jo validate kare.
- 3) Read-only view ke liye public getter banao.
- 4) Jo value sirf family (derived classes) ko chahiye, use protected rakho.
- 5) main() me rakha data directly kabhi mat chhedo — compile error aayega.
-
- TASKS (EASY → HARD):
-
- TASK 1 — EMPLOYEE salary via getter/setter (EASY)
- class Employee: private name + salary. Public setName()/setSalary() and
- getName()/getSalary(). Negative salary rejects — set to 0.
- 💡 HINT: setter ke andar validation — salary < 0 ho to 0 kar do.
- ✏️ STARTER CODE:
- // class Employee {
- //   private: string name; double salary;
- //   public:
- //     void setName(string n);
- //     void setSalary(double s);      // negative → 0
- //     string getName() const;
- //     double getSalary() const;
- // };
-
- TASK 2 — public vs private ka fark (EASY)
- Make struct OpenBox { int code; }; and class SecretBox with private code.
- Set OpenBox.code directly (OK), then try SecretBox.code directly — show in
- a comment that it is a COMPILE ERROR, and use a setter/getter instead.
- 💡 HINT: struct = public by default, class = private by default.
- ✏️ STARTER CODE:
- // struct OpenBox { int code; };
- // class  SecretBox { int code; public: void setCode(int c); int getCode() const; };
- // main: OpenBox o; o.code = 7;          // ✅
- //       // SecretBox s; s.code = 7;     // ❌ compile error
-
- TASK 3 — BankAccount with validation (MEDIUM)
- class BankAccount: private double balance. deposit() / withdraw() that
- REJECT negative or zero amounts and over-withdrawals. Print success/fail.
- 💡 HINT: har method ki shuruaat me `if (amt <= 0)` check lagao.
- ✏️ STARTER CODE:
- // class BankAccount {
- //   private: double balance;
- //   public:
- //     bool deposit(double amt);   // <= 0 reject
- //     bool withdraw(double amt);  // <= 0 ya overdraw reject
- //     double getBalance() const;
- // };
-
- TASK 4 — protected + inheritance (MEDIUM)
- class Meter with protected int reading. class DigitalMeter : public Meter —
- inside it match(int guess) compares guess with reading (protected access
- from derived is allowed). main() me dolphin batao ki reading direct access
- nahi ho sakta.
- 💡 HINT: protected sirf derived class ke METHODS ke andar dikhta hai.
- ✏️ STARTER CODE:
- // class Meter {
- //   protected: int reading = 0;
- //   public: void addReading(int r) { reading += r; }
- // };
- // class DigitalMeter : public Meter {
- //   public: bool isHigh() { return reading > 100; }
- // };
-
- TASK 5 — friend function private member ko dekh saki hai (HARD)
- class Ledger: private int entries. Add records via add(). Declare a friend
- function countEntries() that reads entries directly. Normal (non-friend)
- free function ko private access NAHI milega.
- 💡 HINT: friend declaration class ke andar likhi jati hai, aur function
-    class ke bahar define hota hai.
- ✏️ STARTER CODE:
- // class Ledger {
- //   private: int entries = 0;
- //   public: void add() { entries++; }
- //   friend int countEntries(const Ledger& L);
- // };
- // int countEntries(const Ledger& L) { return L.entries; }
-
- TASK 6 — SecureVault: full data hiding (HARD)
- class SecureVault: private string secret + attempts counter. Public method
- open(pwd) returns the secret only for correct password, else "Wrong
- password", and after 3 wrong tries returns "LOCKED". Validate everything.
- 💡 HINT: private helper unlock() + public gate open() — data hiding ka
-    complete pattern.
- ✏️ STARTER CODE:
- // class SecureVault {
- //   private:
- //     string secret = "gold-bars";
- //     int failed = 0;
- //     bool unlock(string pwd) { return pwd == "open-sesame"; }
- //   public:
- //     string open(string pwd);   // 3 galat try → LOCKED
- // };
+ MODES/TOPICS COVERED:
+  1. Employee salary via getter/setter with validation
+  2. public vs private: struct vs class direct access
+  3. BankAccount that rejects bad deposits and over-withdrawals
+  4. protected member accessed from a derived class
+  5. friend function reading a private member
+  6. SecureVault: complete data hiding
 ═══════════════════════════════════════════════
 */
 

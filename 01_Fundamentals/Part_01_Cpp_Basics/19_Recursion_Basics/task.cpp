@@ -2,83 +2,26 @@
 ═══════════════════════════════════════════════
  TASK SET — RECURSION BASICS
 ═══════════════════════════════════════════════
-🌍 REAL-WORLD SCENARIO: A librarian wants the total books. He asks the
-   next stack, which asks the next... the LAST stack knows "there is 1
-   book". Answers bubble back: 1, 1+1=2, 2+1=3... Each sub-answer is a
-   recursive call returning to the caller. Base case = "last stack".
-   Without it, the chain never stops (stack overflow crash).
+ 🌍 REAL-WORLD SCENARIO: A librarian wants the total books. He asks the
+    next stack, which asks the next... the LAST stack knows "there is 1
+    book". Answers bubble back: 1, 1+1=2, 2+1=3... Each sub-answer is a
+    recursive call returning to the caller. Base case = "last stack".
+    Without it, the chain never stops (stack overflow crash).
 
-🧠 HOW TO SOLVE: Every recursive function needs TWO things:
-   1. BASE CASE — smallest input, direct answer, no recursion.
-   2. RECURSIVE STEP — reduce input size, call the function with the
-      smaller problem, and combine the returned result.
-   Trace small inputs by hand (n=3 or n=4) to see the pattern before
-   coding. Always guard negative inputs so recursion never runs forever.
-═══════════════════════════════════════════════
+ 🧠 HOW TO SOLVE: Every recursive function needs TWO things:
+    1. BASE CASE — smallest input, direct answer, no recursion.
+    2. RECURSIVE STEP — reduce input size, call the function with the
+       smaller problem, and combine the returned result.
+    Trace small inputs by hand (n=3 or n=4) to see the pattern before
+    coding. Always guard negative inputs so recursion never runs forever.
 
-TASK 1 (EASY): Sum 1 to n recursively
-   long long sumN(int n) returns 1+2+...+n.
-   Base case: n<=1 returns n. Recursive: n + sumN(n-1).
-   // STARTER CODE:
-   // long long sumN(int n) {
-   //     if (n <= 0) return 0;           // edge guard
-   //     if (n == 1) return 1;           // base case
-   //     return n + sumN(n - 1);         // chhota sum + n
-   // }
-
-TASK 2 (MEDIUM): Power a^b recursively
-   long long power(int a, int b) returns a^b, b>=0.
-   Base: b==0 → 1. Recursive: a * power(a, b-1).
-   // STARTER CODE:
-   // long long power(int a, int b) {
-   //     if (b < 0) return -1;           // negative exponent guard
-   //     if (b == 0) return 1;           // base case
-   //     return a * power(a, b - 1);     // ek guna kam
-   // }
-
-TASK 3 (MEDIUM): GCD via Euclid recursion
-   int gcd(int a, int b) — gcd(a, b) = gcd(b, a % b); base b==0 → a.
-   // STARTER CODE:
-   // int gcd(int a, int b) {
-   //     if (b == 0) return a;           // base case
-   //     return gcd(b, a % b);           // Euclid formula
-   // }
-
-TASK 4 (MEDIUM): Count Digits recursively
-   int countDigits(int n) — 12345 → 5. Handle negative by abs.
-   Base: |n| < 10 → 1. Recursive: 1 + countDigits(n/10).
-   // STARTER CODE:
-   // int countDigits(int n) {
-   //     if (n < 0) n = -n;              // negative handle
-   //     if (n < 10) return 1;           // base: single digit
-   //     return 1 + countDigits(n / 10); // ek digit kata + baaki
-   // }
-
-TASK 5 (HARD): Fibonacci recursively (with base cases)
-   long long fibRec(int n): base n==0→0, n==1→1, else fib(n-1)+fib(n-2).
-   Guard n<0. Print "fib(i) called" for trace.
-   // STARTER CODE:
-   // long long fibRec(int n) {
-   //     cout << "fib(" << n << ") called\n";
-   //     if (n < 0) return -1;
-   //     if (n == 0) return 0;
-   //     if (n == 1) return 1;
-   //     return fibRec(n - 1) + fibRec(n - 2);
-   // }
-
-TASK 6 (HARD): Binary Search using Recursion
-   int bSearch(int arr[], int lo, int hi, int key) — returns index or -1.
-   Mid = lo + (hi-lo)/2. Base: lo>hi → -1; arr[mid]==key → mid.
-   Recursive: search left or right half depending on key vs arr[mid].
-   // STARTER CODE:
-   // int bSearch(int arr[], int lo, int hi, int key) {
-   //     if (lo > hi) return -1;                // base: not found
-   //     int mid = lo + (hi - lo) / 2;          // overflow-safe
-   //     if (arr[mid] == key) return mid;       // base: found
-   //     if (key < arr[mid]) return bSearch(arr, lo, mid - 1, key);
-   //     return bSearch(arr, mid + 1, hi, key);
-   // }
-
+ MODES/TOPICS COVERED:
+  1. Sum 1 to n recursively
+  2. Compute a^b recursively
+  3. GCD via Euclid's recursion
+  4. Count digits recursively
+  5. Fibonacci recursively (with base cases)
+  6. Binary search using recursion
 ═══════════════════════════════════════════════
 */
 // ---------------- SOLUTIONS ----------------

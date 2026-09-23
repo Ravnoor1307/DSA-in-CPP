@@ -1,57 +1,30 @@
 /*
-┌────────────────────────────────────────────────────────────┐
-│ FILE: task.cpp
-│
-│ REAL-WORLD SCENARIO:
-│ Pattern-recognition practice lab me tumhe identity, diagonal, symmetric, triangular, scalar matrices detect karni hain.
-│
-│ LOGIC (step-by-step, Hinglish):
-│ TASKS (easy -> hard):
-│ 1. n=3 identity matrix generate karo.
-│ 2. Diagonal matrix compact array se print karo.
-│ 3. Symmetric matrix check karo.
-│ 4. Upper triangular matrix check karo.
-│ 5. Lower triangular matrix check karo.
-│ 6. Scalar matrix check karo.
-│ 7. Unit matrix identify karo.
-│ 8. Storage optimization formulas comment me likho.
-│
-│ HINTS:
-│ - i==j diagonal.
-│ - i>j below diagonal.
-│ - i<j above diagonal.
-│ - symmetric ke liye only j>i compare enough.
-│
-│ STARTER CODE IDEA:
-│ for i -> for j -> apply condition.
-│
-│ SOLUTION: Neeche compact checks hain.
-│
-│ ASCII VISUAL / MEMORY DIAGRAM:
-│ Identity 3x3:
-│ 1 0 0
-│ 0 1 0
-│ 0 0 1
-│ Symmetric mirror pair: A[0][2] with A[2][0]
-│
-│ DRY RUN:
-│ Upper triangular checks below diagonal:
-│ (1,0),(2,0),(2,1) all zero.
-│ Lower triangular checks above diagonal:
-│ (0,1),(0,2),(1,2) all zero.
-│
-│ FLOW OF EXECUTION:
-│ setup matrices -> validate condition -> nested loops/formula -> output matrix
-│
-│ COMPLEXITY CALCULATION:
-│ - Most special matrix checks visit n² or half n² cells.
-│ - n(n-1)/2 comparisons simplifies to O(n²).
-│ -> Time Complexity = O(n²).
-│
-│ SPACE COMPLEXITY CALCULATION:
-│ - Checks use constant extra variables.
-│ -> Extra Space Complexity = O(1).
-└────────────────────────────────────────────────────────────┘
+═══════════════════════════════════════════════
+ TASK SET — SPECIAL MATRICES
+═══════════════════════════════════════════════
+ 🌍 REAL-WORLD SCENARIO: In a pattern-recognition lab you must
+    detect which of the classic matrices an input is: identity,
+    diagonal, symmetric, upper/lower triangular, or scalar. These
+    special patterns show up in image processing, graph theory,
+    and linear-algebra libraries.
+
+ 🧠 HOW TO SOLVE: Apply one index rule per matrix type: i==j for
+    the diagonal, A[i][j]==A[j][i] checked over the upper triangle
+    only for symmetric, i>j zeros for upper triangular, i<j zeros
+    for lower triangular, and constant diagonal + zero off-diagonal
+    for scalar. The identity matrix is the diagonal matrix whose
+    diagonal entries all equal 1.
+
+ MODES/TOPICS COVERED:
+  1. Generate an n=3 identity matrix
+  2. Print a diagonal matrix from its compact array
+  3. Check a symmetric matrix
+  4. Check an upper triangular matrix
+  5. Check a lower triangular matrix
+  6. Check a scalar matrix
+  7. Identify a unit matrix
+  8. Write storage optimization formulas in comments
+═══════════════════════════════════════════════
 */
 
 #include <iostream>

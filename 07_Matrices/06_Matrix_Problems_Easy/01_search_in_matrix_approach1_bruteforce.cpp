@@ -1,46 +1,60 @@
 /*
-┌────────────────────────────────────────────────────────────┐
-│ FILE: 01_search_in_matrix_approach1_bruteforce.cpp
-│
-│ REAL-WORLD SCENARIO:
-│ Library me book dhundhne ka simplest tareeka hai har shelf aur har row check karna. Matrix brute-force search bhi every cell scan karta hai.
-│
-│ LOGIC (step-by-step, Hinglish):
-│ 1. Target value define karo.
-│ 2. Row 0 se last row tak jao.
-│ 3. Har row me col 0 se last col tak compare karo.
-│ 4. Agar A[i][j] == target, found return karo.
-│ 5. Sorted property ki zarurat nahi.
-│
-│ ASCII VISUAL / PATH DIAGRAM:
-│ Matrix:
-│ 1  4  7
-│ 2  5  8
-│ 3  6  9
-│ target=5
-│ Scan order row-wise:
-│ 1 -> 4 -> 7 -> 2 -> 5 FOUND
-│
-│ DRY RUN:
-│ Compare A[0][0]=1 no
-│ Compare A[0][1]=4 no
-│ Compare A[0][2]=7 no
-│ Compare A[1][0]=2 no
-│ Compare A[1][1]=5 yes -> position (1,1)
-│
-│ FLOW OF EXECUTION:
-│ matrix setup -> choose traversal/search pattern -> update pointers/bounds -> output
-│
-│ COMPLEXITY CALCULATION:
-│ - In worst case target last cell/not present.
-│ - Rows = R, columns = C.
-│ - Total comparisons = R*C.
-│ -> Time Complexity = O(R*C).
-│
-│ SPACE COMPLEXITY CALCULATION:
-│ - No extra data structure.
-│ -> Extra Space Complexity = O(1).
-└────────────────────────────────────────────────────────────┘
+═══════════════════════════════════════════════
+ SEARCH IN MATRIX — APPROACH 1 (BRUTE FORCE)
+ ⏱️ TIME COMPLEXITY: O(R*C) — worst case checks every cell
+═══════════════════════════════════════════════
+
+ 🌍 REAL-WORLD SCENARIO:
+ The simplest way to find a book in a library is to check every
+ shelf and every row, one by one. Brute-force matrix search does
+ the same: every cell is scanned until the target is found.
+
+ 📖 THEORY:
+ - Brute-force search compares every cell against the target until
+   a match is found.
+ - It needs NO sorted-order property — it works on any matrix.
+ - Worst case (target absent or in the last cell) compares all
+   R*C cells.
+
+ ASCII DIAGRAM:
+ Matrix:
+ 1  4  7
+ 2  5  8
+ 3  6  9
+ target = 5
+ Scan order row-wise:
+ 1 -> 4 -> 7 -> 2 -> 5 FOUND
+
+ 🧠 LOGIC — STEP BY STEP:
+ Step 1: Loop through every row i.
+    WHY: Rows are the outer dimension of the scan.
+ Step 2: Loop through every column j of the current row.
+    WHY: Each row has C cells that must be tested.
+ Step 3: If A[i][j] == target, return position (i, j).
+    WHY: The first match is the answer.
+ Step 4: If both loops finish, return (-1, -1).
+    WHY: No cell matched the target, so it is absent.
+
+ DRY RUN:
+ compare A[0][0]=1 no
+ compare A[0][1]=4 no
+ compare A[0][2]=7 no
+ compare A[1][0]=2 no
+ compare A[1][1]=5 yes -> position (1,1)
+
+ FLOW OF EXECUTION:
+ matrix + target -> nested row/col scan -> A[i][j]==target? -> (i,j), else not found
+
+ TIME COMPLEXITY CALCULATION:
+ - In the worst case, the target is in the last cell or absent.
+ - Rows = R, columns = C.
+ - Total comparisons = R*C.
+ -> Time Complexity = O(R*C)
+
+ SPACE COMPLEXITY CALCULATION:
+ - No extra data structure is used.
+ -> Extra Space Complexity = O(1)
+═══════════════════════════════════════════════
 */
 
 #include <iostream>

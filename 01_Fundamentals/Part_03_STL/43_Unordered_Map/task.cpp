@@ -2,18 +2,28 @@
 ═══════════════════════════════════════════════
  TASK SET — std::unordered_map
 ═══════════════════════════════════════════════
-🌍 REAL-WORLD SCENARIO: A messaging app shows a user their first
-message that was sent EXACTLY once, an e-commerce catalog groups
-anagram product names together, and a finance ledger sums subarrays
-totalling exactly a bill amount. All three need key→value lookups in
-O(1) average with zero regard for sorted order — exactly what
-std::unordered_map gives.
-🧠 HOW TO SOLVE: Frequency → freq[x]++. First non-repeating → count
-first, then re-scan in order using freq[c]==1. Missing number → store
-all present in hash, then scan 1..n with count(). Two-sum → value→index
-map with complement checked BEFORE insert. Subarray sum = k → prefix-sum
-map with cnt[0]=1 (bhoolna mat!). Group anagrams → sorted word as the
-group key. Read every statement; HINT diya hai, pehle khud try karo.
+ 🌍 REAL-WORLD SCENARIO: A messaging app shows a user their first
+    message that was sent EXACTLY once, an e-commerce catalog groups
+    anagram product names together, and a finance ledger sums subarrays
+    totalling exactly a bill amount. All three need key→value lookups in
+    O(1) average with zero regard for sorted order — exactly what
+    std::unordered_map gives.
+
+ 🧠 HOW TO SOLVE: Frequency → freq[x]++. First non-repeating → count
+    first, then re-scan in order using freq[c]==1. Missing number → store
+    all present values in the hash, then scan 1..n with count(). Two-sum →
+    value→index map with the complement checked BEFORE insert. Subarray
+    sum = k → prefix-sum map with cnt[0]=1 (do not forget!). Group
+    anagrams → the sorted word as the group key. Read every statement
+    carefully; a HINT is given, but try it yourself first.
+
+ MODES/TOPICS COVERED:
+  1. First non-repeating character
+  2. Frequency of each value
+  3. Missing number
+  4. Two-sum: return the indices
+  5. Subarray sum equals k
+  6. Group anagrams
 ═══════════════════════════════════════════════
 */
 // ---------------- SOLUTIONS ----------------

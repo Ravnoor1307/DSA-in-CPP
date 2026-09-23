@@ -136,9 +136,9 @@
  in graphs) → unordered_set. Needing min/max/sorted/range queries → set.
 
  GOTCHA ⚠️: std::unordered_set does NOT come for free via <iostream>
- or <vector>. You MUST #include <unordered_set> explicitly. Hona
- chahiye, warna "unordered_set: not a member of std" jaise compile
- error aayega. Kabhi bhi transitive includes par bharosa mat karo.
+ or <vector>. You MUST #include <unordered_set> explicitly. If you
+ forget, you will get a compile error like "unordered_set: not a
+ member of std". Never rely on transitive includes.
 */
 
 #include <iostream>

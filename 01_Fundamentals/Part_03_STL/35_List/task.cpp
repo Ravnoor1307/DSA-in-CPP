@@ -2,83 +2,26 @@
 ═══════════════════════════════════════════════
  TASK SET — STD::LIST
 ═══════════════════════════════════════════════
-🌍 REAL-WORLD SCENARIO:
-A playlist app stores songs in a doubly-linked list so you can
-insert a track between two songs or remove one instantly without
-re-sorting. A DJ also loves merge-sort style mashups — two sorted
-playlists can be merged in one pass, and a block of songs can be
-spliced out of one playlist and dropped into another in O(1).
+ 🌍 REAL-WORLD SCENARIO: A playlist app stores songs in a doubly-linked
+    list so you can insert a track between two songs or remove one
+    instantly without re-sorting. A DJ also loves merge-sort style
+    mashups — two sorted playlists can be merged in one pass, and a block
+    of songs can be spliced out of one playlist and dropped into another
+    in O(1).
 
-🧠 HOW TO SOLVE:
-std::list gives O(1) insertion/erasure at an iterator but O(n)
-searching. Use advance()/lower_bound walk to find sorted positions.
-For duplicates, sort() first then unique() (it only kills
-CONSECUTIVE dupes). splice() moves whole sub-lists by pointer
-rewiring — remember the source list becomes empty after a full
-splice.
+ 🧠 HOW TO SOLVE: std::list gives O(1) insertion/erasure at an iterator
+    but O(n) searching. Use advance()/lower_bound walk to find sorted
+    positions. For duplicates, sort() first then unique() (it only kills
+    CONSECUTIVE dupes). splice() moves whole sub-lists by pointer rewiring
+    — remember the source list becomes empty after a full splice.
 
- 6-6 tasks EASY → HARD:
-──────────────────────────────────────────────
- TASK 1 — Insert into sorted list
- Statement: Given a sorted list {10, 20, 30, 40}, insert 25 so the
-            list stays sorted → {10, 20, 25, 30, 40}.
- 💡 HINT: Walk with an iterator while (*it < 25), then list.insert.
- ✏️ STARTER CODE:
- // list<int> l = {10, 20, 30, 40};
- // int val = 25;
- // auto it = l.begin();
- // while (it != l.end() && *it < val) { ++it; }   // ruk jao jahan 25 aana chahiye
- // l.insert(it, val);  // O(n) walk + O(1) insert
-──────────────────────────────────────────────
- TASK 2 — Remove duplicates
- Statement: Given {5, 5, 3, 3, 3, 8, 8, 8, 8}, remove ALL duplicate
-            values leaving only one copy of each → {5, 3, 8}.
- 💡 HINT: unique() only removes CONSECUTIVE dupes, so sort first.
- ✏️ STARTER CODE:
- // list<int> l = {5, 5, 3, 3, 3, 8, 8, 8, 8};
- // l.sort();     // pehle sort — unique ko consecutive chahiye
- // l.unique();   // ab ek baar scan me sab dupes hat jayenge
-──────────────────────────────────────────────
- TASK 3 — Reverse a list
- Statement: Given {1, 2, 3, 4, 5}, reverse it in place
-            → {5, 4, 3, 2, 1}. No arrays, no extra container.
- 💡 HINT: list has its own member reverse() — O(n) pointer swaps.
- ✏️ STARTER CODE:
- // list<int> l = {1, 2, 3, 4, 5};
- // l.reverse();   // sirf prev/next pointers ulta kar do — O(n)
-──────────────────────────────────────────────
- TASK 4 — Merge two sorted lists
- Statement: Merge {1, 4, 7} and {2, 3, 9} into ONE sorted list
-            → {1, 2, 3, 4, 7, 9}. The second list must be empty after.
- 💡 HINT: Both lists must be sorted; then l1.merge(l2) — O(n).
- ✏️ STARTER CODE:
- // list<int> a = {1, 4, 7};
- // list<int> b = {2, 3, 9};
- // a.merge(b);   // b khali ho jayega — saara data a me aa jayega
-──────────────────────────────────────────────
- TASK 5 — Remove all elements > x
- Statement: Given {3, 9, 1, 9, 5, 9, 2} and x = 5, remove every
-            element GREATER than x → {3, 1, 5, 2}.
- 💡 HINT: remove_if with a lambda: keep only *it <= x.
- ✏️ STARTER CODE:
- // list<int> l = {3, 9, 1, 9, 5, 9, 2};
- // int x = 5;
- // l.remove_if([&](int n) { return n > x; });  // condition true par node delete
-──────────────────────────────────────────────
- TASK 6 — Splice two lists
- Statement: Move the FIRST TWO nodes from list B {100, 200, 300}
-            into the FRONT of list A {1, 2, 3} → A = {100, 200, 1, 2, 3},
-            then FILL any empty spot in analysis: B becomes {300}.
- 💡 HINT: splice(pos, src, first, last) moves a range of nodes
-          WITHOUT copying — O(1) pointer rewiring.
- ✏️ STARTER CODE:
- // list<int> a = {1, 2, 3};
- // list<int> b = {100, 200, 300};
- // auto first = b.begin();
- // auto last  = b.begin();
- // advance(last, 2);                  // [first, last) = {100, 200}
- // a.splice(a.begin(), b, first, last);
- // // ab a = {100, 200, 1, 2, 3}  aur b = {300}
+ MODES/TOPICS COVERED:
+  1. Insert into a sorted list
+  2. Remove duplicates
+  3. Reverse a list
+  4. Merge two sorted lists
+  5. Remove all elements > x
+  6. Splice two lists
 ═══════════════════════════════════════════════
 */
 // ---------------- SOLUTIONS ----------------

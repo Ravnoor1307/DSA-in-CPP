@@ -2,149 +2,27 @@
 ═══════════════════════════════════════════════
  TASK SET — STATIC MEMBERS & this POINTER
 ═══════════════════════════════════════════════
-🌍 REAL-WORLD SCENARIO: An HR system tracks how many employees are currently
- working across all branches. Every new hire increments a shared counter, and
- every resignation decrements it. Meanwhile, when an employee updates their
- own profile, the system must know they are editing THEIR OWN record — that
- is the this pointer at work.
+ 🌍 REAL-WORLD SCENARIO: An HR system tracks how many employees are
+    currently working across all branches. Every new hire increments a
+    shared counter, and every resignation decrements it. Meanwhile, when
+    an employee updates their own profile, the system must know they are
+    editing THEIR OWN record — that is the this pointer at work.
 
-🧠 HOW TO SOLVE:
- - Static data member: declare `static int x;` inside class, define OUTSIDE.
- - Static member function: declare `static returnType fun();`, call via ClassName::fun().
- - this pointer: use `this->member` when parameter hides the member name.
- - Method chaining: setters return `*this` (reference to current object).
- - const member functions: append `const` after parameter list, promise no mutation.
+ 🧠 HOW TO SOLVE: Static data member: declare `static int x;` inside the
+    class, define it OUTSIDE. Static member function: declare
+    `static returnType fun();`, call via ClassName::fun(). this pointer:
+    use `this->member` when the parameter hides the member name. Method
+    chaining: setters return `*this` (a reference to the current object).
+    const member functions: append `const` after the parameter list to
+    promise no mutation.
 
- TASK 1 (EASY) — Object Counter
- Statement: Write a class Counter with a static data member `total`.
- Each constructor increments it, each destructor decrements it.
- Write a static function `getTotal()` that returns the current count.
- Print the count after creating 3 counters and then destroying one.
- 💡 HINT: Remember — static member MUST be defined outside the class
- using `int Counter::total = 0;`. Static functions can only access
- static members.
- ✏️ STARTER CODE:
- // class Counter {
- // private:
- //     static int total;
- // public:
- //     Counter() { total++; }          // harr object banne pe badh jao
- //     ~Counter() { total--; }         // harr object gayab hone pe ghat jao
- //     static int getTotal() { return total; }
- // };
- // // yaha pehle static variable ko define karo (n=0 se)
- // Then in main(): create 3 counters, print total, destroy 1, print again.
-
- TASK 2 (EASY) — Shared Company Config
- Statement: Write a class CompanyConfig where the company name and a bonus
- percentage are static (shared by all employees). Provide a static function
- `showConfig()` and a static function `setBonus(double)` that updates the
- shared bonus. Create Employee objects and show that they ALL see the
- updated bonus.
- 💡 HINT: If one employee updates the bonus, every employee sees the new
- value — that proves it is one shared copy in the static segment.
- ✏️ STARTER CODE:
- // class Employee {
- // private:
- //     static string company;
- //     static double bonus;
- //     string name;
- // public:
- //     Employee(string n) : name(n) {}
- //     static void setBonus(double b) { bonus = b; }
- //     static void showConfig() { cout << company << " bonus=" << bonus; }
- // };
- // Define company = "TechNova", bonus = 5.0 outside class.
- // In main: create e1, e2. showConfig() → setBonus(10.0) → showConfig() again.
-
- TASK 3 (MEDIUM) — Name Shadowing with this->
- Statement: Write a class Account with a member `string owner`. Write a
- method `setOwner(string owner)` that must update the MEMBER using
- this-> , because parameter and member have the SAME name. Prove the
- fix works by printing the account after the call.
- 💡 HINT: Without this->, the code `owner = owner` assigns the parameter
- to itself and the member never changes. this->owner points to the member.
- ✏️ STARTER CODE:
- // class Account {
- // private:
- //     string owner;
- //     int balance;
- // public:
- //     Account(string owner, int balance) { ... }   // constructor me bhi this-> use karo (dekhna band mat)
- //     void setOwner(string owner) {
- //         // BUG without this-> : member never changes
- //         this->owner = owner;   // ✅ FIX: this-> = member
- //     }
- //     void print() const { cout << owner << " Rs." << balance; }
- // };
- // In main: madhur = new Account("Madhur", 5000); setOwner("Madhur Kumar"); print();
-
- TASK 4 (MEDIUM) — Method Chaining
- Statement: Write a class Product with members name and price.
- Implement setters setName() and setPrice() that return *this so the
- following chain works: p.setName("Laptop").setPrice(55000).print().
- Also implement a const print() function.
- 💡 HINT: Return type must be a REFERENCE: `Product& setName(...)`.
- If you return by value, chaining still compiles but creates copies —
- return *this as reference for true chaining.
- ✏️ STARTER CODE:
- // class Product {
- // private:
- //     string name; int price;
- // public:
- //     Product& setName(string n) { name = n; return *this; }
- //     Product& setPrice(int p) { price = p; return *this; }
- //     void print() const { cout << name << " = Rs." << price; }
- // };
- // In main: Product p; p.setName("Laptop").setPrice(55000).print();
- // Then add another settable field like rating and extend the chain.
-
- TASK 5 (HARD) — Comprehensible Counter with const + static
- Statement: Design a class Ticket that:
-   (a) Uses a static int `nextId` to auto-assign increasing IDs to each ticket.
-   (b) Each ticket stores its own id.
-   (c) Has a static function to see how many tickets were sold so far.
-   (d) Has a const function `isValid()` returning true if ticket id is even.
- Create 6 tickets, print their IDs, then test isValid() on first and last.
- 💡 HINT: Constructor can assign `this->id = nextId;` before incrementing.
- Even id check: `id % 2 == 0`. Static nextId persists across all tickets.
- ✏️ STARTER CODE:
- // class Ticket {
- // private:
- //     static int nextId;   // har ticket ko naya id dene ke liye
- //     int id;
- // public:
- //     Ticket() { this->id = nextId++; }   // assign then increment
- //     static int sold() { return nextId; } // kitne tickets beche gaye?
- //     bool isValid() const { return id % 2 == 0; } // even = valid
- //     int getID() const { return id; }
- // };
- // int Ticket::nextId = 1000;   // starting ID
- // In main: create 6 tickets in an array, print each id, print isValid() results.
-
- TASK 6 (HARD) — Full Method-Chaining Library
- Statement: Build a class BankAccount that supports FULL chaining:
-   deposit(double amt) → returns *this (adds money)
-   withdraw(double amt) → returns *this (subtracts money, refuses if insufficient)
-   applyAndPrint() → const function that prints balance nicely.
- Also show that a const function can be chained from a non-const result.
- Edge case: withdraw more than balance must NOT go negative.
- 💡 HINT: track balance as double. In withdraw, use if (amt <= balance)
- balance -= amt, else print refusal. return *this in both paths.
- ✏️ STARTER CODE:
- // class BankAccount {
- // private:
- //     double balance; string owner;
- // public:
- //     BankAccount(string o, double b): owner(o), balance(b) {}
- //     BankAccount& deposit(double amt) { balance += amt; return *this; }
- //     BankAccount& withdraw(double amt) { ... }    // guard: amt <= balance hi allow
- //     void print() const { cout << owner << ": Rs." << balance; }
- // };
- // In main: BankAccount a("Shreya", 10000);
- // a.deposit(5000).withdraw(2000).deposit(300).print();
- // Test: a.withdraw(999999).print() — must not go negative.
-
+ MODES/TOPICS COVERED:
+  1. Object counter with a static total
+  2. Shared company config (static data members)
+  3. Name shadowing resolved with this->
+  4. Method chaining (setters return *this)
+  5. Ticket IDs via static nextId + const isValid
+  6. Full method-chaining bank account
 ═══════════════════════════════════════════════
 */
 // ---------------- SOLUTIONS ----------------

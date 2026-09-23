@@ -1,52 +1,67 @@
 /*
-┌────────────────────────────────────────────────────────────┐
-│ FILE: 07_anagram_check_approach2_freq_array.cpp
-│
-│ REAL-WORLD SCENARIO:
-│ Scrabble counter me 26 boxes hain. LISTEN ke letters add karo aur SILENT ke letters subtract karo; agar all boxes zero, anagram hai.
-│
-│ LOGIC (step-by-step, Hinglish):
-│ 1. Length same check karo after normalization.
-│ 2. freq[26] zero initialize.
-│ 3. First string ke chars ke liye freq[ch-'a']++.
-│ 4. Second string ke chars ke liye freq[ch-'a']--.
-│ 5. End me all zero -> anagram.
-│ 6. This is O(n) and very important frequency-array trick.
-│
-│ ASCII VISUAL / COUNT STATE:
-│ LISTEN vs SILENT:
-│ listen adds: l,i,s,t,e,n
-│ silent subtracts: s,i,l,e,n,t
-│
-│ Final freq array:
-│ a b c d e f ... i ... l ... n ... s t
-│ 0 0 0 0 0 0 ... 0 ... 0 ... 0 ... 0 0
-│ all zero -> anagram
-│
-│ DRY RUN:
-│ add listen:
-│ l:+1, i:+1, s:+1, t:+1, e:+1, n:+1
-│ subtract silent:
-│ s:0, i:0, l:0, e:0, n:0, t:0
-│ all zero -> YES
-│
-│ FLOW OF EXECUTION:
-│ input string -> scan/build frequency/transform -> produce output
-│
-│ COMPLEXITY CALCULATION:
-│ - Normalize first string scans n chars.
-│ - Normalize second string scans n chars.
-│ - Frequency update scans n chars.
-│ - Final fixed 26 scan.
-│ -> Time Complexity = O(n).
-│
-│ SPACE COMPLEXITY CALCULATION:
-│ - Fixed 26 array.
-│ -> Extra Space Complexity = O(1).
-│ APPROACH COMPARISON TABLE:
-│ Sort = arrange Scrabble tiles alphabetically, O(n log n) time/O(n) copy space.
-│ Freq array = 26 attendance boxes, O(n) time/O(1) space.
-└────────────────────────────────────────────────────────────┘
+═══════════════════════════════════════════════
+ ANAGRAM CHECK — APPROACH 2 (FREQUENCY ARRAY)
+ ⏱️ TIME COMPLEXITY: O(n) — normalizing and frequency updates scan n chars, final fixed 26 scan, extra space O(1)
+═══════════════════════════════════════════════
+
+ 🌍 REAL-WORLD SCENARIO:
+ A Scrabble counter has 26 boxes. Add the letters of LISTEN and subtract the letters
+ of SILENT; if every box ends at zero, the words are anagrams.
+
+ 📖 THEORY:
+ - Check equal length after normalization.
+ - Initialize freq[26] to zero.
+ - For each char of the first string: freq[ch-'a']++.
+ - For each char of the second string: freq[ch-'a']--.
+ - If all boxes are zero at the end, they are anagrams.
+ - This is O(n) and is a very important frequency-array trick.
+
+ ASCII VISUAL / COUNT STATE:
+ LISTEN vs SILENT:
+ listen adds: l,i,s,t,e,n
+ silent subtracts: s,i,l,e,n,t
+
+ Final freq array:
+ a b c d e f ... i ... l ... n ... s t
+ 0 0 0 0 0 0 ... 0 ... 0 ... 0 ... 0 0
+ all zero -> anagram
+
+ 🧠 LOGIC — STEP BY STEP:
+ Step 1: Normalize both strings (keep letters, lowercase) and compare lengths.
+    WHY: anagrams must have the exact same multiset of letters.
+ Step 2: Initialize freq(26,0).
+    WHY: one box per letter to track net balance.
+ Step 3: Increment for the first string and decrement for the second in one loop.
+    WHY: additions and subtractions cancel matching letters directly.
+ Step 4: If any box is non-zero, return false.
+    WHY: a non-zero box means some letter count differs.
+ Step 5: Otherwise return true.
+    WHY: all boxes zero means perfect cancellation.
+
+ DRY RUN:
+ add listen:
+ l:+1, i:+1, s:+1, t:+1, e:+1, n:+1
+ subtract silent:
+ s:0, i:0, l:0, e:0, n:0, t:0
+ all zero -> YES
+
+ FLOW OF EXECUTION:
+ input strings -> normalize -> length check -> net frequency +/- -> verify all zero -> print result
+
+ TIME COMPLEXITY CALCULATION:
+ - Normalize first string scans n chars.
+ - Normalize second string scans n chars.
+ - Frequency update scans n chars.
+ - Final fixed 26 scan.
+ -> Time Complexity = O(n).
+
+ SPACE COMPLEXITY CALCULATION:
+ - Fixed 26 array.
+ -> Extra Space Complexity = O(1).
+ APPROACH COMPARISON TABLE:
+ Sort = arrange Scrabble tiles alphabetically, O(n log n) time/O(n) copy space.
+ Freq array = 26 attendance boxes, O(n) time/O(1) space.
+═══════════════════════════════════════════════
 */
 
 #include <iostream>

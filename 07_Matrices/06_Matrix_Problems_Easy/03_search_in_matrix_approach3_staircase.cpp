@@ -1,54 +1,74 @@
 /*
-┌────────────────────────────────────────────────────────────┐
-│ FILE: 03_search_in_matrix_approach3_staircase.cpp
-│
-│ REAL-WORLD SCENARIO:
-│ Sorted office building me top-right corner se guard search karta hai. Agar target current se chhota hai to left jao; agar target bada hai to down jao. Ye staircase search hai.
-│
-│ LOGIC (step-by-step, Hinglish):
-│ 1. Condition: rows sorted left-to-right and columns sorted top-to-bottom.
-│ 2. Start top-right: row=0, col=C-1.
-│ 3. If current == target, found.
-│ 4. If target < current, left move because same column me neeche values aur bade honge.
-│ 5. If target > current, down move because same row me left values aur chhote honge.
-│ 6. Har step me one row ya one column eliminate hota hai.
-│
-│ ASCII VISUAL / PATH DIAGRAM:
-│ Matrix:
-│  1   4   7  11
-│  2   5   8  12
-│  3   6   9  16
-│ 10  13  14  17
-│ target=9
-│
-│ Start top-right 11
-│ 9 < 11 -> left to 7
-│ 9 > 7  -> down to 8
-│ 9 > 8  -> down to 9 FOUND
-│
-│ Path: (0,3)->(0,2)->(1,2)->(2,2)
-│
-│ DRY RUN:
-│ r=0,c=3 value11; target chhota -> c--
-│ r=0,c=2 value7; target bada -> r++
-│ r=1,c=2 value8; target bada -> r++
-│ r=2,c=2 value9; found
-│
-│ FLOW OF EXECUTION:
-│ matrix setup -> choose traversal/search pattern -> update pointers/bounds -> output
-│
-│ COMPLEXITY CALCULATION:
-│ - Start at top-right.
-│ - Each move either row increases or column decreases.
-│ - Row can increase at most R times.
-│ - Column can decrease at most C times.
-│ - Total moves <= R + C.
-│ -> Time Complexity = O(R+C).
-│
-│ SPACE COMPLEXITY CALCULATION:
-│ - Only row and col pointers used.
-│ -> Extra Space Complexity = O(1).
-└────────────────────────────────────────────────────────────┘
+═══════════════════════════════════════════════
+ SEARCH IN MATRIX — APPROACH 3 (STAIRCASE SEARCH)
+ ⏱️ TIME COMPLEXITY: O(R+C) — one row or column dropped per move
+═══════════════════════════════════════════════
+
+ 🌍 REAL-WORLD SCENARIO:
+ A guard searches a sorted office building starting from the
+ top-right corner. If the target is smaller than the current value
+ he moves left; if it is bigger he moves down. This is the
+ staircase search.
+
+ 📖 THEORY:
+ - Requirement: rows sorted left→right AND columns sorted
+   top→bottom.
+ - Start at the top-right corner: row=0, col=C-1.
+ - Moving left gives smaller values; moving down gives larger ones.
+ - Each move eliminates an entire column (going left) or an entire
+   row (going down).
+ - At most R+C moves happen before the target is found or ruled out.
+
+ ASCII DIAGRAM:
+ Matrix:
+  1   4   7  11
+  2   5   8  12
+  3   6   9  16
+ 10  13  14  17
+ target = 9
+
+ Start top-right 11
+ 9 < 11 -> left to 7
+ 9 > 7  -> down to 8
+ 9 > 8  -> down to 9 FOUND
+
+ Path: (0,3) -> (0,2) -> (1,2) -> (2,2)
+
+ 🧠 LOGIC — STEP BY STEP:
+ Step 1: Start at r=0, c=C-1 (top-right).
+    WHY: From this corner one direction is guaranteed smaller and
+    the other larger.
+ Step 2: If A[r][c]==target, return (r,c).
+ Step 3: If target < A[r][c], move left (c--).
+    WHY: The same column below only gets bigger, so everything
+    smaller is to the left.
+ Step 4: If target > A[r][c], move down (r++).
+    WHY: The same row to the left only gets smaller, so everything
+    larger is below.
+ Step 5: If r or c exits the matrix, the target is absent.
+    WHY: Every miss has eliminated one full row or column.
+
+ DRY RUN:
+ r=0, c=3 value 11; target 9 is smaller -> c--
+ r=0, c=2 value 7;  target 9 is larger  -> r++
+ r=1, c=2 value 8;  target 9 is larger  -> r++
+ r=2, c=2 value 9;  found at (2,2)
+
+ FLOW OF EXECUTION:
+ matrix + target -> start top-right -> compare -> left or down move -> found or out of bounds
+
+ TIME COMPLEXITY CALCULATION:
+ - Start at top-right.
+ - Each move either increases the row or decreases the column.
+ - Row can increase at most R times.
+ - Column can decrease at most C times.
+ - Total moves <= R + C.
+ -> Time Complexity = O(R+C)
+
+ SPACE COMPLEXITY CALCULATION:
+ - Only row and col pointers are used.
+ -> Extra Space Complexity = O(1)
+═══════════════════════════════════════════════
 */
 
 #include <iostream>

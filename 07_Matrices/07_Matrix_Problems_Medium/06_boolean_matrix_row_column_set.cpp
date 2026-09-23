@@ -1,53 +1,65 @@
 /*
-┌────────────────────────────────────────────────────────────┐
-│ FILE: 06_boolean_matrix_row_column_set.cpp
-│
-│ REAL-WORLD SCENARIO:
-│ Office access sheet me 1 means infected/active permission. Agar kisi cell me 1 hai, to uski full row and column active 1 set karni hai.
-│
-│ LOGIC (step-by-step, Hinglish):
-│ 1. Boolean matrix has 0/1 values.
-│ 2. Original 1s ki rows and columns mark karo.
-│ 3. Directly mutate karne se new 1s cascade kar sakte hain, isliye marker arrays use karo.
-│ 4. rowMark[i]=true if row i should become 1.
-│ 5. colMark[j]=true if column j should become 1.
-│ 6. Second pass me marked row/col cells ko 1 set karo.
-│
-│ ASCII VISUAL / STATE DIAGRAM:
-│ Input:
-│ 1 0 0
-│ 0 0 0
-│ 0 0 1
-│
-│ rowMark: row0,row2
-│ colMark: col0,col2
-│
-│ Output:
-│ 1 1 1
-│ 1 0 1
-│ 1 1 1
-│
-│ DRY RUN:
-│ First pass:
-│ (0,0)=1 -> row0=true, col0=true
-│ (2,2)=1 -> row2=true, col2=true
-│ Second pass:
-│ any cell with rowMark or colMark true becomes 1.
-│
-│ FLOW OF EXECUTION:
-│ input matrix -> choose approach -> transform/mark/DP -> print final answer
-│
-│ COMPLEXITY CALCULATION:
-│ - First pass visits R*C cells.
-│ - Second pass visits R*C cells.
-│ - Total visits = 2*R*C.
-│ -> Time Complexity = O(R*C).
-│
-│ SPACE COMPLEXITY CALCULATION:
-│ - rowMark stores R booleans.
-│ - colMark stores C booleans.
-│ -> Space Complexity = O(R+C).
-└────────────────────────────────────────────────────────────┘
+═══════════════════════════════════════════════
+ BOOLEAN MATRIX — ROW/COLUMN SET
+ ⏱️ TIME COMPLEXITY: O(R*C) — two passes over all cells
+═══════════════════════════════════════════════
+
+ 🌍 REAL-WORLD SCENARIO:
+ In an office access sheet, 1 means infected/active permission. If
+ any cell is 1, its entire row and column must be set to active 1.
+
+ 📖 THEORY:
+ - The matrix holds 0/1 values; if any cell is 1, its whole row and
+   whole column must become 1.
+ - Mutating in place directly would cascade (new 1s creating more
+   1s), so marker arrays record which rows/columns must be set.
+ - Two passes: mark from the original 1s, then fill the marked
+   rows/columns.
+
+ ASCII DIAGRAM:
+ Input:
+ 1 0 0
+ 0 0 0
+ 0 0 1
+
+ rowMark: row0, row2
+ colMark: col0, col2
+
+ Output:
+ 1 1 1
+ 1 0 1
+ 1 1 1
+
+ 🧠 LOGIC — STEP BY STEP:
+ Step 1: Create rowMark[R] and colMark[C], all false.
+    WHY: No row or column is marked yet.
+ Step 2: First pass: if A[i][j]==1, set rowMark[i]=true and
+    colMark[j]=true.
+    WHY: Every original 1 demands its row and column become 1.
+ Step 3: Second pass: set A[i][j]=1 if rowMark[i] or colMark[j].
+    WHY: A marked row/column forces 1 in every cell it crosses.
+
+ DRY RUN:
+ First pass:
+ (0,0)=1 -> row0=true, col0=true
+ (2,2)=1 -> row2=true, col2=true
+ Second pass:
+ any cell whose rowMark or colMark is true becomes 1.
+
+ FLOW OF EXECUTION:
+ input matrix -> mark rows/cols from original 1s -> second pass fill -> output
+
+ TIME COMPLEXITY CALCULATION:
+ - First pass visits R*C cells.
+ - Second pass visits R*C cells.
+ - Total visits = 2*R*C.
+ -> Time Complexity = O(R*C)
+
+ SPACE COMPLEXITY CALCULATION:
+ - rowMark stores R booleans.
+ - colMark stores C booleans.
+ -> Space Complexity = O(R+C)
+═══════════════════════════════════════════════
 */
 
 #include <iostream>

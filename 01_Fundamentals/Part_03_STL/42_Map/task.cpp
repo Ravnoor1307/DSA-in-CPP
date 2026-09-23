@@ -2,18 +2,28 @@
 ═══════════════════════════════════════════════
  TASK SET — std::map
 ═══════════════════════════════════════════════
-🌍 REAL-WORLD SCENARIO: A news website wants a report of how many
-times each word appears in an article (in alphabetical order), a
-class teacher needs the highest-scoring subject, and a delivery app
-must find two orders whose costs sum exactly to a budget coupon. std
-::map keeps every (name → value) pair sorted by key, which makes
-frequency reports, lookups, and value-sorting all natural.
-🧠 HOW TO SOLVE: Frequency problems → freq[key]++ (map khud sorted).
-Two-sum → map me value→index store karo, phir complement dhoondo.
-"Highest frequency" → map iterate karke max count track karo.
-Distinct count → size() of map. Sort by value → map KEY-se-sorted
-hai, isliye vector<pair> me copy + sort kar ke value se sort karo.
-Read every statement; HINT diya hai, pehle khud try karo.
+ 🌍 REAL-WORLD SCENARIO: A news website wants a report of how many
+    times each word appears in an article (in alphabetical order), a
+    class teacher needs the highest-scoring subject, and a delivery app
+    must find two orders whose costs sum exactly to a budget coupon.
+    std::map keeps every (name → value) pair sorted by key, which makes
+    frequency reports, lookups, and value-sorting all natural.
+
+ 🧠 HOW TO SOLVE: Frequency problems → freq[key]++ (the map sorts
+    itself). Two-sum → store value→index in the map, then search for the
+    complement. "Highest frequency" → iterate the map and track the max
+    count. Distinct count → size() of the map. Sort by value → the map is
+    sorted by KEY, so copy into a vector<pair> and sort by value instead.
+    Read every statement carefully; a HINT is given, but try it yourself
+    first.
+
+ MODES/TOPICS COVERED:
+  1. Word frequency (sorted by key)
+  2. Highest frequency word
+  3. Count distinct elements
+  4. Two-sum: return the indices
+  5. Sort a map by value
+  6. Majority element
 ═══════════════════════════════════════════════
 */
 // ---------------- SOLUTIONS ----------------

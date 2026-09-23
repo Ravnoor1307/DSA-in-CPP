@@ -1,43 +1,57 @@
 /*
-┌────────────────────────────────────────────────────────────┐
-│ FILE: 03_diagonal_traversal_primary.cpp
-│
-│ REAL-WORLD SCENARIO:
-│ Chess board par top-left se bottom-right diagonal line draw karo. Matrix primary diagonal wahi cells hain jahan row index aur column index equal hote hain.
-│
-│ LOGIC (step-by-step, Hinglish):
-│ 1. Primary diagonal condition: i == j.
-│ 2. Square matrix me n primary diagonal elements hote hain.
-│ 3. Traverse i from 0 to n-1 and print A[i][i].
-│ 4. Full matrix scan ki zarurat nahi.
-│ 5. Diagonal sum similarly add A[i][i].
-│
-│ ASCII VISUAL / PATH DIAGRAM:
-│ Matrix:
-│ [1]  2   3
-│  4  [5]  6
-│  7   8  [9]
-│
-│ Primary diagonal: 1,5,9
-│
-│ DRY RUN:
-│ i=0 -> A[0][0]=1
-│ i=1 -> A[1][1]=5
-│ i=2 -> A[2][2]=9
-│ sum=15
-│
-│ FLOW OF EXECUTION:
-│ matrix setup -> choose traversal/search pattern -> update pointers/bounds -> output
-│
-│ COMPLEXITY CALCULATION:
-│ - Loop runs n times.
-│ - Each iteration one access and optional addition.
-│ -> Time Complexity = O(n).
-│
-│ SPACE COMPLEXITY CALCULATION:
-│ - Output vector stores n elements.
-│ -> Extra Space Complexity = O(n), O(1) if direct print/sum.
-└────────────────────────────────────────────────────────────┘
+═══════════════════════════════════════════════
+ PRIMARY DIAGONAL TRAVERSAL
+ ⏱️ TIME COMPLEXITY: O(n) — single loop, one access per row
+═══════════════════════════════════════════════
+
+ 🌍 REAL-WORLD SCENARIO:
+ Draw a straight diagonal line from the top-left to the bottom-right
+ of a chess board. The primary diagonal of a matrix is exactly
+ those cells where the row index and the column index are equal.
+
+ 📖 THEORY:
+ - Primary diagonal condition: i == j.
+ - In a square matrix there are exactly n primary-diagonal cells.
+ - Traverse i from 0 to n-1 and print/read A[i][i]; a full matrix
+   scan is not needed.
+ - The diagonal sum is computed the same way: add A[i][i].
+
+ ASCII DIAGRAM:
+ Matrix:
+ [1]  2   3
+  4  [5]  6
+  7   8  [9]
+
+ Primary diagonal: 1, 5, 9
+
+ 🧠 LOGIC — STEP BY STEP:
+ Step 1: Loop i from 0 to n-1.
+    WHY: The diagonal has exactly one cell per row — n cells total.
+ Step 2: Access and print A[i][i].
+    WHY: The single-index rule i==j selects the diagonal cell of
+    each row.
+ Step 3: Optionally add A[i][i] to a sum.
+    WHY: Summing inside the same loop costs O(n) with no extra pass.
+
+ DRY RUN:
+ n=3
+ i=0 -> A[0][0] = 1
+ i=1 -> A[1][1] = 5
+ i=2 -> A[2][2] = 9
+ sum = 1 + 5 + 9 = 15
+
+ FLOW OF EXECUTION:
+ matrix -> single loop i=0..n-1 -> print/sum A[i][i] -> output
+
+ TIME COMPLEXITY CALCULATION:
+ - Loop runs n times.
+ - Each iteration does one access and an optional addition.
+ -> Time Complexity = O(n)
+
+ SPACE COMPLEXITY CALCULATION:
+ - Output vector stores n elements.
+ -> Extra Space Complexity = O(n), O(1) if direct print/sum
+═══════════════════════════════════════════════
 */
 
 #include <iostream>

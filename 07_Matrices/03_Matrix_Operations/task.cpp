@@ -1,57 +1,28 @@
 /*
-┌────────────────────────────────────────────────────────────┐
-│ FILE: task.cpp
-│
-│ REAL-WORLD SCENARIO:
-│ Excel operation lab me same tables ko add/subtract, product table multiply, and rows-columns flip karna hai.
-│
-│ LOGIC (step-by-step, Hinglish):
-│ TASKS (easy -> hard):
-│ 1. Same-size 2x3 matrices add karo.
-│ 2. Same-size 2x2 matrices subtract karo.
-│ 3. Dimension validation function banao.
-│ 4. 2x2 matrix multiplication implement karo.
-│ 5. Transpose for rectangular matrix implement karo.
-│ 6. Square matrix in-place transpose implement karo.
-│ 7. Matrix power repeated multiplication implement karo.
-│ 8. Har operation ki complexity calculation comment me likho.
-│
-│ HINTS:
-│ - Multiplication: C[i][j] += A[i][k]*B[k][j].
-│ - Result dimensions A rows x B cols.
-│ - Square transpose: swap only when j>i.
-│
-│ STARTER CODE IDEA:
-│ for i rows -> for j cols -> compute cell.
-│
-│ SOLUTION: Neeche short compiled solution hai.
-│
-│ ASCII VISUAL / MEMORY DIAGRAM:
-│ Multiplication dry run:
-│ A=[1 2;3 4], B=[5 6;7 8]
-│ C00=1*5+2*7=19
-│ C01=1*6+2*8=22
-│ C10=3*5+4*7=43
-│ C11=3*6+4*8=50
-│
-│ DRY RUN:
-│ Addition 2x2:
-│ [1 2] + [10 20] = [11 22]
-│ [3 4]   [30 40]   [33 44]
-│ Transpose: [1 2 3;4 5 6] -> [1 4;2 5;3 6]
-│
-│ FLOW OF EXECUTION:
-│ setup matrices -> validate condition -> nested loops/formula -> output matrix
-│
-│ COMPLEXITY CALCULATION:
-│ - Add/sub/transpose visit R*C cells = O(R*C).
-│ - Multiplication loops m*p*n = O(m*n*p).
-│ - Repeated power k times multiply = O(k*n³).
-│
-│ SPACE COMPLEXITY CALCULATION:
-│ - Output matrices store result cells.
-│ -> Space ranges from O(1) in-place to O(R*C).
-└────────────────────────────────────────────────────────────┘
+═══════════════════════════════════════════════
+ TASK SET — MATRIX OPERATIONS
+═══════════════════════════════════════════════
+ 🌍 REAL-WORLD SCENARIO: An Excel/calculator lab needs the same
+    tables added, subtracted, multiplied, and flipped about the
+    diagonal. These tasks build the exact logic used in
+    spreadsheets, image transforms, and linear-algebra libraries.
+
+ 🧠 HOW TO SOLVE: Add/subtract require identical sizes; multiply
+    only when A's columns equal B's rows, computing
+    C[i][j] += A[i][k]*B[k][j]; transpose mirrors cells with
+    T[j][i] = A[i][j] (in-place square: swap only when j>i); matrix
+    power repeats multiplication k times.
+
+ MODES/TOPICS COVERED:
+  1. Add two same-size 2x3 matrices
+  2. Subtract two same-size 2x2 matrices
+  3. Build a dimension validation function
+  4. Implement 2x2 matrix multiplication
+  5. Implement transpose for a rectangular matrix
+  6. Implement in-place transpose for a square matrix
+  7. Implement matrix power via repeated multiplication
+  8. Write the complexity calculation of each operation in comments
+═══════════════════════════════════════════════
 */
 
 #include <iostream>

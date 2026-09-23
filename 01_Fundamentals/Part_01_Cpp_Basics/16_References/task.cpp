@@ -2,89 +2,26 @@
 ═══════════════════════════════════════════════
  TASK SET — REFERENCES
 ═══════════════════════════════════════════════
-🌍 REAL-WORLD SCENARIO: A car workshop has a customer register. Two
-   mechanics edit the SAME paper file (one register, two pens). Whatever
-   one writes, the other instantly sees — no photocopy, no separate copy.
-   That is pass-by-reference: functions work on the caller's real data.
-   When you only need to VIEW the register, you still share it but with
-   a "const" promise — read-only, no modifications allowed.
+ 🌍 REAL-WORLD SCENARIO: A car workshop has a customer register. Two
+    mechanics edit the SAME paper file (one register, two pens). Whatever
+    one writes, the other instantly sees — no photocopy, no separate copy.
+    That is pass-by-reference: functions work on the caller's real data.
+    When you only need to VIEW the register, you still share it but with
+    a "const" promise — read-only, no modifications allowed.
 
-🧠 HOW TO SOLVE: Decide first — do we need to modify the caller's
-   variable? If YES → pass int &x (reference). If NO → pass const int &x.
-   Swapping = 3 assignments with a temp. Rotation = chain of assignments.
-   Reference binding is at declaration time (int &ref = target), and
-   after that, using ref is identical to using the target variable.
-═══════════════════════════════════════════════
+ 🧠 HOW TO SOLVE: Decide first — do we need to modify the caller's
+    variable? If YES → pass int &x (reference). If NO → pass const int &x.
+    Swapping = 3 assignments with a temp. Rotation = chain of assignments.
+    Reference binding is at declaration time (int &ref = target), and
+    after that, using ref is identical to using the target variable.
 
-TASK 1 (EASY): Swap Two Variables using References
-   Write a function swapRef(int &a, int &b) that swaps two ints and
-   updates the caller's values.
-   Hint: Use a temp variable. No pointers needed.
-   // STARTER CODE:
-   // void swapRef(int &a, int &b) {
-   //     int temp = a;   // temp me a ki value backup karo
-   //     a = b;          // ab a me b daalo
-   //     b = temp;       // aur b me purani a
-   // }
-
-TASK 2 (EASY): Swap TWO PAIRS simultaneously
-   Write a function swapPairs(int &a, int &b, int &c, int &d) that
-   swaps (a,b) and also swaps (c,d) — all four caller values change.
-   Hint: Just call the logic twice inline — two temps, or call a helper.
-   // STARTER CODE:
-   // void swapPairs(int &a, int &b, int &c, int &d) {
-   //     // pahle (a,b) swap karo, phir (c,d) swap karo
-   // }
-
-TASK 3 (MEDIUM): Left Rotate Three Values by Reference
-   Given (a, b, c), change it to (b, c, a) using references.
-   Hint: Save a, then a=b, b=c, c=temp.
-   // STARTER CODE:
-   // void rotateLeft(int &a, int &b, int &c) {
-   //     int temp = a;
-   //     a = b;
-   //     b = c;
-   //     c = temp;
-   // }
-
-TASK 4 (MEDIUM): Increment the Smaller, Decrement the Bigger
-   Write void adjust(int &x, int &y): if x < y then x++ and y--;
-   else y++ and x--. Modifies caller's variables.
-   Hint: else covers the x >= y case — write both branches.
-   // STARTER CODE:
-   // void adjust(int &x, int &y) {
-   //     if (x < y) { x++; y--; }
-   //     else       { y++; x--; }
-   // }
-
-TASK 5 (HARD): Find Min and Max using Two Reference Outputs
-   Write void minMax(int arr[], int n, int &mn, int &mx) that fills
-   mn with the minimum and mx with the maximum of the array.
-   Hint: Initialize mn=mx=arr[0], then loop i=1..n-1 and update both.
-   // STARTER CODE:
-   // void minMax(int arr[], int n, int &mn, int &mx) {
-   //     mn = arr[0];  mx = arr[0];       // pahle element se shuru
-   //     for (int i = 1; i < n; i++) {
-   //         if (arr[i] < mn) mn = arr[i];
-   //         if (arr[i] > mx) mx = arr[i];
-   //     }
-   // }
-
-TASK 6 (HARD): Multimax — Largest Element of Each Column
-   Given an array of n ints, write multMax(int arr[], int n, int &max1,
-   int &max2) that puts the largest and SECOND largest into max1/max2
-   (all distinct values). Modify via references.
-   Hint: Track top1 and top2 while scanning. If you see a new biggest,
-         shift the old biggest to second place.
-   // STARTER CODE:
-   // void multMax(int arr[], int n, int &max1, int &max2) {
-   //     max1 = arr[0];  max2 = arr[0];
-   //     for (int i = 1; i < n; i++) {
-   //         if (arr[i] > max1) { max2 = max1; max1 = arr[i]; }
-   //         else if (arr[i] > max2 && arr[i] != max1) max2 = arr[i];
-   //     }
-   // }
-
+ MODES/TOPICS COVERED:
+  1. Swap two variables by reference
+  2. Swap two pairs simultaneously
+  3. Left rotate three values by reference
+  4. Increment the smaller, decrement the bigger
+  5. Find the minimum and maximum using two reference outputs
+  6. Find the largest and second largest via references
 ═══════════════════════════════════════════════
 */
 // ---------------- SOLUTIONS ----------------

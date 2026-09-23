@@ -1,52 +1,76 @@
 /*
-┌────────────────────────────────────────────────────────────┐
-│ FILE: 05_row_with_max_ones.cpp
-│
-│ REAL-WORLD SCENARIO:
-│ Class attendance sheet me 1 means present. Hume woh row dhundhni hai jisme maximum present students hain. Binary sorted rows me optimized top-right method kaam karta hai.
-│
-│ LOGIC (step-by-step, Hinglish):
-│ 1. Matrix binary hai and each row sorted: 0s then 1s.
-│ 2. Start top-right cell.
-│ 3. Agar value 1 hai, current row candidate hai; left jao to aur 1s count improve ho sakta hai.
-│ 4. Agar value 0 hai, niche jao because current row me left side bhi 0 hi honge.
-│ 5. Last candidate row max ones wali hoti hai.
-│
-│ ASCII VISUAL / PATH DIAGRAM:
-│ Matrix:
-│ 0 0 1 1
-│ 0 1 1 1
-│ 0 0 0 1
-│
-│ start (0,3)=1 -> ans row0, left
-│ (0,2)=1 -> ans row0, left
-│ (0,1)=0 -> down
-│ (1,1)=1 -> ans row1, left
-│ (1,0)=0 -> down
-│ (2,0)=0 -> down end
-│ Answer row1 has 3 ones.
-│
-│ DRY RUN:
-│ r0c3=1: ans=0, c=2
-│ r0c2=1: ans=0, c=1
-│ r0c1=0: r=1
-│ r1c1=1: ans=1, c=0
-│ r1c0=0: r=2
-│ r2c0=0: r=3 stop
-│
-│ FLOW OF EXECUTION:
-│ matrix setup -> choose traversal/search pattern -> update pointers/bounds -> output
-│
-│ COMPLEXITY CALCULATION:
-│ - Row pointer can move down at most R times.
-│ - Column pointer can move left at most C times.
-│ - Total moves <= R+C.
-│ -> Time Complexity = O(R+C).
-│
-│ SPACE COMPLEXITY CALCULATION:
-│ - Only row, col, answer variables.
-│ -> Extra Space Complexity = O(1).
-└────────────────────────────────────────────────────────────┘
+═══════════════════════════════════════════════
+ ROW WITH MAXIMUM ONES
+ ⏱️ TIME COMPLEXITY: O(R+C) — one row or column dropped per move
+═══════════════════════════════════════════════
+
+ 🌍 REAL-WORLD SCENARIO:
+ In a class attendance sheet, 1 means present. We need the row with
+ the maximum number of present students. Because every row is
+ binary-sorted (0s then 1s), a top-right pointer trick answers it
+ optimally.
+
+ 📖 THEORY:
+ - The matrix is binary (0/1) and each row is sorted: all 0s
+   followed by all 1s.
+ - Starting at top-right, a 1 means the current row has at least
+   this many ones, so it becomes the current best; moving left
+   counts how far the ones extend.
+ - A 0 means the whole row from here leftwards is 0 — no better
+   candidate in this row, so move down.
+ - Each step eliminates one column or one row -> at most R+C steps.
+
+ ASCII DIAGRAM:
+ Matrix:
+ 0 0 1 1
+ 0 1 1 1
+ 0 0 0 1
+
+ start (0,3)=1 -> candidate row0, go left
+ (0,2)=1 -> candidate row0, go left
+ (0,1)=0 -> move down
+ (1,1)=1 -> candidate row1, go left
+ (1,0)=0 -> move down
+ (2,0)=0 -> move down, end
+
+ Answer: row1 has 3 ones.
+
+ 🧠 LOGIC — STEP BY STEP:
+ Step 1: Start at r=0, c=C-1, ans=-1.
+    WHY: Top-right sits on the boundary between the 0s and 1s zones.
+ Step 2: If A[r][c]==1, set ans=r and move left (c--).
+    WHY: A 1 confirms this row has ones; going left counts how many,
+    improving the candidate while further 1s exist.
+ Step 3: Else (value 0) move down (r++).
+    WHY: Since a row is 0s then 1s, everything left of a 0 is also 0
+    — no more ones in this row.
+ Step 4: When the pointers exit, ans holds the row with the most
+    ones.
+    WHY: The last row marked as candidate is the one whose ones
+    extended furthest left.
+
+ DRY RUN:
+ r=0, c=3 value 1: ans=0, c=2
+ r=0, c=2 value 1: ans=0, c=1
+ r=0, c=1 value 0: r=1
+ r=1, c=1 value 1: ans=1, c=0
+ r=1, c=0 value 0: r=2
+ r=2, c=0 value 0: r=3, stop
+ -> Row with max ones = 1
+
+ FLOW OF EXECUTION:
+ matrix -> top-right start -> 1: candidate + move left, 0: move down -> answer = last candidate row
+
+ TIME COMPLEXITY CALCULATION:
+ - Row pointer can move down at most R times.
+ - Column pointer can move left at most C times.
+ - Total moves <= R+C.
+ -> Time Complexity = O(R+C)
+
+ SPACE COMPLEXITY CALCULATION:
+ - Only row, col, and answer variables are used.
+ -> Extra Space Complexity = O(1)
+═══════════════════════════════════════════════
 */
 
 #include <iostream>

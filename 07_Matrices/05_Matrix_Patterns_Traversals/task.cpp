@@ -1,57 +1,28 @@
 /*
-┌────────────────────────────────────────────────────────────┐
-│ FILE: task.cpp
-│
-│ REAL-WORLD SCENARIO:
-│ Maze route practice me same matrix ko alag-alag routes se traverse karna hai: spiral, boundary, diagonal, zigzag, wave.
-│
-│ LOGIC (step-by-step, Hinglish):
-│ TASKS (easy -> hard):
-│ 1. Primary diagonal print karo.
-│ 2. Secondary diagonal print karo.
-│ 3. Boundary traversal implement karo.
-│ 4. Wave traversal implement karo.
-│ 5. Spiral traversal implement karo.
-│ 6. Zigzag diagonal traversal implement karo.
-│ 7. Har traversal ka path ASCII arrows me draw karo.
-│ 8. Complexity calculation likho.
-│
-│ HINTS:
-│ - Spiral: four boundaries.
-│ - Boundary: top row, right col, bottom row, left col.
-│ - Diagonal: `i==j` and `i+j==n-1`.
-│ - Wave: even columns down, odd columns up.
-│
-│ STARTER CODE IDEA:
-│ vector<vector<int>> A = {{1,2,3},{4,5,6},{7,8,9}};
-│
-│ SOLUTION: Neeche short demo solution hai.
-│
-│ ASCII VISUAL / PATH DIAGRAM:
-│ 3x3 matrix:
-│ 1 2 3
-│ 4 5 6
-│ 7 8 9
-│ Spiral: 1 2 3 6 9 8 7 4 5
-│ Wave:   1 4 7 8 5 2 3 6 9
-│
-│ DRY RUN:
-│ Primary: 1,5,9
-│ Secondary: 3,5,7
-│ Boundary: 1,2,3,6,9,8,7,4
-│
-│ FLOW OF EXECUTION:
-│ matrix setup -> choose traversal/search pattern -> update pointers/bounds -> output
-│
-│ COMPLEXITY CALCULATION:
-│ - Diagonal tasks visit n elements = O(n).
-│ - Spiral/wave/zigzag visit all R*C cells = O(R*C).
-│ - Boundary visits 2R+2C-4 = O(R+C).
-│
-│ SPACE COMPLEXITY CALCULATION:
-│ - If printing directly, O(1) extra space.
-│ - If storing output, O(number of output elements).
-└────────────────────────────────────────────────────────────┘
+═══════════════════════════════════════════════
+ TASK SET — MATRIX PATTERNS & TRAVERSALS
+═══════════════════════════════════════════════
+ 🌍 REAL-WORLD SCENARIO: A maze-route practice board uses the same
+    matrix navigated by different route rules: spiral rings, outer
+    boundary, diagonals, zigzag, and waves. Mastering these paths
+    powers computer-vision scans and grid-based game engines.
+
+ 🧠 HOW TO SOLVE: Each traversal is a fixed set of pointer rules:
+    four shrinking boundaries for spiral; four edges for boundary;
+    i==j and i+j==n-1 for the diagonals; even columns down / odd
+    columns up for wave; alternate up-right / down-left per
+    diagonal sum for zigzag.
+
+ MODES/TOPICS COVERED:
+  1. Print the primary diagonal
+  2. Print the secondary diagonal
+  3. Implement boundary traversal
+  4. Implement wave traversal
+  5. Implement spiral traversal
+  6. Implement zigzag diagonal traversal
+  7. Draw each traversal path with ASCII arrows
+  8. Write the complexity calculation for each traversal
+═══════════════════════════════════════════════
 */
 
 #include <iostream>
