@@ -1,0 +1,219 @@
+INTRO_TO_CPP/
+│
+├── 00_SETUP_AND_RESOURCES/
+│   ├── 01_CPP_Introduction.md
+│   ├── 02_Install_Compiler.md
+│   ├── 03_Setup_VS_Code.md
+│   ├── 04_Compile_And_Run_CPP.md
+│   ├── 05_Useful_Resources.md
+│   └── 06_Common_Setup_Errors.md
+│
+├── 01_CPP_FUNDAMENTALS/
+│   ├── 01_What_Is_CPP/
+│   │   ├── notes.md
+│   │   ├── examples.cpp
+│   │   └── practice.cpp
+│   ├── 02_History_And_Features/
+│   │   ├── notes.md
+│   │   └── examples.cpp
+│   ├── 03_Program_Structure/
+│   │   ├── notes.md
+│   │   ├── hello_world.cpp
+│   │   └── program_breakdown.cpp
+│   ├── 04_Compilation_And_Execution/
+│   │   ├── notes.md
+│   │   └── compile_commands.md
+│   ├── 05_Syntax_And_Statements/
+│   │   ├── notes.md
+│   │   └── examples.cpp
+│   ├── 06_Comments_And_Formatting/
+│   │   ├── notes.md
+│   │   └── examples.cpp
+│   └── 07_Compiler_Errors_And_Debugging/
+│       ├── notes.md
+│       └── debugging_exercises.cpp
+│
+├── 02_VARIABLES_AND_DATA_TYPES/
+│   ├── 01_Variables/
+│   │   ├── notes.md
+│   │   └── examples.cpp
+│   ├── 02_Declaration_And_Initialization/
+│   │   ├── notes.md
+│   │   └── examples.cpp
+│   ├── 03_Basic_Data_Types/
+│   │   ├── notes.md
+│   │   └── examples.cpp
+│   ├── 04_Type_Modifiers/
+│   │   ├── notes.md
+│   │   └── examples.cpp
+│   ├── 05_Constants_And_Const/
+│   │   ├── notes.md
+│   │   └── examples.cpp
+│   ├── 06_Type_Conversion/
+│   │   ├── notes.md
+│   │   └── examples.cpp
+│   ├── 07_Type_Casting/
+│   │   ├── notes.md
+│   │   └── examples.cpp
+│   └── 08_Sizeof_And_Type_Limits/
+│       ├── notes.md
+│       └── examples.cpp
+│
+├── 03_INPUT_OUTPUT/
+│   ├── 01_Cout_And_Cin/
+│   │   ├── notes.md
+│   │   └── examples.cpp
+│   ├── 02_Newline_And_Endl/
+│   │   ├── notes.md
+│   │   └── examples.cpp
+│   ├── 03_Escape_Sequences/
+│   │   ├── notes.md
+│   │   └── examples.cpp
+│   ├── 04_Getline_And_String_Input/
+│   │   ├── notes.md
+│   │   └── examples.cpp
+│   ├── 05_Formatted_Output/
+│   │   ├── notes.md
+│   │   └── examples.cpp
+│   └── 06_Input_Validation_Basics/
+│       ├── notes.md
+│       └── examples.cpp
+│
+├── 04_OPERATORS_AND_EXPRESSIONS/
+│   ├── 01_Arithmetic_Operators/
+│   ├── 02_Assignment_Operators/
+│   ├── 03_Relational_Operators/
+│   ├── 04_Logical_Operators/
+│   ├── 05_Increment_Decrement/
+│   ├── 06_Modulus_And_Division/
+│   ├── 07_Operator_Precedence/
+│   ├── 08_Operator_Associativity/
+│   ├── 09_Ternary_Operator/
+│   └── 10_Bitwise_Operators_Introduction/
+│
+├── 05_CONDITIONAL_STATEMENTS/
+│   ├── 01_If_Statement/
+│   ├── 02_If_Else/
+│   ├── 03_Else_If_Ladder/
+│   ├── 04_Nested_If/
+│   ├── 05_Switch_Statement/
+│   ├── 06_Ternary_Conditions/
+│   └── 07_Condition_Based_Problems/
+│
+├── 06_LOOPS/
+│   ├── 01_For_Loop/
+│   ├── 02_While_Loop/
+│   ├── 03_Do_While_Loop/
+│   ├── 04_Break_And_Continue/
+│   ├── 05_Nested_Loops/
+│   ├── 06_Infinite_Loops/
+│   ├── 07_Loop_Tracing/
+│   └── 08_Pattern_Printing/
+│
+├── 07_FUNCTIONS/
+│   ├── 01_Function_Introduction/
+│   ├── 02_Function_Declaration_And_Definition/
+│   ├── 03_Parameters_And_Arguments/
+│   ├── 04_Return_Types/
+│   ├── 05_Call_By_Value/
+│   ├── 06_Default_Arguments/
+│   ├── 07_Function_Overloading/
+│   ├── 08_Inline_Functions_Basics/
+│   ├── 09_Scope_And_Lifetime/
+│   └── 10_Recursion_Introduction/
+│
+├── 08_ARRAYS/
+│   ├── 01_One_Dimensional_Arrays/
+│   ├── 02_Array_Initialization/
+│   ├── 03_Array_Traversal/
+│   ├── 04_Array_Input_Output/
+│   ├── 05_Min_Max_And_Sum/
+│   ├── 06_Searching_Basics/
+│   ├── 07_Multidimensional_Arrays/
+│   └── 08_Array_Practice_Problems/
+│
+├── 09_STRINGS/
+│   ├── 01_Character_And_String_Basics/
+│   ├── 02_Std_String/
+│   ├── 03_String_Input/
+│   ├── 04_String_Length_And_Access/
+│   ├── 05_String_Concatenation/
+│   ├── 06_String_Comparison/
+│   ├── 07_Common_String_Methods/
+│   └── 08_String_Practice_Problems/
+│
+├── 10_POINTERS_AND_REFERENCES/
+│   ├── 01_Memory_And_Addresses/
+│   ├── 02_Pointer_Basics/
+│   ├── 03_Nullptr/
+│   ├── 04_Pointer_Arithmetic_Basics/
+│   ├── 05_References/
+│   ├── 06_Pointers_And_Arrays/
+│   ├── 07_Dynamic_Memory_Basics/
+│   └── 08_Stack_And_Heap_Introduction/
+│
+├── 11_STRUCTURES_AND_ENUMS/
+│   ├── 01_Struct/
+│   ├── 02_Enum/
+│   ├── 03_Typedef_And_Using/
+│   └── 04_Struct_Practice/
+│
+├── 12_OBJECT_ORIENTED_PROGRAMMING/
+│   ├── 01_Classes_And_Objects/
+│   ├── 02_Access_Specifiers/
+│   ├── 03_Constructors/
+│   ├── 04_Destructors/
+│   ├── 05_This_Pointer/
+│   ├── 06_Encapsulation/
+│   ├── 07_Inheritance/
+│   ├── 08_Polymorphism/
+│   ├── 09_Function_Overriding/
+│   ├── 10_Virtual_Functions_Basics/
+│   └── 11_Abstraction/
+│
+├── 13_CPP_STANDARD_LIBRARY_INTRODUCTION/
+│   ├── 01_Namespace_Std/
+│   ├── 02_Std_Array/
+│   ├── 03_Std_Vector/
+│   ├── 04_Std_String/
+│   ├── 05_Std_Pair/
+│   ├── 06_Std_Sort/
+│   ├── 07_Iterators_Introduction/
+│   └── 08_STL_Overview/
+│
+├── 14_BASIC_ALGORITHMIC_THINKING/
+│   ├── 01_Problem_Decomposition/
+│   ├── 02_Pseudocode/
+│   ├── 03_Flowcharts/
+│   ├── 04_Dry_Runs/
+│   ├── 05_Time_Complexity_Introduction/
+│   └── 06_Space_Complexity_Introduction/
+│
+├── 15_BEGINNER_PRACTICE/
+│   ├── 01_Printing_And_Output/
+│   ├── 02_Variables_And_Input/
+│   ├── 03_Arithmetic_Problems/
+│   ├── 04_If_Else_Problems/
+│   ├── 05_Loop_Problems/
+│   ├── 06_Pattern_Problems/
+│   ├── 07_Function_Problems/
+│   ├── 08_Array_Problems/
+│   └── 09_String_Problems/
+│
+├── 16_MINI_PROJECTS/
+│   ├── 01_Simple_Calculator/
+│   ├── 02_Marks_And_Grade_Calculator/
+│   ├── 03_Number_Guessing_Game/
+│   ├── 04_Multiplication_Table_Generator/
+│   ├── 05_Student_Record_Manager/
+│   └── 06_Basic_Banking_Simulation/
+│
+├── 17_REVISION_AND_ASSESSMENTS/
+│   ├── 01_Concept_Summaries/
+│   ├── 02_Syntax_Cheat_Sheet/
+│   ├── 03_Common_Mistakes/
+│   ├── 04_Quiz_Questions/
+│   ├── 05_Coding_Assessments/
+│   └── 06_Weak_Topics_Tracker/
+│
+└── README.md

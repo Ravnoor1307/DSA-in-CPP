@@ -1,0 +1,62 @@
+
+# Compiled executables
+*.exe
+*.out
+*.app
+*.o
+*.obj
+*.a
+*.lib
+*.dll
+*.so
+*.dylib
+
+# Debugging files
+*.pdb
+*.ilk
+*.idb
+*.gch
+*.pch
+core
+core.*
+
+# Build directories
+build/
+cmake-build-*/
+out/
+bin/
+obj/
+
+# IDE and editor settings
+.vscode/
+.idea/
+.vs/
+*.suo
+*.user
+*.code-workspace
+
+# Operating system files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Temporary and backup files
+*.tmp
+*.temp
+*.bak
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+
+# CMake generated files
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+compile_commands.json
+
+# Keep source code and learning materials tracked
+# *.cpp, *.h, *.hpp, *.md and README.md are NOT ignored
